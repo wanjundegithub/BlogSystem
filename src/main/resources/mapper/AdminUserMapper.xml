@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+        <!DOCTYPE mapper
+                PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+                "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.blog.dao.AdminUserDao">
+   <resultMap id="adminModel" type="com.company.blog.model.AdminUser">
+       <id column="adminID" jdbcType="INTEGER" property="adminID" />
+       <result column="adminAccount" jdbcType="VARCHAR" property="adminAccount"/>
+       <result column="adminPassword" jdbcType="VARCHAR" property="adminPassword"/>
+       <result column="adminNickname" jdbcType="VARCHAR" property="adminNickname"/>
+       <result column="locked" jdbcType="TINYINT" property="locked"/>
+   </resultMap>
+
+    <sql id="commonField">
+        adminID,adminAccount,adminPassword,adminNickname,locked
+    </sql>
+
+    <insert id="insertAdminUser" parameterType="com.company.blog.model.AdminUser">
+        insert into admin (adminID,adminAccount,adminPassword,adminNickname,locked)
+        values (#{adminID,jdbcType=INTEGER},#{adminAccount,jdbcType=VARCHAR},#{adminPassword,jdbcType=VARCHAR},
+                #{adminNickname,jdbcType=VARCHAR},#{locked,jdbcType=TINYINT})
+    </insert>
+
+    <insert id="insertSelectiveAdminUser" parameterType="com.company.blog.model.AdminUser">
+        insert into admin
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="adminID!=null">
+                adminID,
+            </if>
+            <if test="adminAccount!=null">
+                adminAccount,
+            </if>
+            <if test="adminPassword!=null">
+                adminPassword,
+            </if>
+            <if test="adminNickname!=null">
+                adminNickname,
+            </if>
+            <if test="locked!=null">
+                locked,
+            </if>
+        </trim>
+        <trim prefix="values (" suffix=")" suffixOverrides=",">
+            <if test="adminID!=null">
+                #{adminID,jdbcType=INTEGER},
+            </if>
+            <if test="adminAccount!=null">
+                #{adminAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPassword!=null">
+                #{adminPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="adminNickname!=null">
+                #{adminNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="locked!=null">
+                #{locked,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="login"  resultMap="adminModel">
+        select
+            <include refid="commonField"/>
+        from admin where adminAccount=#{account,jdbcType=VARCHAR} and adminPassword=#{password,jdbcType=VARCHAR} and locked=0
+    </select>
+
+    <select id="queryAdminUserByID" resultMap="adminModel">
+        select
+        <include refid="commonField"/>
+        from admin where adminID=#{adminID,jdbcType=INTEGER} and locked=0
+    </select>
+
+    <update id="updateAdminUser"  parameterType="com.company.blog.model.AdminUser">
+        update admin set adminAccount=#{adminAccount,jdbcType=VARCHAR},
+                         adminPassword=#{adminPassword,jdbcType=VARCHAR}, adminNickname=#{adminNickname,jdbcType=VARCHAR},
+                         locked=#{locked,jdbcType=TINYINT} where adminID=#{adminID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelectiveAdminUser" parameterType="com.company.blog.model.AdminUser">
+        update admin set
+        <trim suffix="where adminID=#{adminID,jdbcType=INTEGER}" suffixOverrides=",">
+            <if test="adminAccount!=null">
+                adminAccount=#{adminAccount,jdbcType=VARCHAR},
+            </if>
+            <if test="adminPassword!=null">
+                adminPassword=#{adminPassword,jdbcType=VARCHAR},
+            </if>
+            <if test="adminNickname!=null">
+                adminNickname=#{adminNickname,jdbcType=VARCHAR},
+            </if>
+            <if test="locked!=null">
+                locked=#{locked,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </update>
+</mapper>
