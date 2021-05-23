@@ -23,13 +23,6 @@ public class AdminUser {
         this.locked = locked;
     }
 
-    public AdminUser(String adminAccount, String adminPassword, String adminNickname, byte locked) {
-        this.adminAccount = adminAccount;
-        this.adminPassword = adminPassword;
-        this.adminNickname = adminNickname;
-        this.locked = locked;
-    }
-
     public AdminUser() {
     }
 

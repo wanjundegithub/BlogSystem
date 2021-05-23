@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.blog.dao.BlogDao">
+    <resultMap id="blogModel" type="com.company.blog.model.Blog">
+        <id column="blogID" jdbcType="INTEGER" property="blogID"/>
+        <result column="blogTitle" jdbcType="VARCHAR" property="blogTitle"/>
+        <result column="blogSubUrl" jdbcType="VARCHAR" property="blogSubUrl"/>
+        <result column="blogCoverImagePath" jdbcType="VARCHAR" property="blogCoverImagePath"/>
+        <result column="blogContent" jdbcType="LONGVARCHAR" property="blogContent"/>
+        <result column="blogCategoryID" jdbcType="INTEGER" property="blogCategoryID"/>
+        <result column="blogCategoryName" jdbcType="VARCHAR" property="blogCategoryName"/>
+        <result column="blogTags" jdbcType="VARCHAR" property="blogTags"/>
+        <result column="blogStatus" jdbcType="TINYINT" property="blogStatus"/>
+        <result column="blogViews" jdbcType="INTEGER" property="blogViews"/>
+        <result column="blogEnableComment" jdbcType="TINYINT" property="blogEnableComment"/>
+        <result column="blogIsDeleted" jdbcType="TINYINT" property="blogIsDeleted"/>
+        <result column="blogCreateTime" jdbcType="DATETIME" property="blogCreateTime"/>
+        <result column="blogUpdateTime" jdbcType="DATETIME" property="blogUpdateTime"/>
+    </resultMap>
+
+    <sql id="commonFile">
+
+    </sql>
+</mapper>
