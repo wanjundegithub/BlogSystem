@@ -1,12 +1,18 @@
 package com.company.blog.dao;
 
 import com.company.blog.model.Blog;
+import com.company.blog.util.PageQueryUtil;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface BlogDao {
 
     int deleteBlogByPrimaryKey(int blogID);
+
+    int deleteBlogByBatch(@Param("blogIDS") int[] blogIDS);
 
     int insertBlog(Blog blog);
 
@@ -14,7 +20,27 @@ public interface BlogDao {
 
     Blog queryBlogByPrimaryID(int blogID);
 
-    int updateBlog(Blog blog);
+    int updateBlogWithContent(Blog blog);
 
-    int updateSelectiveBlog(Blog blog);
+    int updateBlogWithoutContent(Blog blog);
+
+    int updateSelectiveBlogWithContent(Blog blog);
+
+    List<Blog> findBlogList(PageQueryUtil pageQueryUtil);
+
+    List<Blog> findBlogListByCondition(@Param("condition") int condition,@Param("limit") int limit);
+
+    int getTotalBlogs(PageQueryUtil pageQueryUtil);
+
+    //暂时不实现
+    List<Blog> getBlogByTagID(PageQueryUtil pageQueryUtil);
+
+    //暂时不实现
+    int getTotalBlogByTagID(PageQueryUtil pageQueryUtil);
+
+    Blog findBlogBySubUrl(String blogSubUrl);
+
+    int  updateCategoryByBatch(@Param("blogCategoryID") int blogCategoryID,
+                               @Param("blogCategoryName") String blogCategoryName,
+                               @Param("blogCategoryIDs") int[] blogCategoryIDs);
 }

@@ -14,8 +14,6 @@ public class Blog {
 
     private String blogCoverImagePath;
 
-    private String blogContent;
-
     private  int blogCategoryID;
 
     private String blogCategoryName;
@@ -35,14 +33,16 @@ public class Blog {
 
     private Date blogUpdateTime;
 
-    public Blog(int blogID, String blogTitle, String blogSubUrl, String blogCoverImagePath, String blogContent, int blogCategoryID,
-                String blogCategoryName, String blogTags, byte blogStatus, int blogViews, byte blogEnableComment, byte blogIsDeleted,
-                Date blogCreateTime, Date blogUpdateTime) {
+    private String blogContent;
+
+    public Blog(Integer blogID, String blogTitle, String blogSubUrl, String blogCoverImagePath,
+                int blogCategoryID, String blogCategoryName, String blogTags, byte blogStatus,
+                int blogViews, byte blogEnableComment, byte blogIsDeleted, Date blogCreateTime,
+                Date blogUpdateTime) {
         this.blogID = blogID;
         this.blogTitle = blogTitle;
         this.blogSubUrl = blogSubUrl;
         this.blogCoverImagePath = blogCoverImagePath;
-        this.blogContent = blogContent;
         this.blogCategoryID = blogCategoryID;
         this.blogCategoryName = blogCategoryName;
         this.blogTags = blogTags;
@@ -55,6 +55,26 @@ public class Blog {
     }
 
     public Blog() {
+    }
+
+    public Blog(int blogID, String blogTitle, String blogSubUrl, String blogCoverImagePath,
+                int blogCategoryID, String blogCategoryName, String blogTags, byte blogStatus,
+                int blogViews, byte blogEnableComment, byte blogIsDeleted, Date blogCreateTime,
+                Date blogUpdateTime, String blogContent) {
+        this.blogID = blogID;
+        this.blogTitle = blogTitle;
+        this.blogSubUrl = blogSubUrl;
+        this.blogCoverImagePath = blogCoverImagePath;
+        this.blogCategoryID = blogCategoryID;
+        this.blogCategoryName = blogCategoryName;
+        this.blogTags = blogTags;
+        this.blogStatus = blogStatus;
+        this.blogViews = blogViews;
+        this.blogEnableComment = blogEnableComment;
+        this.blogIsDeleted = blogIsDeleted;
+        this.blogCreateTime = blogCreateTime;
+        this.blogUpdateTime = blogUpdateTime;
+        this.blogContent = blogContent;
     }
 
     public int getBlogID() {

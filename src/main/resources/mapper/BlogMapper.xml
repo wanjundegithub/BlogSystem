@@ -3,12 +3,11 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.company.blog.dao.BlogDao">
-    <resultMap id="blogModel" type="com.company.blog.model.Blog">
+    <resultMap id="baseBlogModel" type="com.company.blog.model.Blog">
         <id column="blogID" jdbcType="INTEGER" property="blogID"/>
         <result column="blogTitle" jdbcType="VARCHAR" property="blogTitle"/>
         <result column="blogSubUrl" jdbcType="VARCHAR" property="blogSubUrl"/>
         <result column="blogCoverImagePath" jdbcType="VARCHAR" property="blogCoverImagePath"/>
-        <result column="blogContent" jdbcType="LONGVARCHAR" property="blogContent"/>
         <result column="blogCategoryID" jdbcType="INTEGER" property="blogCategoryID"/>
         <result column="blogCategoryName" jdbcType="VARCHAR" property="blogCategoryName"/>
         <result column="blogTags" jdbcType="VARCHAR" property="blogTags"/>
@@ -16,11 +15,297 @@
         <result column="blogViews" jdbcType="INTEGER" property="blogViews"/>
         <result column="blogEnableComment" jdbcType="TINYINT" property="blogEnableComment"/>
         <result column="blogIsDeleted" jdbcType="TINYINT" property="blogIsDeleted"/>
-        <result column="blogCreateTime" jdbcType="DATETIME" property="blogCreateTime"/>
-        <result column="blogUpdateTime" jdbcType="DATETIME" property="blogUpdateTime"/>
+        <result column="blogCreateTime" jdbcType="TIMESTAMP" property="blogCreateTime"/>
+        <result column="blogUpdateTime" jdbcType="TIMESTAMP" property="blogUpdateTime"/>
     </resultMap>
 
-    <sql id="commonFile">
-
+    <resultMap extends="baseBlogModel" id="blogModelWithContent" type="com.company.blog.model.Blog">
+        <result column="blogContent" jdbcType="LONGVARCHAR" property="blogContent"/>
+    </resultMap>
+    
+    <sql id="baseField">
+        blogID,blogTitle,blogSubUrl,blogCoverImagePath,blogCategoryID,blogCategoryName,
+        blogTags,blogStatus,blogViews,blogEnableComment,blogIsDeleted,blogCreateTime,blogUpdateTime
     </sql>
+    
+    <sql id="blogContentField">
+        blogContent
+    </sql>
+    
+    <update id="deleteBlogByPrimaryKey" parameterType="java.lang.Integer">
+       update blog set blogIsDeleted=1 where blogID=#{blogID,jdbcType=INTEGER}                                      and blogIsDeleted=0
+    </update>
+
+    <update id="deleteBlogByBatch" >
+        update blog set blogIsDeleted=1 where blogID in
+        <foreach item="blogID" collection="blogIDS" open="(" close=")" separator=",">
+            #{blogID}
+        </foreach>
+    </update>
+    
+    <insert id="insertBlog" parameterType="com.company.blog.model.Blog">
+        insert into blog (blogID,blogTitle,blogSubUrl,blogCoverImagePath,
+        blogCategoryID,blogCategoryName,blogTags,blogStatus,blogViews,
+        blogEnableComment,blogIsDeleted,blogCreateTime,blogUpdateTime,blogContent)
+        values (#{blogID,jdbcType=INTEGER},#{blogTitle,jdbcType=VARCHAR},
+        #{blogSubUrl,jdbcType=VARCHAR},#{blogCoverImagePath,jdbcType=VARCHAR},
+        #{blogCategoryID,jdbcType=INTEGER},#{blogCategoryName,jdbcType=VARCHAR},
+        #{blogTags,jdbcType=VARCHAR},#{blogStatus,jdbcType=TINYINT},
+        #{blogViews,jdbcType=INTEGER},#{blogEnableComment,jdbcType=TINYINT},
+        #{blogIsDeleted,jdbcType=INTEGER},
+        #{blogCreateTime,jdbcType=TIMESTAMP},#{blogUpdateTime,jdbcType=TIMESTAMP},
+        #{blogContent,jdbcType=LONGVARCHAR})
+    </insert>
+
+    <insert id="insertSelectiveBlog" parameterType="com.company.blog.model.Blog">
+        insert into blog
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogID!=null">
+                blogID,
+            </if>
+            <if test="blogTitle!=null">
+                blogTitle,
+            </if>
+            <if test="blogSubUrl!=null">
+                blogSubUrl,
+            </if>
+            <if test="blogCoverImagePath!=null">
+                blogCoverImagePath,
+            </if>
+            <if test="blogCategoryID!=null">
+                blogCategoryID,
+            </if>
+            <if test="blogCategoryName!=null">
+                blogCategoryName,
+            </if>
+            <if test="blogTags!=null">
+                blogTags,
+            </if>
+            <if test="blogStatus!=null">
+                blogStatus,
+            </if>
+            <if test="blogViews!=null">
+                blogViews,
+            </if>
+            <if test="blogEnableComment!=null">
+                blogEnableComment,
+            </if>
+            <if test="blogIsDeleted!=null">
+                blogIsDeleted,
+            </if>
+            <if test="blogCreateTime!=null">
+                blogCreateTime,
+            </if>
+            <if test="blogUpdateTime!=null">
+                blogUpdateTime,
+            </if>
+            <if test="blogContent!=null">
+                blogContent,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogID!=null">
+                #{blogID,jdbcType=INTEGER},
+            </if>
+            <if test="blogTitle!=null">
+                #{blogTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="blogSubUrl!=null">
+                #{blogSubUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCoverImagePath!=null">
+                #{blogCoverImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCategoryID!=null">
+                #{blogCategoryID,jdbcType=INTEGER},
+            </if>
+            <if test="blogCategoryName!=null">
+                #{blogCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogTags!=null">
+                #{blogTags,jdbcType=VARCHAR},
+            </if>
+            <if test="blogStatus!=null">
+                #{blogStatus,jdbcType=TINYINT},
+            </if>
+            <if test="blogViews!=null">
+                #{blogViews,jdbcType=INTEGER},
+            </if>
+            <if test="blogEnableComment!=null">
+                #{blogEnableComment,jdbcType=TINYINT},
+            </if>
+            <if test="blogIsDeleted!=null">
+                #{blogIsDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="blogCreateTime!=null">
+                #{blogCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogUpdateTime!=null">
+                #{blogUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogContent!=null">
+                #{blogContent,jdbcType=LONGVARCHAR}
+            </if>
+        </trim>
+    </insert>
+
+    <select id="queryBlogByPrimaryID" parameterType="java.lang.Integer"
+            resultMap="blogModelWithContent">
+        select
+        <include refid="baseField"/>
+        ,
+        <include refid="blogContentField"/>
+        from blog where  blogID=#{blogID,jdbcType=INTEGER}
+    </select>
+
+    <update id="updateBlogWithContent" parameterType="com.company.blog.model.Blog">
+        update blog set
+        blogTitle=#{blogTitle,jdbcType=VARCHAR}, blogSubUrl=#{blogSubUrl,jdbcType=VARCHAR},
+        blogCoverImagePath=#{blogCoverImagePath,jdbcType=VARCHAR},
+        blogCategoryID=#{blogCategoryID,jdbcType=INTEGER},
+        blogCategoryName=#{blogCategoryName,jdbcType=VARCHAR},
+        blogTags=#{blogTags,jdbcType=VARCHAR},
+        blogStatus=#{blogStatus,jdbcType=TINYINT},
+        blogViews=#{blogViews,jdbcType=INTEGER},
+        blogEnableComment=#{blogEnableComment,jdbcType=TINYINT},
+        blogIsDeleted=#{blogIsDeleted,jdbcType=INTEGER},
+        blogCreateTime=#{blogCreateTime,jdbcType=TIMESTAMP},
+        blogUpdateTime=#{blogUpdateTime,jdbcType=TIMESTAMP},
+        blogContent=#{blogContent,jdbcType=LONGVARCHAR}
+        where blogID=#{blogID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateBlogWithoutContent" parameterType="com.company.blog.model.Blog">
+        update blog set
+         blogTitle=#{blogTitle,jdbcType=VARCHAR}, blogSubUrl=#{blogSubUrl,jdbcType=VARCHAR},
+         blogCoverImagePath=#{blogCoverImagePath,jdbcType=VARCHAR},
+         blogCategoryID=#{blogCategoryID,jdbcType=INTEGER},
+         blogCategoryName=#{blogCategoryName,jdbcType=VARCHAR},
+         blogTags=#{blogTags,jdbcType=VARCHAR},
+         blogStatus=#{blogStatus,jdbcType=TINYINT},
+         blogViews=#{blogViews,jdbcType=INTEGER},
+         blogEnableComment=#{blogEnableComment,jdbcType=TINYINT},
+         blogIsDeleted=#{blogIsDeleted,jdbcType=INTEGER},
+         blogCreateTime=#{blogCreateTime,jdbcType=TIMESTAMP},
+         blogUpdateTime=#{blogUpdateTime,jdbcType=TIMESTAMP}
+        where blogID=#{blogID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelectiveBlogWithContent" parameterType="com.company.blog.model.Blog">
+        update blog set
+        <trim suffixOverrides=",">
+            <if test="blogTitle!=null">
+                blogTitle=#{blogTitle,jdbcType=VARCHAR},
+            </if>
+            <if test="blogSubUrl!=null">
+                blogSubUrl=#{blogSubUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCoverImagePath!=null">
+                blogCoverImagePath=#{blogCoverImagePath,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCategoryID!=null">
+                blogCategoryID=#{blogCategoryID,jdbcType=INTEGER},
+            </if>
+            <if test="blogCategoryName!=null">
+                blogCategoryName=#{blogCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogTags!=null">
+                blogTags=#{blogTags,jdbcType=VARCHAR},
+            </if>
+            <if test="blogStatus!=null">
+                blogStatus=#{blogStatus,jdbcType=TINYINT},
+            </if>
+            <if test="blogViews!=null">
+                blogViews=#{blogViews,jdbcType=INTEGER},
+            </if>
+            <if test="blogEnableComment!=null">
+                blogEnableComment=#{blogEnableComment,jdbcType=TINYINT},
+            </if>
+            <if test="blogIsDeleted!=null">
+                blogIsDeleted=#{blogIsDeleted,jdbcType=INTEGER},
+            </if>
+            <if test="blogCreateTime!=null">
+                blogCreateTime=#{blogCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogUpdateTime!=null">
+                blogUpdateTime=#{blogUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogContent!=null">
+                blogContent=#{blogContent,jdbcType=LONGVARCHAR},
+            </if>
+        </trim>
+        where blogID=#{blogID,jdbcType=INTEGER}
+    </update>
+
+    <select id="findBlogList" parameterType="Map" resultMap="baseBlogModel">
+        select
+        <include refid="baseField"/>
+        from blog where blogIsDeleted=0
+        <trim prefixOverrides="and">
+            <if test="keyword!=null">
+                and (blogTitle like  CONCAT('%', #{keyword}, '%') or
+                     blogCategoryName like CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="blogStatus!=null">
+                and blogStatus=#{blogStatus,jdbcType=TINYINT}
+            </if>
+            <if test="blogCategoryID!=null">
+                and blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
+            </if>
+        </trim>
+        order by blogID desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <!--按类型排序查询 -->
+    <select id="findBlogListByCondition" resultMap="baseBlogModel">
+        select
+        <include refid="baseField"/>
+        from blog where blogStatus=1 and blogIsDeleted=0
+        <if test="condition!=null and condition=0">
+            order by blogViews desc
+        </if>
+        <if test="condition!=null and condition=1">
+            order by blogID desc
+        </if>
+        limit #{limit}
+    </select>
+
+    <select id="getTotalBlogs" parameterType="Map" resultType="java.lang.Integer">
+        select count(1) from blog  where blogIsDeleted=0
+        <trim prefixOverrides="and">
+            <if test="keyword!=null">
+                and (blogTitle like  CONCAT('%', #{keyword}, '%') or
+                blogCategoryName like CONCAT('%', #{keyword}, '%'))
+            </if>
+            <if test="blogStatus!=null">
+                and blogStatus=#{blogStatus,jdbcType=TINYINT}
+            </if>
+            <if test="blogCategoryID!=null">
+                and blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
+            </if>
+        </trim>
+    </select>
+
+    <select id="findBlogBySubUrl" parameterType="java.lang.String" resultMap="blogModelWithContent">
+        select
+        <include refid="baseField"/>
+        ,
+        <include refid="blogContentField"/>
+        from blog where blogIsDeleted=0 and
+        blogSubUrl=#{blogSubUrl,jdbcType=VARCHAR} limit 1
+    </select>
+
+    <update id="updateCategoryByBatch">
+        update blog set
+        blogCategoryID=#{blogCategoryID,jdbcType=INTEGER},
+        blogCategoryName=#{blogCategoryName,jdbcType=String}
+        where blogCategoryID in
+        <foreach collection="blogCategoryIDs" item="blogCategoryID" open="(" close=")" separator=",">
+            #{blogCategoryID,jdbcType=INTEGER}
+        </foreach>
+    </update>
 </mapper>
