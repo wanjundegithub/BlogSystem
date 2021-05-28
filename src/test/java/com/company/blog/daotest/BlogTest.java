@@ -111,7 +111,7 @@ public class BlogTest {
     public void testFindBlogList(){
         Map<String,Object> maps=new HashMap<>();
         maps.put("start",1);
-        maps.put("currentPage",0);
+        maps.put("currentPage",1);
         maps.put("limit",2);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var blogs=blogDao.findBlogList(pageQueryUtil);
@@ -125,12 +125,36 @@ public class BlogTest {
 
     @Test
     public void testFindBlogListByCondition(){
-
+       var blogs=blogDao.findBlogListByCondition(1,2);
+        if(blogs!=null&&blogs.size()!=0){
+            blogs.forEach(t->{
+                LoggerUtil.info("title:"+t.getBlogTitle()+
+                        ",imagePath:"+t.getBlogCoverImagePath());
+            });
+        }
     }
 
     @Test
     public void testGetTotalBlogs(){
-
+        Map<String,Object> maps=new HashMap<>();
+        maps.put("currentPage",1);
+        maps.put("limit",2);
+        PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
+        var result=blogDao.getTotalBlogs(pageQueryUtil);
+        LoggerUtil.info("博客数量:"+result);
     }
 
+    @Test
+    public void testFindBlogBySubUrl(){
+        var t=blogDao.findBlogBySubUrl("岳飞事迹");
+        LoggerUtil.info("title:"+t.getBlogTitle()+
+                ",imagePath:"+t.getBlogCoverImagePath());
+    }
+
+    @Test
+    public void testUpdateCategoryByBatch(){
+        int[] catIDs={3};
+        var result=blogDao.updateCategoryByBatch(99,"test",catIDs);
+        LoggerUtil.info("update result:"+result);
+    }
 }

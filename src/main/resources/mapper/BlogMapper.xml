@@ -238,7 +238,7 @@
         where blogID=#{blogID,jdbcType=INTEGER}
     </update>
 
-    <select id="findBlogList" parameterType="Map" resultMap="baseBlogModel">
+    <select id="findBlogList" parameterType="java.util.Map" resultMap="baseBlogModel">
         select
         <include refid="baseField"/>
         from blog where blogIsDeleted=0
@@ -260,15 +260,14 @@
         </if>
     </select>
 
-    <!--按类型排序查询 -->
     <select id="findBlogListByCondition" resultMap="baseBlogModel">
         select
         <include refid="baseField"/>
         from blog where blogStatus=1 and blogIsDeleted=0
-        <if test="condition!=null and condition=0">
+        <if test="condition!=null and condition==0">
             order by blogViews desc
         </if>
-        <if test="condition!=null and condition=1">
+        <if test="condition!=null and condition==1">
             order by blogID desc
         </if>
         limit #{limit}
@@ -302,7 +301,7 @@
     <update id="updateCategoryByBatch">
         update blog set
         blogCategoryID=#{blogCategoryID,jdbcType=INTEGER},
-        blogCategoryName=#{blogCategoryName,jdbcType=String}
+        blogCategoryName=#{blogCategoryName,jdbcType=VARCHAR}
         where blogCategoryID in
         <foreach collection="blogCategoryIDs" item="blogCategoryID" open="(" close=")" separator=",">
             #{blogCategoryID,jdbcType=INTEGER}
