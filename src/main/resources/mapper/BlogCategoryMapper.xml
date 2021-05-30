@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.company.blog.dao.BlogCategoryDao">
+    <resultMap id="baseBlogCategoryModel" type="com.company.blog.model.BlogCategory">
+        <id column="blogCategoryID" jdbcType="INTEGER" property="blogCategoryID"/>
+        <result column="blogCategoryName" jdbcType="VARCHAR" property="blogCategoryName"/>
+        <result column="blogCategoryIcon" jdbcType="VARCHAR" property="blogCategoryIcon"/>
+        <result column="blogCategoryRank" jdbcType="INTEGER" property="blogCategoryRank"/>
+        <result column="blogCategoryIsDeleted" jdbcType="TINYINT" property="blogCategoryIsDeleted"/>
+        <result column="blogCategoryCreateTime" jdbcType="TIMESTAMP" property="blogCategoryCreateTime"/>
+    </resultMap>
+
+    <sql id="commonField">
+        blogCategoryID,blogCategoryName,blogCategoryIcon,blogCategoryRank,blogCategoryIsDeleted,blogCategoryCreateTime
+    </sql>
+
+    <update id="deleteBlogCategoryByPrimaryKey" parameterType="java.lang.Integer">
+        update blogCategory set blogCategoryIsDeleted=1 where blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
+    </update>
+
+    <update id="deleteBlogCategoryBatch">
+        update blogCategory set blogCategoryIsDeleted=1 where blogCategoryID in
+        <foreach collection="blogCategoryIDs" item="blogCategoryID" open="(" close=")" separator=",">
+            #{blogCategoryID,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <insert id="insertBlogCategory" parameterType="com.company.blog.model.BlogCategory" >
+        insert into blogCategory
+        (blogCategoryID,blogCategoryName,blogCategoryIcon,blogCategoryRank,blogCategoryIsDeleted,blogCategoryCreateTime)
+        values (#{blogCategoryID,jdbcType=INTEGER},#{blogCategoryName,jdbcType=VARCHAR},#{blogCategoryIcon,jdbcType=VARCHAR},
+        #{blogCategoryRank,jdbcType=INTEGER},#{blogCategoryIsDeleted,jdbcType=TINYINT},#{blogCategoryCreateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelectiveBlogCategory" parameterType="com.company.blog.model.BlogCategory">
+        insert into blogCategory
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogCategoryID!=null">
+                blogCategoryID,
+            </if>
+            <if test="blogCategoryName!=null">
+                blogCategoryName,
+            </if>
+            <if test="blogCategoryIcon!=null">
+                blogCategoryIcon,
+            </if>
+            <if test="blogCategoryRank!=null">
+                blogCategoryRank,
+            </if>
+            <if test="blogCategoryIsDeleted!=null">
+                blogCategoryIsDeleted,
+            </if>
+            <if test="blogCategoryCreateTime!=null">
+                blogCategoryCreateTime,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogCategoryID!=null">
+                #{blogCategoryID,jdbcType=INTEGER},
+            </if>
+            <if test="blogCategoryName!=null">
+                #{blogCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCategoryIcon!=null">
+                #{blogCategoryIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCategoryRank!=null">
+                #{blogCategoryRank,jdbcType=INTEGER},
+            </if>
+            <if test="blogCategoryIsDeleted!=null">
+                #{blogCategoryIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="blogCategoryCreateTime!=null">
+                #{blogCategoryCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findBlogCategoryByPrimaryKey" resultMap="baseBlogCategoryModel" parameterType="java.lang.Integer">
+        select
+        <include refid="commonField"/>
+        from blogCategory where blogCategoryID=#{blogCategoryID,jdbcType=INTEGER} and blogCategoryIsDeleted=0
+    </select>
+
+    <select id="selectBlogCategoryByName" parameterType="java.lang.String" resultMap="baseBlogCategoryModel">
+        select
+        <include refid="commonField"/>
+        from blogCategory where blogCategoryName=#{blogCategoryName,jdbcType=VARCHAR} and blogCategoryIsDeleted=0
+    </select>
+
+    <select id="findBlogCategoryList" resultMap="baseBlogCategoryModel" parameterType="java.util.Map">
+        select
+        <include refid="commonField"/>
+        from blogCategory where blogCategoryIsDeleted=0
+        order by blogCategoryRank desc ,blogCategoryCreateTime desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="selectBlogCategoryByIDs" resultMap="baseBlogCategoryModel" parameterType="java.lang.Integer">
+        select
+        <include refid="commonField"/>
+        from blogCategory where blogCategoryID in
+        <foreach collection="blogCategoryIDs" item="iD" open="(" close=")" separator=",">
+            #{iD,jdbcType=INTEGER}
+        </foreach>
+        and  blogCategoryIsDeleted=0
+    </select>
+
+    <select id="getTotalBlogCategoryCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from blogCategory where blogCategoryIsDeleted=0
+    </select>
+
+   <update id="updateBlogCategory" parameterType="com.company.blog.model.BlogCategory">
+       update blogCategory set blogCategoryName=#{blogCategoryName,jdbcType=VARCHAR},
+                               blogCategoryIcon=#{blogCategoryIcon,jdbcType=VARCHAR},
+                               blogCategoryRank=#{blogCategoryRank,jdbcType=INTEGER},
+                               blogCategoryIsDeleted=#{blogCategoryIsDeleted,jdbcType=TINYINT},
+                               blogCategoryCreateTime=#{blogCategoryCreateTime,jdbcType=TIMESTAMP}
+       where blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
+   </update>
+
+    <update id="updateSelectiveBlogCategory" parameterType="com.company.blog.model.BlogCategory">
+        update blogCategory set
+        <trim suffixOverrides=",">
+            <if test="blogCategoryName!=null">
+                blogCategoryName=#{blogCategoryName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCategoryIcon">
+                blogCategoryIcon=#{blogCategoryIcon,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCategoryRank!=null">
+                blogCategoryRank=#{blogCategoryRank,jdbcType=INTEGER},
+            </if>
+            <if test="blogCategoryIsDeleted!=null">
+                blogCategoryIsDeleted=#{blogCategoryIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="blogCategoryCreateTime!=null">
+                blogCategoryCreateTime=#{blogCategoryCreateTime,jdbcType=TIMESTAMP}
+            </if>
+        </trim>
+        where blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
+    </update>
+</mapper>

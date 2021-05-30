@@ -1,0 +1,223 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 引入dao层-->
+
+<mapper namespace="com.company.blog.dao.BlogCommentDao">
+    <resultMap id="baseBlogCommentModel" type="com.company.blog.model.BlogComment">
+        <id column="blogCommentID" jdbcType="INTEGER" property="blogCommentID"/>
+        <result column="blogID" jdbcType="INTEGER" property="blogID"/>
+        <result column="blogCommentatorName" jdbcType="VARCHAR" property="blogCommentatorName"/>
+        <result column="blogCommentatorEmail" jdbcType="VARCHAR" property="blogCommentatorEmail"/>
+        <result column="blogWebsiteUrl" jdbcType="VARCHAR" property="blogWebsiteUrl"/>
+        <result column="blogCommentContent" jdbcType="VARCHAR" property="blogCommentContent"/>
+        <result column="blogCommentSubmitTime" jdbcType="TIMESTAMP" property="blogCommentSubmitTime"/>
+        <result column="blogCommentatorIP" jdbcType="VARCHAR" property="blogCommentatorIP"/>
+        <result column="commentReplyContent" jdbcType="VARCHAR" property="commentReplyContent"/>
+        <result column="commentReplyTime" jdbcType="TIMESTAMP" property="commentReplyTime"/>
+        <result column="commentStatus" jdbcType="TINYINT" property="commentStatus"/>
+        <result column="commentIsDeleted" jdbcType="TINYINT" property="commentIsDeleted"/>
+    </resultMap>
+
+    <sql id="commonField">
+        blogCommentID, blogID,  blogCommentatorName, blogCommentatorEmail, blogWebsiteUrl,blogCommentContent,
+        blogCommentSubmitTime,  blogCommentatorIP,  commentReplyContent,commentReplyTime, commentStatus, commentIsDeleted
+    </sql>
+
+    <update id="deleteBlogCommentByPrimaryKey" parameterType="java.lang.Integer">
+        update blogComment set commentIsDeleted=1 where blogCommentID=#{blogCommentID,jdbcType=INTEGER}
+    </update>
+
+    <update id="deleteBlogCommentByBatch" parameterType="java.util.List">
+        update blogComment set commentIsDeleted=1 where blogCommentID in
+        <foreach collection="blogCommentIDs" item="id" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <insert id="insertBlogComment" parameterType="com.company.blog.model.BlogComment">
+        insert into blogComment 
+        (blogCommentID, blogID,blogCommentatorName,blogCommentatorEmail,blogWebsiteUrl,blogCommentContent,
+        blogCommentSubmitTime,blogCommentatorIP,commentReplyContent,commentReplyTime,commentStatus,commentIsDeleted)
+        values 
+        (#{blogCommentID,jdbcType=INTEGER},#{blogID,jdbcType=INTEGER},#{blogCommentatorName,jdbcType=VARCHAR},
+        #{blogCommentatorEmail,jdbcType=VARCHAR},#{blogWebsiteUrl,jdbcType=VARCHAR},#{blogCommentContent,jdbcType=VARCHAR},
+        #{blogCommentSubmitTime,jdbcType=TIMESTAMP},#{blogCommentatorIP,jdbcType=VARCHAR},#{commentReplyContent,jdbcType=VARCHAR},
+        #{commentReplyTime,jdbcType=TIMESTAMP},#{commentStatus,jdbcType=TINYINT},#{commentIsDeleted,jdbcType=TINYINT})
+    </insert>
+
+    <insert id="insertSelectiveBlogComment" parameterType="com.company.blog.model.BlogComment">
+        insert into blogComment
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogCommentID!=null">
+                blogCommentID,
+            </if>
+            <if test="blogID!=null">
+                blogID,
+            </if>
+            <if test="blogCommentatorName!=null">
+                blogCommentatorName,
+            </if>
+            <if test="blogCommentatorEmail!=null">
+                blogCommentatorEmail,
+            </if>
+            <if test="blogWebsiteUrl!=null">
+                blogWebsiteUrl,
+            </if>
+            <if test="blogCommentContent!=null">
+                blogCommentContent,
+            </if>
+            <if test="blogCommentSubmitTime!=null">
+                blogCommentSubmitTime,
+            </if>
+            <if test="blogCommentatorIP!=null">
+                blogCommentatorIP,
+            </if>
+            <if test="commentReplyContent!=null">
+                commentReplyContent,
+            </if>
+            <if test="commentReplyTime!=null">
+                commentReplyTime,
+            </if>
+            <if test="commentStatus!=null">
+                commentStatus,
+            </if>
+            <if test="commentIsDeleted!=null">
+                commentIsDeleted,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogCommentID!=null">
+                #{blogCommentID,jdbcType=INTEGER},
+            </if>
+            <if test="blogID!=null">
+                #{blogID,jdbcType=INTEGER},
+            </if>
+            <if test="blogCommentatorName!=null">
+                #{blogCommentatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCommentatorEmail!=null">
+                #{blogCommentatorEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="blogWebsiteUrl!=null">
+                #{blogWebsiteUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCommentContent!=null">
+                #{blogCommentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCommentSubmitTime!=null">
+                #{blogCommentSubmitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogCommentatorIP!=null">
+                #{blogCommentatorIP,jdbcType=VARCHAR},
+            </if>
+            <if test="commentReplyContent!=null">
+                #{commentReplyContent,jdbcType=VARCHAR},
+            </if>
+            <if test="commentReplyTime!=null">
+                #{commentReplyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentStatus!=null">
+                #{commentStatus,jdbcType=TINYINT},
+            </if>
+            <if test="commentIsDeleted!=null">
+                #{commentIsDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findBlogCommentByPrimaryKey" parameterType="java.lang.Integer" resultMap="baseBlogCommentModel">
+        select
+        <include refid="commonField"/>
+        from blogComment where  blogCommentID=#{blogCommentID,jdbcType=INTEGER} and commentIsDeleted=0
+    </select>
+
+    <select id="findBlogCommentList" parameterType="java.util.Map" resultMap="baseBlogCommentModel">
+        select
+        <include refid="commonField"/>
+        from blogComment where commentIsDeleted=0
+        <trim prefixOverrides="and">
+            <if test="blogID!=null">
+                and blogID=#{blogID,jdbcType=INTEGER}
+            </if>
+            <if test="commentStatus!=null">
+                and commentStatus=#{commentStatus,jdbcType=TINYINT}
+            </if>
+        </trim>
+        order by blogCommentID desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalBlogCommentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from blogComment where commentIsDeleted=0
+        <trim prefixOverrides="and">
+            <if test="blogID!=null">
+                and blogID=#{blogID,jdbcType=INTEGER}
+            </if>
+            <if test="commentStatus!=null">
+                and commentStatus=#{commentStatus,jdbcType=TINYINT}
+            </if>
+        </trim>
+    </select>
+
+    <update id="updateBlogComment" parameterType="com.company.blog.model.BlogComment" >
+        update blogComment set blogID=#{blogID,jdbcType=INTEGER},blogCommentatorName=#{blogCommentatorName,jdbcType=VARCHAR},
+        blogCommentatorEmail=#{blogCommentatorEmail,jdbcType=VARCHAR},blogWebsiteUrl=#{blogWebsiteUrl,jdbcType=VARCHAR},
+        blogCommentContent=#{blogCommentContent,jdbcType=VARCHAR},blogCommentSubmitTime=#{blogCommentSubmitTime,jdbcType=TIMESTAMP},
+        blogCommentatorIP= #{blogCommentatorIP,jdbcType=VARCHAR},commentReplyContent=#{commentReplyContent,jdbcType=VARCHAR},
+        commentReplyTime=#{commentReplyTime,jdbcType=TIMESTAMP},commentStatus=#{commentStatus,jdbcType=TINYINT},
+        commentIsDeleted=#{commentIsDeleted,jdbcType=TINYINT}
+        where blogCommentID=#{blogCommentID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelectiveBlogComment" parameterType="com.company.blog.model.BlogComment">
+        update blogComment set
+        <trim suffixOverrides=",">
+            <if test="blogID!=null">
+                blogID=#{blogID,jdbcType=INTEGER},
+            </if>
+            <if test="blogCommentatorName!=null">
+                blogCommentatorName=#{blogCommentatorName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCommentatorEmail!=null">
+                blogCommentatorEmail=#{blogCommentatorEmail,jdbcType=VARCHAR},
+            </if>
+            <if test="blogWebsiteUrl!=null">
+                blogWebsiteUrl=#{blogWebsiteUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCommentContent!=null">
+                blogCommentContent=#{blogCommentContent,jdbcType=VARCHAR},
+            </if>
+            <if test="blogCommentSubmitTime!=null">
+                blogCommentSubmitTime=#{blogCommentSubmitTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogCommentatorIP!=null">
+                blogCommentatorIP=#{blogCommentatorIP,jdbcType=VARCHAR},
+            </if>
+            <if test="commentReplyContent!=null">
+                commentReplyContent=#{commentReplyContent,jdbcType=VARCHAR},
+            </if>
+            <if test="commentReplyTime!=null">
+                commentReplyContent=#{commentReplyTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="commentStatus!=null">
+                commentStatus=#{commentStatus,jdbcType=TINYINT},
+            </if>
+            <if test="commentIsDeleted!=null">
+                commentIsDeleted=#{commentIsDeleted,jdbcType=TINYINT},
+            </if>
+        </trim>
+        where blogCommentID=#{blogCommentID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateBlogCommentCheckStatusByBatch" parameterType="java.util.List">
+        update blogComment set commentStatus=1 where blogCommentID in
+        <foreach collection="blogCommentIDs" item="id" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+</mapper>
