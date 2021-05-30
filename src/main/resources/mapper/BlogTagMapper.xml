@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 引入dao层-->
+<mapper namespace="com.company.blog.dao.BlogTagDao">
+    <resultMap id="baseBlogTagModel" type="com.company.blog.model.BlogTag">
+        <id column="BlogTagID" jdbcType="INTEGER" property="BlogTagID"/>
+        <result column="BlogTagName" jdbcType="VARCHAR" property="BlogTagName"/>
+        <result column="BlogTagIsDeleted" jdbcType="TINYINT" property="BlogTagIsDeleted"/>
+        <result column="BlogTagCreateTime" jdbcType="TIMESTAMP" property="BlogTagCreateTime"/>
+    </resultMap>
+
+    <sql id="commonField" >
+        BlogTagID,BlogTagName,BlogTagIsDeleted,BlogTagCreateTime
+    </sql>
+
+
+</mapper>
