@@ -32,13 +32,11 @@ public interface BlogDao {
 
     int getTotalBlogs(PageQueryUtil pageQueryUtil);
 
-    //暂时不实现
-    List<Blog> getBlogByTagID(PageQueryUtil pageQueryUtil);
-
-    //暂时不实现
-    int getTotalBlogByTagID(PageQueryUtil pageQueryUtil);
-
     Blog findBlogBySubUrl(String blogSubUrl);
+
+    List<Blog> getBlogListByTagID(PageQueryUtil pageQueryUtil);
+
+    int getTotalBlogCountByTagID(PageQueryUtil pageQueryUtil);
 
     int  updateCategoryByBatch(@Param("blogCategoryID") int blogCategoryID,
                                @Param("blogCategoryName") String blogCategoryName,

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 引入dao层-->
+<mapper namespace="com.company.blog.dao.BlogConfigDao">
+    <resultMap id="baseBlogConfigModel" type="com.company.blog.model.BlogConfig">
+        <id column="blogConfigName" jdbcType="VARCHAR" property="blogConfigName"/>
+        <result column="blogConfigValue" jdbcType="VARCHAR" property="blogConfigValue"/>
+        <result column="blogConfigCreateTime" jdbcType="TIMESTAMP" property="blogConfigCreateTime"/>
+        <result column="blogConfigUpdateTime" jdbcType="TIMESTAMP" property="blogConfigUpdateTime"/>
+    </resultMap>
+
+    <sql id="commonField" >
+        blogConfigName,blogConfigValue,blogConfigCreateTime,blogConfigUpdateTime
+    </sql>
+
+    <select id="findAllConfig" resultMap="baseBlogConfigModel">
+        select
+        <include refid="commonField"/>
+        from blogConfig
+    </select>
+
+    <select id="getConfigByPrimaryKey" parameterType="java.lang.String" resultMap="baseBlogConfigModel">
+        select
+        <include refid="commonField"/>
+        from blogConfig where blogConfigName=#{blogConfigName,jdbcType=VARCHAR}
+    </select>
+
+    <update id="updateSelectiveBlogConfig" parameterType="com.company.blog.model.BlogConfig">
+        update blogConfig set
+        <trim  suffixOverrides=",">
+            <if test="blogConfigValue!=null">
+                blogConfigValue=#{blogConfigValue,jdbcType=VARCHAR},
+            </if>
+            <if test="blogConfigCreateTime!=null">
+                blogConfigCreateTime=#{blogConfigCreateTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="blogConfigUpdateTime!=null">
+                blogConfigUpdateTime=#{blogConfigUpdateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        where blogConfigName=#{blogConfigName,jdbcType=VARCHAR}
+    </update>
+</mapper>

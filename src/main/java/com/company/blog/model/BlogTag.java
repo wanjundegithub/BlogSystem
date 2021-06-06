@@ -1,28 +1,35 @@
 package com.company.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BlogTag {
 
-    private int blogTagID;
+    private Integer blogTagID;
 
     private String blogTagName;
 
-    private byte blogTagIsDeleted;
+    private Byte blogTagIsDeleted;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date blogTagCreateTime;
 
-    public BlogTag(int blogTagID, String blogTagName, byte blogTagIsDeleted, Date blogTagCreateTime) {
+    public BlogTag(Integer blogTagID, String blogTagName, Byte blogTagIsDeleted, Date blogTagCreateTime) {
         this.blogTagID = blogTagID;
         this.blogTagName = blogTagName;
         this.blogTagIsDeleted = blogTagIsDeleted;
         this.blogTagCreateTime = blogTagCreateTime;
     }
 
+    public BlogTag(String blogTagName) {
+        this.blogTagName = blogTagName;
+    }
+
     public BlogTag() {
     }
 
-    public int getBlogTagID() {
+    public Integer getBlogTagID() {
         return blogTagID;
     }
 
@@ -38,7 +45,7 @@ public class BlogTag {
         this.blogTagName = blogTagName;
     }
 
-    public byte getBlogTagIsDeleted() {
+    public Byte getBlogTagIsDeleted() {
         return blogTagIsDeleted;
     }
 

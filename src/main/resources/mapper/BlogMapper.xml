@@ -298,6 +298,24 @@
         blogSubUrl=#{blogSubUrl,jdbcType=VARCHAR} limit 1
     </select>
 
+    <select id="getBlogListByTagID" parameterType="java.util.Map" resultMap="blogModelWithContent">
+        select
+        <include refid="baseField"/>
+        from blog where blogID in
+        (select blogID from blog_tag_relation where blogTagID=#{blogTagID,jdbcType=INTEGER})
+        and blogStatus=1 and blogIsDeleted=0
+        order by blogID desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalBlogCountByTagID" parameterType="java.util.Map"  resultType="java.lang.Integer">
+        select count(1) from blog where  blogID in
+        (select blogID from blog_tag_relation where blogTagID=#{blogTagID,jdbcType=INTEGER})
+        and blogStatus=1 and blogIsDeleted=0
+    </select>
+
     <update id="updateCategoryByBatch">
         update blog set
         blogCategoryID=#{blogCategoryID,jdbcType=INTEGER},

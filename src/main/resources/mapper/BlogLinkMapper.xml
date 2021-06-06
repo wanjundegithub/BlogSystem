@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 引入dao层-->
+<mapper namespace="com.company.blog.dao.BlogLinkDao">
+    <resultMap id="baseBlogLinkModel" type="com.company.blog.model.BlogLink">
+        <id column="blogLinkID" jdbcType="INTEGER" property="blogLinkID"/>
+        <result column="blogLinkType" jdbcType="TINYINT" property="blogLinkType"/>
+        <result column="blogLinkName" jdbcType="VARCHAR" property="blogLinkName"/>
+        <result column="blogLinkUrl" jdbcType="VARCHAR" property="blogLinkUrl"/>
+        <result column="blogLinkDescription" jdbcType="VARCHAR" property="blogLinkDescription"/>
+        <result column="blogLinkRank" jdbcType="INTEGER" property="blogLinkRank"/>
+        <result column="blogLinkIsDeleted" jdbcType="TINYINT" property="blogLinkIsDeleted"/>
+        <result column="blogLinkCreateTime" jdbcType="TIMESTAMP" property="blogLinkCreateTime"/>
+    </resultMap>
+
+    <sql id="commonField">
+        blogLinkID,blogLinkType,blogLinkName,blogLinkUrl,blogLinkDescription,
+        blogLinkRank,blogLinkIsDeleted,blogLinkCreateTime
+    </sql>
+
+    <update id="deleteBlogLinkByPrimaryKey" parameterType="java.lang.Integer">
+        update blogLink set blogLinkIsDeleted=1 where blogLinkID=#{blogLinkID,jdbcType=INTEGER}
+    </update>
+
+    <update id="deleteBlogLinkByBatch" parameterType="java.util.List">
+        update blogLink set blogLinkIsDeleted=1 where blogLinkID in
+        <foreach collection="blogLinkIDs" item="id" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <insert id="insertBlogLink" parameterType="com.company.blog.model.BlogLink">
+        insert into blogLink
+        <trim prefix="(" suffix=")">
+            <include refid="commonField"/>
+        </trim>
+        values
+        <trim prefix="(" suffix=")">
+            #{blogLinkID,jdbcType=INTEGER},#{blogLinkType,jdbcType=TINYINT},
+            #{blogLinkName,jdbcType=VARCHAR},#{blogLinkUrl,jdbcType=VARCHAR},
+            #{blogLinkDescription,jdbcType=VARCHAR},#{blogLinkRank,jdbcType=INTEGER},
+            #{blogLinkIsDeleted,jdbcType=TINYINT},#{blogLinkCreateTime,jdbcType=TIMESTAMP}
+        </trim>
+    </insert>
+
+    <insert id="insertSelectiveBlogLink" parameterType="com.company.blog.model.BlogLink">
+        insert into blogLink
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogLinkType!=null">
+                blogLinkType,
+            </if>
+            <if test="blogLinkName!=null">
+                blogLinkName,
+            </if>
+            <if test="blogLinkUrl!=null">
+                blogLinkUrl,
+            </if>
+            <if test="blogLinkDescription!=null">
+                blogLinkDescription,
+            </if>
+            <if test="blogLinkRank!=null">
+                blogLinkRank,
+            </if>
+            <if test="blogLinkIsDeleted!=null">
+                blogLinkIsDeleted,
+            </if>
+            <if test="blogLinkCreateTime">
+                blogLinkCreateTime,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogLinkType!=null">
+                #{blogLinkType,jdbcType=TINYINT},
+            </if>
+            <if test="blogLinkName!=null">
+                #{blogLinkName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogLinkUrl!=null">
+                #{blogLinkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogLinkDescription!=null">
+                #{blogLinkDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="blogLinkRank!=null">
+                #{blogLinkRank,jdbcType=INTEGER},
+            </if>
+            <if test="blogLinkIsDeleted!=null">
+                #{blogLinkIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="blogLinkCreateTime">
+                #{blogLinkCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <select id="findBlogLinkByPrimaryKey" resultMap="baseBlogLinkModel">
+        select
+        <include refid="commonField"/>
+        from blogLink where  blogLinkID=#{blogLinkID,jdbcType=INTEGER} and blogLinkIsDeleted=0
+    </select>
+
+    <select id="findBlogLinkList" resultMap="baseBlogLinkModel" parameterType="java.util.Map">
+        select
+        <include refid="commonField"/>
+        from blogLink where blogLinkIsDeleted=0
+        order by blogLinkID desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTotalBlogLinkCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from blogLink where blogLinkIsDeleted=0
+    </select>
+
+    <update id="updateBlogLink" parameterType="com.company.blog.model.BlogLink">
+        update blogLink set
+                            blogLinkType=#{blogLinkType,jdbcType=TINYINT},
+                            blogLinkName=#{blogLinkName,jdbcType=VARCHAR},
+                            blogLinkUrl=#{blogLinkUrl,jdbcType=VARCHAR},
+                            blogLinkDescription=#{blogLinkDescription,jdbcType=VARCHAR},
+                            blogLinkRank=#{blogLinkRank,jdbcType=INTEGER},
+                            blogLinkIsDeleted=#{blogLinkIsDeleted,jdbcType=TINYINT},
+                            blogLinkCreateTime=#{blogLinkCreateTime,jdbcType=TIMESTAMP}
+        where  blogLinkID=#{blogLinkID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelectiveBlogLink" parameterType="com.company.blog.model.BlogLink">
+        update blogLink set
+        <trim  suffixOverrides=",">
+            <if test="blogLinkType!=null">
+                blogLinkType=#{blogLinkType,jdbcType=TINYINT},
+            </if>
+            <if test="blogLinkName!=null">
+                blogLinkName=#{blogLinkName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogLinkUrl!=null">
+                blogLinkUrl=#{blogLinkUrl,jdbcType=VARCHAR},
+            </if>
+            <if test="blogLinkDescription!=null">
+                blogLinkDescription=#{blogLinkDescription,jdbcType=VARCHAR},
+            </if>
+            <if test="blogLinkRank!=null">
+                blogLinkRank=#{blogLinkRank,jdbcType=INTEGER},
+            </if>
+            <if test="blogLinkIsDeleted!=null">
+                blogLinkIsDeleted=#{blogLinkIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="blogLinkCreateTime">
+                blogLinkCreateTime=#{blogLinkCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        where  blogLinkID=#{blogLinkID,jdbcType=INTEGER}
+    </update>
+</mapper>

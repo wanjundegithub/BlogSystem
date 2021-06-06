@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!-- 引入dao层-->
+<mapper namespace="com.company.blog.dao.BlogTagRelationDao">
+    <resultMap id="baseBlogTagRelationModel" type="com.company.blog.model.BlogTagRelation">
+        <id column="relationID" jdbcType="INTEGER" property="relationID"/>
+        <result column="blogID" jdbcType="INTEGER" property="blogID"/>
+        <result column="blogTagID" jdbcType="INTEGER" property="blogTagID"/>
+        <result column="relationCreateTime" jdbcType="TIMESTAMP" property="relationCreateTime"/>
+    </resultMap>
+
+    <sql id="commonField" >
+        relationID,blogID,blogTagID,relationCreateTime
+    </sql>
+
+    <delete id="deleteRelationByPrimaryKey" parameterType="java.lang.Integer">
+        delete from blog_tag_relation where relationID=#{relationID,jdbcType=INTEGER}
+    </delete>
+
+    <delete id="deleteRelationByBlogID" >
+        delete from blog_tag_relation where blogID=#{blogID,jdbcType=INTEGER}
+    </delete>
+
+    <insert id="insertRelation" parameterType="com.company.blog.model.BlogTagRelation">
+        insert into blog_tag_relation
+        <trim prefix="(" suffix=")">
+            <include refid="commonField"/>
+        </trim>
+        values
+        <trim prefix="(" suffix=")">
+            #{relationID,jdbcType=INTEGER},#{blogID,jdbcType=INTEGER},
+               #{blogTagID,jdbcType=INTEGER},#{relationCreateTime,jdbcType=TIMESTAMP}
+        </trim>
+    </insert>
+
+    <insert id="insertSelectiveRelation" parameterType="com.company.blog.model.BlogTagRelation">
+        insert into blog_tag_relation
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="relationID!=null">
+                relationID,
+            </if>
+            <if test="blogID!=null">
+                blogID,
+            </if>
+            <if test="blogTagID!=null">
+                blogTagID,
+            </if>
+            <if test="relationCreateTime!=null">
+                relationCreateTime,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="relationID!=null">
+                #{relationID,jdbcType=INTEGER},
+            </if>
+            <if test="blogID!=null">
+                #{blogID,jdbcType=INTEGER},
+            </if>
+            <if test="blogTagID!=null">
+                #{blogTagID,jdbcType=INTEGER},
+            </if>
+            <if test="relationCreateTime!=null">
+                #{relationCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertRelationByBatch" parameterType="java.util.List">
+        insert into blog_tag_relation
+        (blogID,blogTagID) values
+        <foreach collection="blogTagRelations" item="relation"  separator=",">
+            (#{relation.blogID,jdbcType=INTEGER},#{relation.blogTagID,jdbcType=INTEGER})
+        </foreach>
+    </insert>
+
+    <select id="findBlogTagRelationByPrimaryKey" resultMap="baseBlogTagRelationModel">
+        select
+        <include refid="commonField"/>
+        from blog_tag_relation where relationID=#{relationID,jdbcType=INTEGER}
+    </select>
+
+    <select id="findBlogTagRelationByID" resultMap="baseBlogTagRelationModel">
+        select
+        <include refid="commonField"/>
+        from blog_tag_relation where blogID=#{blogID,jdbcType=INTEGER} and
+        blogTagID=#{blogTagID,jdbcType=INTEGER}
+    </select>
+
+    <select id="findDistinctTagIDs" parameterType="java.util.List" resultType="java.lang.Integer">
+        select distinct(blogTagID) from blog_tag_relation where
+        blogTagID in
+        <foreach collection="tagIDs" open="(" close=")" separator="," item="tagID">
+            #{tagID,jdbcType=INTEGER}
+        </foreach>
+    </select>
+
+    <update id="updateBlogTagRelation" parameterType="com.company.blog.model.BlogTagRelation">
+        update blog_tag_relation set
+        blogID=#{blogID,jdbcType=INTEGER},blogTagID=#{blogTagID,jdbcType=INTEGER},
+        relationCreateTime=#{relationCreateTime,jdbcType=TIMESTAMP}
+        where relationID=#{relationID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelectiveBlogTagRelation" parameterType="com.company.blog.model.BlogTagRelation">
+        update blog_tag_relation set
+        <trim suffixOverrides=",">
+            <if test="blogID!=null">
+                blogID=#{blogID,jdbcType=INTEGER},
+            </if>
+            <if test="blogTagID!=null">
+                blogTagID=#{blogTagID,jdbcType=INTEGER},
+            </if>
+            <if test="relationCreateTime!=null">
+                relationCreateTime=#{relationCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        where relationID=#{relationID,jdbcType=INTEGER}
+    </update>
+</mapper>

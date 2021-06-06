@@ -152,6 +152,31 @@ public class BlogTest {
     }
 
     @Test
+    public void  getBlogListByTagID(){
+        Map<String,Object> maps=new HashMap<>();
+        maps.put("currentPage",1);
+        maps.put("limit",2);
+        maps.put("blogTagID",57);
+        PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
+        var blogs=blogDao.getBlogListByTagID(pageQueryUtil);
+        blogs.forEach(t->{
+            LoggerUtil.info("title:"+t.getBlogTitle()+
+                    ",imagePath:"+t.getBlogCoverImagePath());
+        });
+    }
+
+    @Test
+    public void  getTotalBlogCountByTagID(){
+        Map<String,Object> maps=new HashMap<>();
+        maps.put("currentPage",1);
+        maps.put("limit",2);
+        maps.put("blogTagID",57);
+        PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
+        var result=blogDao.getTotalBlogCountByTagID(pageQueryUtil);
+        LoggerUtil.info("数量:"+result);
+    }
+
+    @Test
     public void testUpdateCategoryByBatch(){
         int[] catIDs={3};
         var result=blogDao.updateCategoryByBatch(99,"test",catIDs);

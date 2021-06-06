@@ -5,15 +5,141 @@
 <!-- 引入dao层-->
 <mapper namespace="com.company.blog.dao.BlogTagDao">
     <resultMap id="baseBlogTagModel" type="com.company.blog.model.BlogTag">
-        <id column="BlogTagID" jdbcType="INTEGER" property="BlogTagID"/>
-        <result column="BlogTagName" jdbcType="VARCHAR" property="BlogTagName"/>
-        <result column="BlogTagIsDeleted" jdbcType="TINYINT" property="BlogTagIsDeleted"/>
-        <result column="BlogTagCreateTime" jdbcType="TIMESTAMP" property="BlogTagCreateTime"/>
+        <id column="blogTagID" jdbcType="INTEGER" property="blogTagID"/>
+        <result column="blogTagName" jdbcType="VARCHAR" property="blogTagName"/>
+        <result column="blogTagIsDeleted" jdbcType="TINYINT" property="blogTagIsDeleted"/>
+        <result column="blogTagCreateTime" jdbcType="TIMESTAMP" property="blogTagCreateTime"/>
+    </resultMap>
+
+    <resultMap id="baseBlogTagQuantityModel" type="com.company.blog.model.BlogTagQuantity">
+        <id column="blogTagID" jdbcType="INTEGER" property="blogTagID"/>
+        <result column="blogTagName" jdbcType="VARCHAR" property="blogTagName"/>
+        <result column="blogTagCount" jdbcType="INTEGER" property="blogTagCount"/>
     </resultMap>
 
     <sql id="commonField" >
-        BlogTagID,BlogTagName,BlogTagIsDeleted,BlogTagCreateTime
+        blogTagID,blogTagName,blogTagIsDeleted,blogTagCreateTime
     </sql>
 
+    <update id="deleteBlogTagByPrimaryKey" parameterType="java.lang.Integer">
+        update blogTag set blogTagIsDeleted=1 where blogTagID=#{blogTagID,jdbcType=INTEGER}
+    </update>
 
+    <update id="deleteBlogByBatch" parameterType="java.util.List">
+        update blogTag set blogTagIsDeleted=1 where blogTagID in
+        <foreach collection="blogTageIDs" item="id" open="(" close=")" separator=",">
+            #{id,jdbcType=INTEGER}
+        </foreach>
+    </update>
+
+    <insert id="insertBlogTag" parameterType="com.company.blog.model.BlogTag">
+        insert into blogTag
+        (blogTagID,blogTagName,blogTagIsDeleted,blogTagCreateTime)
+        values
+        (#{blogTagID,jdbcType=INTEGER},#{blogTagName,jdbcType=VARCHAR},
+         #{blogTagIsDeleted,jdbcType=TINYINT},#{blogTagCreateTime,jdbcType=TIMESTAMP})
+    </insert>
+
+    <insert id="insertSelectiveBlogTag" parameterType="com.company.blog.model.BlogTag">
+        insert into blogTag
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogTagID!=null">
+                blogTagID,
+            </if>
+            <if test="blogTagName!=null">
+                blogTagName,
+            </if>
+            <if test="blogTagIsDeleted!=null">
+                blogTagIsDeleted,
+            </if>
+            <if test="blogTagCreateTime!=null">
+                blogTagCreateTime,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="blogTagID!=null">
+                #{blogTagID,jdbcType=INTEGER},
+            </if>
+            <if test="blogTagName!=null">
+                #{blogTagName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogTagIsDeleted!=null">
+                #{blogTagIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="blogTagCreateTime!=null">
+                #{blogTagCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
+
+    <insert id="insertBlogTagByBatch" parameterType="java.util.List" useGeneratedKeys="true">
+        insert into blogTag (blogTagName) values
+        <foreach collection="blogTags" item="blogTag" separator=",">
+            (#{blogTag.blogTagName,jdbcType=VARCHAR})
+        </foreach>
+    </insert>
+
+    <select id="findBlogTagByPrimaryKey" parameterType="java.lang.Integer" resultMap="baseBlogTagModel">
+        select
+        <include refid="commonField"/>
+        from blogTag where blogTagID=#{blogTagID,jdbcType=INTEGER} and blogTagIsDeleted=0;
+    </select>
+
+    <select id="findBlogTagList" parameterType="java.util.Map" resultMap="baseBlogTagModel">
+        select
+        <include refid="commonField"/>
+        from blogTag where blogTagIsDeleted=0
+        order by blogTagID desc
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="findBlogTagByName" parameterType="java.lang.String" resultMap="baseBlogTagModel">
+        select
+        <include refid="commonField"/>
+        from blogTag where blogTagName=#{blogTagName,jdbcType=VARCHAR} and blogTagIsDeleted=0
+    </select>
+
+    <select id="getBlogTagCount" parameterType="java.util.Map" resultType="java.lang.Integer">
+        select count(1) from blogTag where blogTagIsDeleted=0
+        <if test="start!=null and limit!=null">
+            limit #{start},#{limit}
+        </if>
+    </select>
+
+    <select id="getTagQuantityListByBlogID"  resultMap="baseBlogTagQuantityModel">
+        select t_r.blogTagID,t.blogTagName,t_r.blogTagCount from
+        (select blogTagID,count(*) as blogTagCount from
+        (select btr.blogTagID from blog_tag_relation as btr
+        left join blog b on btr.blogID=b.blogID where b.blogIsDeleted=0) as trb
+        group by blogTagID order by blogTagCount desc limit 20) as t_r
+        left join blogTag as t on t_r.blogTagID=t.blogTagID
+        where t.blogTagIsDeleted=0
+    </select>
+
+    <update id="updateBlogTag" parameterType="com.company.blog.model.BlogTag">
+        update blogTag set
+        blogTagName=#{blogTagName,jdbcType=VARCHAR},
+        blogTagIsDeleted=#{blogTagIsDeleted,jdbcType=TINYINT},
+        blogTagCreateTime=#{blogTagCreateTime,jdbcType=TIMESTAMP}
+        where blogTagID=#{blogTagID,jdbcType=INTEGER}
+    </update>
+
+    <update id="updateSelectiveBlogTag" parameterType="com.company.blog.model.BlogTag">
+        update blogTag set
+        <trim suffixOverrides=",">
+            <if test="blogTagName!=null">
+                blogTagName=#{blogTagName,jdbcType=VARCHAR},
+            </if>
+            <if test="blogTagIsDeleted!=null">
+                blogTagIsDeleted=#{blogTagIsDeleted,jdbcType=TINYINT},
+            </if>
+            <if test="blogTagCreateTime!=null">
+                blogTagCreateTime=#{blogTagCreateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        where blogTagID=#{blogTagID,jdbcType=INTEGER}
+    </update>
 </mapper>

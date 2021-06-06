@@ -1,5 +1,7 @@
 package com.company.blog.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 import java.util.Date;
 
 public class BlogComment {
@@ -16,12 +18,14 @@ public class BlogComment {
 
     private String blogCommentContent;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date blogCommentSubmitTime;
 
     private String blogCommentatorIP;
 
     private String commentReplyContent;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date commentReplyTime;
 
     private byte commentStatus;
