@@ -24,24 +24,16 @@ public class AdminUserServiceImpl implements AdminUserService {
     }
 
     @Override
-    public boolean updateAdminUserNickname(Integer adminID,String nickName) {
+    public boolean updateAdminUserInfo(Integer adminID,String account,String nickName) {
         var user=adminUserDao.queryAdminUserByID(adminID);
         if(null==user){
             return false;
         }
+        user.setAdminAccount(account);
         user.setAdminNickname(nickName);
         return adminUserDao.updateAdminUser(user)!=0;
     }
 
-    @Override
-    public boolean updateAdminUserAccount(Integer adminID, String account) {
-        var user=adminUserDao.queryAdminUserByID(adminID);
-        if(null==user){
-            return false;
-        }
-        user.setAdminNickname(account);
-        return adminUserDao.updateAdminUser(user)!=0;
-    }
 
     @Override
     public boolean updateAdminUserPassword(Integer adminID, String oldPassword, String newPassword) {

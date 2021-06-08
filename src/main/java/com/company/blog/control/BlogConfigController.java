@@ -20,7 +20,7 @@ public class BlogConfigController {
 
     @GetMapping("/configurations")
     public String showConfigs(HttpServletRequest httpServletRequest){
-        httpServletRequest.setAttribute("path","");
+        httpServletRequest.setAttribute("path","configurations");
         httpServletRequest.setAttribute("configurations",blogConfigService.getAllConfigs());
         return "/admin/configurations";
     }

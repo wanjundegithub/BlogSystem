@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="admin/header::header-fragment"></head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <div class="content-wrapper">
+        <!--標題 -->
+        <div class="content-header">
+            <div class="container-fluid"></div>
+        </div>
+        <!--内容 -->
+        <section class="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">基本信息</h3>
+                            </div>
+                            <div class="card-body">
+                                <form role="form" id="userNameForm">
+                                    <div class="form-group col-sm-8">
+                                        <div class="alert alert-danger" id="updateUserName-info"
+                                             style="display:none;"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label >登录名称</label>
+                                        <input type="text" class="form-control" name="adminAccount"
+                                               id="adminAccount" placeholder="请输入登录名称" required="true"
+                                               th:value="${adminAccount}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>登录昵称</label>
+                                        <input type="text" name="adminNickname" id="adminNickname"
+                                               placeholder="请输入登录昵称" required="true" class="form-control"
+                                               th:value="${adminNickname}">
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="button" id="updateUserNameButton"
+                                                class="btn btn-danger float-right" onsubmit="return false;">
+                                            确认修改
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-md-6">
+                        <div class="card card-primary card-outline">
+                            <div class="card-header">
+                                <h3 class="card-title">密码修改</h3>
+                            </div>
+                            <div class="card-body">
+                                <form role="form" id="userPasswordForm">
+                                    <div class="form-group col-sm-8">
+                                        <div class="alert alert-danger"
+                                             id="updatePassword-info" style="display: none;">
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa fa-key"></i>原密码</label>
+                                        <input type="password" name="oldPassword" id="oldPassword"
+                                                placeholder="请输入原密码"
+                                               required="true" class="form-control">
+                                    </div>
+                                    <div class="form-group">
+                                        <label><i class="fa fa-key"></i>新密码</label>
+                                        <input type="password" name="newPassword" id="newPassword"
+                                               placeholder="请输入新密码"
+                                               required="true" class="form-control">
+                                    </div>
+                                    <div class="card-footer">
+                                        <button type="button" id="updatePasswordButton"
+                                                onsubmit="return false;" class="btn btn-danger float-right">
+                                            确认修改
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- public.js -->
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<!-- profile -->
+<script th:src="@{/admin/dist/js/profile.js}"></script>
+</body>
+</html>

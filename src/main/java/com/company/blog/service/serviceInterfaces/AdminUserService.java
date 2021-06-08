@@ -8,9 +8,7 @@ public interface AdminUserService {
 
     AdminUser queryByAdminID(Integer adminID);
 
-    boolean updateAdminUserNickname(Integer adminID,String nickName);
-
-    boolean updateAdminUserAccount(Integer adminID,String account);
+    boolean updateAdminUserInfo(Integer adminID,String account,String nickName);
 
     boolean updateAdminUserPassword(Integer adminID,String oldPassword,String newPassword);
 }

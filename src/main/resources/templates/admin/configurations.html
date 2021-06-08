@@ -7,9 +7,10 @@
 <body class="hold-transition sidebar-mini">
 <!-- 引入adminlte body css布局-->
 <div class="wrapper">
-    <!-- 引入页面头header-fragment 暂时省略-->
-    <!-- 引入工具栏sidebar-fragment 暂时省略-->
-
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
     <div class="content-wrapper">
         <!-- 主界面标题-->
         <div class="content-header">
@@ -151,8 +152,8 @@
         </div>
     </div>
 
-    <!-- 引入页脚footer-fragment 暂时省略-->
-
+    <!-- 引入页脚footer-fragment -->
+    <div th:replace="admin/footer::footer-fragment"></div>
 </div>
 <!-- jQuery -->
 <script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>

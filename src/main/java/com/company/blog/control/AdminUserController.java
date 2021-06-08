@@ -1,16 +1,16 @@
 package com.company.blog.control;
 
 import com.company.blog.service.serviceInterfaces.AdminUserService;
+import com.company.blog.util.LoggerUtil;
+import com.company.blog.util.Result;
 import com.company.blog.util.StringUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 @Controller
@@ -63,10 +63,69 @@ public class AdminUserController {
             return "admin/login";
         }
         logger.info("账号，密码，验证码正确");
-        session.setAttribute("loginUser",user.getAdminNickname());
+        session.setAttribute("loginUserName",user.getAdminNickname());
         session.setAttribute("loginUserID",user.getAdminID());
-        return "redirect:/admin/index";
+        //return "redirect:/admin/index";
+        return "redirect:/admin/profile";
     }
 
+    @GetMapping("/profile")
+    public String getProfile(HttpServletRequest httpServletRequest){
+        var adminID=(int)httpServletRequest.getSession().getAttribute("loginUserID");
+        var adminUser=adminUserService.queryByAdminID(adminID);
+        if(null==adminUser){
+            LoggerUtil.error("缓存ID失效,用户为空");
+            return "/admin/login";
+        }
+        httpServletRequest.setAttribute("path","profile");
+        httpServletRequest.setAttribute("adminAccount",adminUser.getAdminAccount());
+        httpServletRequest.setAttribute("adminNickname",adminUser.getAdminNickname());
+        return "/admin/profile";
+    }
 
+    @PostMapping("/profile/name")
+    @ResponseBody
+    public String updateName(HttpServletRequest httpServletRequest,
+                             @RequestParam("adminAccount")String adminAccount,
+                             @RequestParam("adminNickname")String adminNickname){
+        LoggerUtil.info("开始修改account");
+        if(StringUtil.isNullOrEmpty(adminAccount)&&StringUtil.isNullOrEmpty(adminNickname)){
+            return "参数不能同时为空";
+        }
+        var adminUserID=(int)httpServletRequest.getSession().getAttribute("loginUserID");
+        LoggerUtil.info("loginUserName:"+adminAccount+",nickName:"+adminNickname+",id:"+adminUserID);
+        if(!adminUserService.updateAdminUserInfo(adminUserID,adminAccount,adminNickname)){
+            return "修改账户或昵称失败";
+        }
+        LoggerUtil.info("修改成功");
+        return "success";
+    }
+
+    @PostMapping("/profile/password")
+    @ResponseBody
+    public String updatePassword(HttpServletRequest httpServletRequest,
+                                 @RequestParam("oldPassword")String oldPassword,
+                                 @RequestParam("newPassword")String newPassword){
+        LoggerUtil.info("begin to modify password");
+        if(StringUtil.isNullOrEmpty(oldPassword)||StringUtil.isNullOrEmpty(newPassword)){
+            return "参数不能为空";
+        }
+        var adminID=(Integer)httpServletRequest.getSession().getAttribute("loginUserID");
+        LoggerUtil.info("oldPassword:"+oldPassword+",newPassword:"+newPassword);
+        if(!adminUserService.updateAdminUserPassword(adminID,oldPassword,newPassword)){
+            return "修改密码失败";
+        }
+        httpServletRequest.getSession().removeAttribute("loginUser");
+        httpServletRequest.getSession().removeAttribute("loginUserID");
+        httpServletRequest.getSession().removeAttribute("errorMsg");
+        return "success";
+    }
+
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest httpServletRequest){
+        httpServletRequest.getSession().removeAttribute("loginUser");
+        httpServletRequest.getSession().removeAttribute("loginUserID");
+        httpServletRequest.getSession().removeAttribute("errorMsg");
+        return "/admin/login";
+    }
 }
