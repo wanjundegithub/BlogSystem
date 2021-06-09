@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<!-- 引入头-->
+<head th:replace="admin/header::header-fragment"></head>
+<body class="hold-transition sidebar-mini">
+<div class="wrapper">
+    <!-- 引入页面头header-fragment -->
+    <div th:replace="admin/header::header-nav"></div>
+    <!-- 引入工具栏sidebar-fragment -->
+    <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
+    <div class="content-wrapper">
+        <!--header -->
+        <div class="content-header">
+            <div class="container-fluid"></div>
+        </div>
+        <!--Main content -->
+        <div class="content">
+            <div class="container-fluid">
+                <div class="card card-primary card-outline">
+                    <!-- header-->
+                    <div class="card-header">
+                        <h3 class="card-title">友情链接</h3>
+                    </div>
+                   <!--body -->
+                    <div class="card-body">
+                        <div class="grid-btn">
+                            <button class="btn btn-info" type="button"
+                            onclick="linkAdd()"><i class="fa fa-plus"></i>新增
+                            </button>
+                            <button class="btn btn-info" type="button"
+                                    onclick="linkEdit()"><i class="fa fa-pencil-square-o"></i>修改
+                            </button>
+                            <button class="btn btn-danger" type="button"
+                                    onclick="deleteLink()"><i class="fa fa-trash-o"></i>删除
+                            </button>
+                        </div>
+                        <table class="table table-bordered" id="jqGrid">
+                        </table>
+                        <div id="jqGridPager"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content">
+            <!-- 模态框-->
+            <div class="model fade" id="linkModal" tabindex="-1" role="dialog"
+                 aria-labelledby="linkModalLabel">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <button type="button" class="close"  data-dismiss="modal"
+                            aria-label="Close"><span aria-hidden="true">&times;</span>
+                            </button>
+                            <h6 class="modal-title" id="linkModalLabel">Modal</h6>
+                        </div>
+                        <div class="modal-body">
+                            <form id="linkForm">
+                                <div class="form-group">
+                                    <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
+                                        错误信息展示
+                                    </div>
+                                </div>
+                                <input class="form-control" id="linkId" name="linkId">
+                                <div class="form-group">
+                                    <label for="linkType" class="control-label">
+                                        友链类型:
+                                    </label>
+                                    <section class="form-control" id="linkType" name="linkType">
+                                        <option selected="selected" value="0">友链</option>
+                                        <option value="1">推荐网站</option>
+                                        <option value="2">个人链接</option>
+                                    </section>
+                                </div>
+                                <div class="form-group">
+                                    <label for="linkName" class="control-label">网站名称:</label>
+                                    <input type="text" name="linkName" id="linkName" class="form-control"
+                                    placeholder="请输入网站名称" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linkUrl" class="control-label">网站Url:</label>
+                                    <input type="url" name="linkUrl" id="linkUrl" class="form-control"
+                                           placeholder="请输入网站Url" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linkDescription" class="control-label">网站描述:</label>
+                                    <input type="url" name="linkDescription" id="linkDescription" class="form-control"
+                                           placeholder="请输入网站描述" required="true">
+                                </div>
+                                <div class="form-group">
+                                    <label for="linkRank" class="control-label">网站排序值:</label>
+                                    <input type="number" name="linkRank" id="linkRank" class="form-control"
+                                           placeholder="请输入网站排序值" required="true">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                            <button type="button" class="btn btn-primary" id="saveButton">确定</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- end 模态框-->
+        </div>
+    </div>
+    <div th:replace="admin/footer::footer-fragment"></div>
+</div>
+<!-- jQuery -->
+<script th:src="@{/admin/plugins/jquery/jquery.min.js}"></script>
+<!-- jQuery UI 1.11.4 -->
+<script th:src="@{/admin/plugins/jQueryUI/jquery-ui.min.js}"></script>
+<!-- Bootstrap 4 -->
+<script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
+<!-- AdminLTE App -->
+<script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
+<!-- public.js -->
+<script th:src="@{/admin/dist/js/public.js}"></script>
+<!-- profile -->
+<script th:src="@{/admin/dist/js/profile.js}"></script>
+</body>
+</html>
