@@ -1,8 +1,16 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org">
 <!-- 引入头-->
 <head th:replace="admin/header::header-fragment"></head>
 <body class="hold-transition sidebar-mini">
+<style>
+    .ui-jqgrid tr.jqgrow td {
+        white-space: normal !important;
+        height: auto;
+        vertical-align: text-top;
+        padding-top: 2px;
+    }
+</style>
 <div class="wrapper">
     <!-- 引入页面头header-fragment -->
     <div th:replace="admin/header::header-nav"></div>
@@ -19,19 +27,19 @@
                 <div class="card card-primary card-outline">
                     <!-- header-->
                     <div class="card-header">
-                        <h3 class="card-title">友情链接</h3>
+                        <h3 class="card-title">友情链接管理</h3>
                     </div>
                    <!--body -->
                     <div class="card-body">
                         <div class="grid-btn">
-                            <button class="btn btn-info" type="button"
-                            onclick="linkAdd()"><i class="fa fa-plus"></i>新增
+                            <button class="btn btn-info"  onclick="linkAdd()"><i
+                                    class="fa fa-plus"></i>&nbsp;新增
                             </button>
-                            <button class="btn btn-info" type="button"
-                                    onclick="linkEdit()"><i class="fa fa-pencil-square-o"></i>修改
+                            <button class="btn btn-info" onclick="linkEdit()"><i
+                                    class="fa fa-pencil-square-o"></i>&nbsp;修改
                             </button>
-                            <button class="btn btn-danger" type="button"
-                                    onclick="deleteLink()"><i class="fa fa-trash-o"></i>删除
+                            <button class="btn btn-danger" onclick="deleteLink()"><i
+                                    class="fa fa-trash-o"></i>&nbsp;删除
                             </button>
                         </div>
                         <table class="table table-bordered" id="jqGrid">
@@ -57,38 +65,36 @@
                             <form id="linkForm">
                                 <div class="form-group">
                                     <div class="alert alert-danger" id="edit-error-msg" style="display: none;">
-                                        错误信息展示
+                                        错误信息展示栏
                                     </div>
                                 </div>
-                                <input class="form-control" id="linkId" name="linkId">
+                                <input type="hidden" class="form-control" id="blogLinkID" name="blogLinkID">
                                 <div class="form-group">
-                                    <label for="linkType" class="control-label">
-                                        友链类型:
-                                    </label>
-                                    <section class="form-control" id="linkType" name="linkType">
+                                    <label for="blogLinkType" class="control-label">友链类型:</label>
+                                    <select class="form-control" id="blogLinkType" name="blogLinkType">
                                         <option selected="selected" value="0">友链</option>
                                         <option value="1">推荐网站</option>
                                         <option value="2">个人链接</option>
-                                    </section>
+                                    </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="linkName" class="control-label">网站名称:</label>
-                                    <input type="text" name="linkName" id="linkName" class="form-control"
+                                    <label for="blogLinkName" class="control-label">网站名称:</label>
+                                    <input type="text" name="blogLinkName" id="blogLinkName" class="form-control"
                                     placeholder="请输入网站名称" required="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="linkUrl" class="control-label">网站Url:</label>
-                                    <input type="url" name="linkUrl" id="linkUrl" class="form-control"
+                                    <label for="blogLinkUrl" class="control-label">网站Url:</label>
+                                    <input type="url" name="blogLinkUrl" id="blogLinkUrl" class="form-control"
                                            placeholder="请输入网站Url" required="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="linkDescription" class="control-label">网站描述:</label>
-                                    <input type="url" name="linkDescription" id="linkDescription" class="form-control"
+                                    <label for="blogLinkDescription" class="control-label">网站描述:</label>
+                                    <input type="url" name="blogLinkDescription" id="blogLinkDescription" class="form-control"
                                            placeholder="请输入网站描述" required="true">
                                 </div>
                                 <div class="form-group">
-                                    <label for="linkRank" class="control-label">网站排序值:</label>
-                                    <input type="number" name="linkRank" id="linkRank" class="form-control"
+                                    <label for="blogLinkRank" class="control-label">网站排序值:</label>
+                                    <input type="number" name="blogLinkRank" id="blogLinkRank" class="form-control"
                                            placeholder="请输入网站排序值" required="true">
                                 </div>
                             </form>
@@ -113,9 +119,11 @@
 <script th:src="@{/admin/plugins/bootstrap/js/bootstrap.bundle.min.js}"></script>
 <!-- AdminLTE App -->
 <script th:src="@{/admin/dist/js/adminlte.min.js}"></script>
-<!-- public.js -->
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/jquery.jqGrid.min.js}"></script>
+<script th:src="@{/admin/plugins/jqgrid-5.3.0/grid.locale-cn.js}"></script>
+<!-- sweetalert -->
+<script th:src="@{/admin/plugins/sweetalert/sweetalert.min.js}"></script>
 <script th:src="@{/admin/dist/js/public.js}"></script>
-<!-- profile -->
-<script th:src="@{/admin/dist/js/profile.js}"></script>
+<script th:src="@{/admin/dist/js/link.js}"></script>
 </body>
 </html>

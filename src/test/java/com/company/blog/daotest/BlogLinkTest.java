@@ -37,7 +37,7 @@ public class BlogLinkTest {
     @Test
     @Rollback(value = false)
     public void deleteBlogLinkByBatch(){
-        int[] ids={30,31,32};
+        Integer[] ids={30,31,32};
         int result=blogLinkDao.deleteBlogLinkByBatch(ids);
         LoggerUtil.info("批量删除操作:"+result);
     }
@@ -78,7 +78,7 @@ public class BlogLinkTest {
     @Rollback(value = false)
     public void findBlogLinkList(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",3);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var results=blogLinkDao.findBlogLinkList(pageQueryUtil);
@@ -91,7 +91,7 @@ public class BlogLinkTest {
     @Rollback(value = false)
     public void getTotalBlogLinkCount(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",3);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var count=blogLinkDao.getTotalBlogLinkCount(pageQueryUtil);

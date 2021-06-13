@@ -20,10 +20,10 @@ public class PageQueryUtil extends LinkedHashMap<String,Object> {
 
     public PageQueryUtil(Map<String, Object> m) {
        this.putAll(m);
-       this.currentPage=Integer.parseInt(m.get("currentPage").toString());
+       this.currentPage=Integer.parseInt(m.get("page").toString());
        this.limit=Integer.parseInt(m.get("limit").toString());
        this.put("start",(currentPage-1)*limit);
-       this.put("currentPage",currentPage);
+       this.put("page",currentPage);
        this.put("limit",limit);
     }
 

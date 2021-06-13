@@ -111,7 +111,7 @@ public class BlogTest {
     public void testFindBlogList(){
         Map<String,Object> maps=new HashMap<>();
         maps.put("start",1);
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var blogs=blogDao.findBlogList(pageQueryUtil);
@@ -137,7 +137,7 @@ public class BlogTest {
     @Test
     public void testGetTotalBlogs(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var result=blogDao.getTotalBlogs(pageQueryUtil);
@@ -154,7 +154,7 @@ public class BlogTest {
     @Test
     public void  getBlogListByTagID(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         maps.put("blogTagID",57);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
@@ -168,7 +168,7 @@ public class BlogTest {
     @Test
     public void  getTotalBlogCountByTagID(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         maps.put("blogTagID",57);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);

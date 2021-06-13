@@ -80,7 +80,7 @@ public class BlogTagDaoTest {
     @Rollback(value = false)
     public void testFindBlogTagList(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",3);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var results=blogTagDao.findBlogTagList(pageQueryUtil);
@@ -101,7 +101,7 @@ public class BlogTagDaoTest {
     @Rollback(value = false)
     public void testGetBlogTagCount(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",3);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         int result=blogTagDao.getBlogTagCount(pageQueryUtil);

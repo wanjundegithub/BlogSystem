@@ -77,7 +77,7 @@ public class BlogCategoryTest {
     @Test
     public void testFindBlogCategoryList(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var results=blogCategoryDao.findBlogCategoryList(pageQueryUtil);
@@ -98,7 +98,7 @@ public class BlogCategoryTest {
     @Test
     public void testGetTotalBlogCategoryCount(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var result=blogCategoryDao.getTotalBlogCategoryCount(pageQueryUtil);

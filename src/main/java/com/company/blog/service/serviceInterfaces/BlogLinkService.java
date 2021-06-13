@@ -17,9 +17,9 @@ public interface BlogLinkService {
 
     boolean updateSelectiveBlogLink(BlogLink blogLink);
 
-    BlogLink selectBlogLinkByLinkID(int id);
+    BlogLink selectBlogLinkByLinkID(Integer id);
 
-    boolean deleteBlogLinks(int[] ids);
+    boolean deleteBlogLinks(Integer[] ids);
 
     Map<Byte, List<BlogLink>> getLinkMaps();
 }

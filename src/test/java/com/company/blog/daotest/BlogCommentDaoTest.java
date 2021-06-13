@@ -79,7 +79,7 @@ public class BlogCommentDaoTest {
     @Test
     public void testFindBlogCommentList(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var results=blogCommentDao.findBlogCommentList(pageQueryUtil);
@@ -91,7 +91,7 @@ public class BlogCommentDaoTest {
     @Test
     public void testGetTotalBlogCommentCount(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("currentPage",1);
+        maps.put("page",1);
         maps.put("limit",2);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var count=blogCommentDao.getTotalBlogCommentCount(pageQueryUtil);

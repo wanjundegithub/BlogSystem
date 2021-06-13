@@ -27,8 +27,7 @@ public class BlogLinkServiceImpl implements BlogLinkService {
             return null;
         }
         int totalCount=blogLinkDao.getTotalBlogLinkCount(pageQueryUtil);
-        var pageResult=new PageResult(totalCount,pageQueryUtil.getLimit(), pageQueryUtil.getCurrentPage(),
-                links);
+        var pageResult=new PageResult(links,totalCount,pageQueryUtil.getLimit(), pageQueryUtil.getCurrentPage());
         return pageResult;
     }
 
@@ -49,12 +48,12 @@ public class BlogLinkServiceImpl implements BlogLinkService {
     }
 
     @Override
-    public BlogLink selectBlogLinkByLinkID(int id) {
+    public BlogLink selectBlogLinkByLinkID(Integer id) {
         return blogLinkDao.findBlogLinkByPrimaryKey(id);
     }
 
     @Override
-    public boolean deleteBlogLinks(int[] ids) {
+    public boolean deleteBlogLinks(Integer[] ids) {
         return blogLinkDao.deleteBlogLinkByBatch(ids)>0;
     }
 

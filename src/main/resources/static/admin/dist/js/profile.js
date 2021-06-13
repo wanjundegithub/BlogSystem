@@ -2,8 +2,8 @@ $(function () {
     //修改个人信息
     $('#updateUserNameButton').click(function () {
         $("#updateUserNameButton").attr("disabled",true);
-        var userName = $('#adminAccount').val();
-        var nickName = $('#adminNickname').val();
+        var userName = $('#loginUserName').val();
+        var nickName = $('#nickName').val();
         if (validUserNameForUpdate(userName, nickName)) {
             //ajax提交数据
             var params = $("#userNameForm").serialize();
@@ -27,7 +27,7 @@ $(function () {
     //修改密码
     $('#updatePasswordButton').click(function () {
         $("#updatePasswordButton").attr("disabled",true);
-        var originalPassword = $('#oldPassword').val();
+        var originalPassword = $('#originalPassword').val();
         var newPassword = $('#newPassword').val();
         if (validPasswordForUpdate(originalPassword, newPassword)) {
             var params = $("#userPasswordForm").serialize();
@@ -82,8 +82,8 @@ function validUserNameForUpdate(userName, nickName) {
 /**
  * 密码验证
  */
-function validPasswordForUpdate(oldPassword, newPassword) {
-    if (isNull(oldPassword) || oldPassword.trim().length < 1) {
+function validPasswordForUpdate(originalPassword, newPassword) {
+    if (isNull(originalPassword) || originalPassword.trim().length < 1) {
         $('#updatePassword-info').css("display", "block");
         $('#updatePassword-info').html("请输入原密码！");
         return false;
@@ -93,10 +93,10 @@ function validPasswordForUpdate(oldPassword, newPassword) {
         $('#updatePassword-info').html("新密码不能为空！");
         return false;
     }
-    // if (!validPassword(newPassword)) {
-    //     $('#updatePassword-info').css("display", "block");
-    //     $('#updatePassword-info').html("请输入符合规范的密码！");
-    //     return false;
-    // }
+    if (!validPassword(newPassword)) {
+        $('#updatePassword-info').css("display", "block");
+        $('#updatePassword-info').html("请输入符合规范的密码！");
+        return false;
+    }
     return true;
 }

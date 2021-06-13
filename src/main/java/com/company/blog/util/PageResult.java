@@ -8,6 +8,11 @@ import java.util.List;
 public class PageResult {
 
     /**
+     * 所有数据项
+     */
+    private List<?> list;
+
+    /**
      * 总记录数
      */
     private int totalCount;
@@ -23,20 +28,15 @@ public class PageResult {
     private int currentPage;
 
     /**
-     * 所有数据项
-     */
-    private List<?> list;
-
-    /**
      * 总页数
      */
     private int totalPage;
 
-    public PageResult(int totalCount, int pageSize, int currentPage, List<?> list) {
+    public PageResult(List<?> list,int totalCount, int pageSize, int currentPage) {
+        this.list = list;
         this.totalCount = totalCount;
         this.pageSize = pageSize;
         this.currentPage = currentPage;
-        this.list = list;
         this.totalPage=(int) Math.floor(totalCount*1.0/pageSize)+1;
     }
 

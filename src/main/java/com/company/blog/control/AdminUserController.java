@@ -65,7 +65,7 @@ public class AdminUserController {
         logger.info("账号，密码，验证码正确");
         session.setAttribute("loginUserName",user.getAdminNickname());
         session.setAttribute("loginUserID",user.getAdminID());
-        //return "redirect:/admin/index";
+        //这里应该到主页index
         return "redirect:/admin/profile";
     }
 

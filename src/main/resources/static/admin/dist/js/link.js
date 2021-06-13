@@ -3,12 +3,12 @@ $(function () {
         url: '/admin/links/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'linkId', index: 'linkId', width: 50, key: true, hidden: true},
-            {label: '网站名称', name: 'linkName', index: 'linkName', width: 100},
-            {label: '网站链接', name: 'linkUrl', index: 'linkUrl', width: 120},
-            {label: '网站描述', name: 'linkDescription', index: 'linkDescription', width: 120},
-            {label: '排序值', name: 'linkRank', index: 'linkRank', width: 30},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 100}
+            {label: 'id', name: 'blogLinkID', index: 'blogLinkID', width: 50, key: true, hidden: true},
+            {label: '网站名称', name: 'blogLinkName', index: 'blogLinkName', width: 100},
+            {label: '网站链接', name: 'blogLinkUrl', index: 'blogLinkUrl', width: 120},
+            {label: '网站描述', name: 'blogLinkDescription', index: 'blogLinkDescription', width: 120},
+            {label: '排序值', name: 'blogLinkRank', index: 'blogLinkRank', width: 30},
+            {label: '添加时间', name: 'blogLinkCreateTime', index: 'blogLinkCreateTime', width: 100}
         ],
         height: 560,
         rowNum: 10,
@@ -59,11 +59,11 @@ function linkAdd() {
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    var linkId = $("#linkId").val();
-    var linkName = $("#linkName").val();
-    var linkUrl = $("#linkUrl").val();
-    var linkDescription = $("#linkDescription").val();
-    var linkRank = $("#linkRank").val();
+    var linkId = $("#blogLinkID").val();
+    var linkName = $("#blogLinkName").val();
+    var linkUrl = $("#blogLinkUrl").val();
+    var linkDescription = $("#blogLinkDescription").val();
+    var linkRank = $("#blogLinkRank").val();
     if (!validCN_ENString2_18(linkName)) {
         $('#edit-error-msg').css("display", "block");
         $('#edit-error-msg').html("请输入符合规范的名称！");
@@ -128,22 +128,22 @@ function linkEdit() {
     $.get("/admin/links/info/" + id, function (r) {
         if (r.resultCode == 200 && r.data != null) {
             //填充数据至modal
-            $("#linkName").val(r.data.linkName);
-            $("#linkUrl").val(r.data.linkUrl);
-            $("#linkDescription").val(r.data.linkDescription);
-            $("#linkRank").val(r.data.linkRank);
+            $("#blogLinkName").val(r.data.linkName);
+            $("#blogLinkUrl").val(r.data.linkUrl);
+            $("#blogLinkDescription").val(r.data.linkDescription);
+            $("#blogLinkRank").val(r.data.linkRank);
             //根据原linkType值设置select选择器为选中状态
-            if (r.data.linkType == 1) {
+            if (r.data.blogLinkType == 1) {
                 $("#linkType option:eq(1)").prop("selected", 'selected');
             }
-            if (r.data.linkType == 2) {
+            if (r.data.blogLinkType == 2) {
                 $("#linkType option:eq(2)").prop("selected", 'selected');
             }
         }
     });
     $('.modal-title').html('友链修改');
     $('#linkModal').modal('show');
-    $("#linkId").val(id);
+    $("#blogLinkID").val(id);
 }
 
 function deleteLink() {
@@ -183,10 +183,10 @@ function deleteLink() {
 }
 
 function reset() {
-    $("#linkName").val('');
-    $("#linkUrl").val('');
-    $("#linkDescription").val('');
-    $("#linkRank").val(0);
+    $("#blogLinkName").val('');
+    $("#blogLinkUrl").val('');
+    $("#blogLinkDescription").val('');
+    $("#blogLinkRank").val(0);
     $('#edit-error-msg').css("display", "none");
     $("#linkType option:first").prop("selected", 'selected');
 }
