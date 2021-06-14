@@ -11,9 +11,9 @@ import java.util.List;
 @Repository
 public interface BlogTagDao {
 
-    int deleteBlogTagByPrimaryKey(int blogTagID);
+    int deleteBlogTagByPrimaryKey(Integer blogTagID);
 
-    int deleteBlogByBatch(@Param("blogTageIDs") int[] blogTageIDs);
+    int deleteBlogByBatch(@Param("blogTageIDs") Integer[] blogTageIDs);
 
     int insertBlogTag(BlogTag blogTag);
 
@@ -21,7 +21,7 @@ public interface BlogTagDao {
 
     int insertBlogTagByBatch(@Param("blogTags") List<BlogTag> blogTags);
 
-    BlogTag findBlogTagByPrimaryKey(int blogTagID);
+    BlogTag findBlogTagByPrimaryKey(Integer blogTagID);
 
     List<BlogTag> findBlogTagList(PageQueryUtil pageQueryUtil);
 

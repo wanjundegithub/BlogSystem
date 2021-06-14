@@ -24,7 +24,7 @@ public interface BlogTagRelationDao {
 
     BlogTagRelation findBlogTagRelationByID(Integer blogID,Integer blogTagID);
 
-    List<Integer> findDistinctTagIDs(@Param("tagIDs") int[] tagIDs);
+    List<Integer> findDistinctTagIDs(@Param("tagIDs") Integer[] tagIDs);
 
     int updateBlogTagRelation(BlogTagRelation blogTagRelation);
 

@@ -34,7 +34,7 @@ public class BlogLinkServiceImpl implements BlogLinkService {
     @Override
     public int getTotalBlogLinks() {
         int totalCount=blogLinkDao.getTotalBlogLinkCount(null);
-        return 0;
+        return totalCount;
     }
 
     @Override

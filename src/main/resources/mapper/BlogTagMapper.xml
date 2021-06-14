@@ -104,9 +104,6 @@
 
     <select id="getBlogTagCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from blogTag where blogTagIsDeleted=0
-        <if test="start!=null and limit!=null">
-            limit #{start},#{limit}
-        </if>
     </select>
 
     <select id="getTagQuantityListByBlogID"  resultMap="baseBlogTagQuantityModel">

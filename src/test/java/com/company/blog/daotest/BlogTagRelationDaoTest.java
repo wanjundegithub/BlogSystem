@@ -87,7 +87,7 @@ public class BlogTagRelationDaoTest {
     @Test
     @Rollback(value = false)
     public void testFindDistinctTagIDs(){
-        int[] tagIDs={69,128,99,99,100,101};
+        Integer[] tagIDs={69,128,99,99,100,101};
         var results=blogTagRelationDao.findDistinctTagIDs(tagIDs);
         results.forEach(result->{
             LoggerUtil.info("tagID:"+result);

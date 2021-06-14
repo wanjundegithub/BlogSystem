@@ -34,7 +34,7 @@ public class BlogTagDaoTest {
     @Test
     @Rollback(value = false)
     public void testDeleteBlogByBatch(){
-        int[] ids={134,135,136,137};
+        Integer[] ids={134,135,136,137};
         int result=blogTagDao.deleteBlogByBatch(ids);
         LoggerUtil.info("批量删除结果:"+result);
     }
@@ -44,7 +44,7 @@ public class BlogTagDaoTest {
     public void testInsertBlogTag() throws ParseException {
         DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date=dateFormat.parse("2021-5-31 20:43:21");
-        BlogTag blogTag=new BlogTag(150,"标签",(byte) 0,date);
+        BlogTag blogTag=new BlogTag(72,"标签",(byte) 0,date);
         int result=blogTagDao.insertBlogTag(blogTag);
         LoggerUtil.info("插入结果:"+result);
     }

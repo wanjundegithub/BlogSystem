@@ -3,9 +3,9 @@ $(function () {
         url: '/admin/tags/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'tagId', index: 'tagId', width: 50, key: true, hidden: true},
-            {label: '标签名称', name: 'tagName', index: 'tagName', width: 240},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
+            {label: 'id', name: 'blogTagID', index: 'blogTagID', width: 50, key: true, hidden: true},
+            {label: '标签名称', name: 'blogTagName', index: 'blogTagName', width: 240},
+            {label: '添加时间', name: 'blogTagCreateTime', index: 'blogTagCreateTime', width: 120}
         ],
         height: 560,
         rowNum: 10,
@@ -49,26 +49,27 @@ function reload() {
 }
 
 function tagAdd() {
-    var tagName = $("#tagName").val();
-    if (!validCN_ENString2_18(tagName)) {
+    var blogTagName = $("#blogTagName").val();
+    if (!validCN_ENString2_18(blogTagName)) {
         swal("标签名称不规范", {
             icon: "error",
         });
     } else {
-        var url = '/admin/tags/save?tagName=' + tagName;
+        //var url = '/admin/tags/save?blogTagName=' + blogTagName;
+        var url='/admin/tags/save';
         $.ajax({
             type: 'POST',//方法类型
             url: url,
             success: function (result) {
                 if (result.resultCode == 200) {
-                    $("#tagName").val('')
+                    $("#blogTagName").val('')
                     swal("保存成功", {
                         icon: "success",
                     });
                     reload();
                 }
                 else {
-                    $("#tagName").val('')
+                    $("#blogTagName").val('')
                     swal(result.message, {
                         icon: "error",
                     });
