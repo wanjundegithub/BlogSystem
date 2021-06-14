@@ -6,9 +6,9 @@ import java.util.Date;
 
 public class BlogComment {
 
-    private int blogCommentID;
+    private Integer blogCommentID;
 
-    private int blogID;
+    private Integer blogID;
 
     private String blogCommentatorName;
 
@@ -28,13 +28,14 @@ public class BlogComment {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date commentReplyTime;
 
-    private byte commentStatus;
+    private Byte commentStatus;
 
-    private byte commentIsDeleted;
+    private Byte commentIsDeleted;
 
-    public BlogComment(int blogCommentID, int blogID, String blogCommentatorName, String blogCommentatorEmail, String blogWebsiteUrl,
-                       String blogCommentContent, Date blogCommentSubmitTime, String blogCommentatorIP, String commentReplyContent,
-                       Date commentReplyTime, byte commentStatus, byte commentIsDeleted) {
+    public BlogComment(Integer blogCommentID, Integer blogID, String blogCommentatorName,
+                       String blogCommentatorEmail, String blogWebsiteUrl, String blogCommentContent,
+                       Date blogCommentSubmitTime, String blogCommentatorIP, String commentReplyContent,
+                       Date commentReplyTime, Byte commentStatus, Byte commentIsDeleted) {
         this.blogCommentID = blogCommentID;
         this.blogID = blogID;
         this.blogCommentatorName = blogCommentatorName;
@@ -52,19 +53,19 @@ public class BlogComment {
     public BlogComment() {
     }
 
-    public int getBlogCommentID() {
+    public Integer getBlogCommentID() {
         return blogCommentID;
     }
 
-    public void setBlogCommentID(int blogCommentID) {
+    public void setBlogCommentID(Integer blogCommentID) {
         this.blogCommentID = blogCommentID;
     }
 
-    public int getBlogID() {
+    public Integer getBlogID() {
         return blogID;
     }
 
-    public void setBlogID(int blogID) {
+    public void setBlogID(Integer blogID) {
         this.blogID = blogID;
     }
 
@@ -132,19 +133,19 @@ public class BlogComment {
         this.commentReplyTime = commentReplyTime;
     }
 
-    public byte getCommentStatus() {
+    public Byte getCommentStatus() {
         return commentStatus;
     }
 
-    public void setCommentStatus(byte commentStatus) {
+    public void setCommentStatus(Byte commentStatus) {
         this.commentStatus = commentStatus;
     }
 
-    public byte getCommentIsDeleted() {
+    public Byte getCommentIsDeleted() {
         return commentIsDeleted;
     }
 
-    public void setCommentIsDeleted(byte commentIsDeleted) {
+    public void setCommentIsDeleted(Byte commentIsDeleted) {
         this.commentIsDeleted = commentIsDeleted;
     }
 }

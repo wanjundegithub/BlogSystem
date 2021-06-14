@@ -55,7 +55,7 @@ public class BlogCategoryTest {
     @Test
     @Rollback(value = false)
     public void testDeleteBlogCategoryBatch(){
-        int[] keys={99,100};
+        Integer[] keys={99,100};
         int result=blogCategoryDao.deleteBlogCategoryBatch(keys);
         LoggerUtil.info("批量删除操作:"+result);
     }
@@ -88,7 +88,7 @@ public class BlogCategoryTest {
 
     @Test
     public void testSelectBlogCategoryByIDs(){
-        int[] ids={20,22,24};
+        Integer[] ids={20,22,24};
         var results=blogCategoryDao.selectBlogCategoryByIDs(ids);
         results.forEach(result->{
             LoggerUtil.info("BlogCategoryName:"+result.getBlogCategoryName()+",BlogCategoryIcon:"+result.getBlogCategoryIcon());

@@ -10,15 +10,15 @@ import java.util.List;
 @Repository
 public interface BlogDao {
 
-    int deleteBlogByPrimaryKey(int blogID);
+    int deleteBlogByPrimaryKey(Integer blogID);
 
-    int deleteBlogByBatch(@Param("blogIDS") int[] blogIDS);
+    int deleteBlogByBatch(@Param("blogIDS") Integer[] blogIDS);
 
     int insertBlog(Blog blog);
 
     int insertSelectiveBlog(Blog blog);
 
-    Blog queryBlogByPrimaryID(int blogID);
+    Blog queryBlogByPrimaryID(Integer blogID);
 
     int updateBlogWithContent(Blog blog);
 
@@ -38,7 +38,7 @@ public interface BlogDao {
 
     int getTotalBlogCountByTagID(PageQueryUtil pageQueryUtil);
 
-    int  updateCategoryByBatch(@Param("blogCategoryID") int blogCategoryID,
+    int  updateCategoryByBatch(@Param("blogCategoryID") Integer blogCategoryID,
                                @Param("blogCategoryName") String blogCategoryName,
-                               @Param("blogCategoryIDs") int[] blogCategoryIDs);
+                               @Param("blogCategoryIDs") Integer[] blogCategoryIDs);
 }

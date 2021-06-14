@@ -189,4 +189,13 @@ public class Blog {
     public void setBlogUpdateTime(Date blogUpdateTime) {
         this.blogUpdateTime = blogUpdateTime;
     }
+
+    public void copyFrom(Blog fromBlog){
+        this.setBlogTitle(fromBlog.getBlogTitle());
+        this.setBlogSubUrl(fromBlog.getBlogSubUrl());
+        this.setBlogContent(fromBlog.getBlogContent());
+        this.setBlogCoverImagePath(fromBlog.getBlogCoverImagePath());
+        this.setBlogStatus(fromBlog.getBlogStatus());
+        this.setBlogEnableComment(fromBlog.getBlogEnableComment());
+    }
 }

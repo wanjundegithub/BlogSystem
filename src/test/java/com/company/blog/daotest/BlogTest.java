@@ -35,7 +35,7 @@ public class BlogTest {
     @Test
     @Rollback(value = false)
     public void testDeleteBlogByBatch(){
-        int[] blogIDs={1,2,3};
+        Integer[] blogIDs={1,2,3};
         var result=blogDao.deleteBlogByBatch(blogIDs);
         LoggerUtil.info("批量删除操作:"+result);
     }
@@ -178,7 +178,7 @@ public class BlogTest {
 
     @Test
     public void testUpdateCategoryByBatch(){
-        int[] catIDs={3};
+        Integer[] catIDs={3};
         var result=blogDao.updateCategoryByBatch(99,"test",catIDs);
         LoggerUtil.info("update result:"+result);
     }

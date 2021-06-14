@@ -10,21 +10,21 @@ import java.util.List;
 @Repository
 public interface BlogCategoryDao {
 
-    int deleteBlogCategoryByPrimaryKey(int blogCategoryID);
+    int deleteBlogCategoryByPrimaryKey(Integer blogCategoryID);
 
-    int deleteBlogCategoryBatch(@Param("blogCategoryIDs") int[] blogCategoryIDs);
+    int deleteBlogCategoryBatch(@Param("blogCategoryIDs") Integer[] blogCategoryIDs);
 
     int insertBlogCategory(BlogCategory blogCategory);
 
     int insertSelectiveBlogCategory(BlogCategory blogCategory);
 
-    BlogCategory findBlogCategoryByPrimaryKey(int blogCategoryID);
+    BlogCategory findBlogCategoryByPrimaryKey(Integer blogCategoryID);
 
     BlogCategory selectBlogCategoryByName(String BlogCategoryName);
 
     List<BlogCategory> findBlogCategoryList(PageQueryUtil pageQueryUtil);
 
-    List<BlogCategory> selectBlogCategoryByIDs(@Param("blogCategoryIDs") int[] blogCategoryIDs);
+    List<BlogCategory> selectBlogCategoryByIDs(@Param("blogCategoryIDs") Integer[] blogCategoryIDs);
 
     int getTotalBlogCategoryCount(PageQueryUtil pageQueryUtil);
 

@@ -3,13 +3,13 @@ $(function () {
         url: '/admin/comments/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'commentId', index: 'commentId', width: 50, key: true, hidden: true},
-            {label: '评论内容', name: 'commentBody', index: 'commentBody', width: 120},
-            {label: '评论时间', name: 'commentCreateTime', index: 'commentCreateTime', width: 60},
-            {label: '评论人名称', name: 'commentator', index: 'commentator', width: 60},
-            {label: '评论人邮箱', name: 'email', index: 'email', width: 90},
+            {label: 'id', name: 'blogCommentID', index: 'blogCommentID', width: 50, key: true, hidden: true},
+            {label: '评论内容', name: 'blogCommentContent', index: 'blogCommentContent', width: 120},
+            {label: '评论时间', name: 'blogCommentSubmitTime', index: 'blogCommentSubmitTime', width: 60},
+            {label: '评论人名称', name: 'blogCommentatorName', index: 'blogCommentatorName', width: 60},
+            {label: '评论人邮箱', name: 'blogCommentatorEmail', index: 'blogCommentatorEmail', width: 90},
             {label: '状态', name: 'commentStatus', index: 'commentStatus', width: 60, formatter: statusFormatter},
-            {label: '回复内容', name: 'replyBody', index: 'replyBody', width: 120},
+            {label: '回复内容', name: 'commentReplyContent', index: 'commentReplyContent', width: 120},
         ],
         height: 700,
         rowNum: 10,
@@ -168,7 +168,7 @@ $('#saveButton').click(function () {
     } else {
         var url = '/admin/comments/reply';
         var id = getSelectedRow();
-        var params = {"commentId": id, "replyBody": replyBody}
+        var params = {"blogCommentID": id, "replyBody": replyBody}
         $.ajax({
             type: 'POST',//方法类型
             url: url,

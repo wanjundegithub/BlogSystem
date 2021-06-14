@@ -12,13 +12,13 @@ public interface BlogCommentDao {
 
     int deleteBlogCommentByPrimaryKey(int blogCommentID);
 
-    int deleteBlogCommentByBatch(@Param("blogCommentIDs") int[] blogCommentIDs);
+    int deleteBlogCommentByBatch(@Param("blogCommentIDs") Integer[] blogCommentIDs);
 
     int insertBlogComment(BlogComment blogComment);
 
     int insertSelectiveBlogComment(BlogComment blogComment);
 
-    BlogComment findBlogCommentByPrimaryKey(int blogCommentID);
+    BlogComment findBlogCommentByPrimaryKey(Integer blogCommentID);
 
     List<BlogComment> findBlogCommentList(PageQueryUtil pageQueryUtil);
 
@@ -28,5 +28,5 @@ public interface BlogCommentDao {
 
     int updateSelectiveBlogComment(BlogComment blogComment);
 
-    int updateBlogCommentCheckStatusByBatch(@Param("blogCommentIDs") int[] blogCommentIDs);
+    int updateBlogCommentCheckStatusByBatch(@Param("blogCommentIDs") Integer[] blogCommentIDs);
 }

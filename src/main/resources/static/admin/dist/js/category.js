@@ -3,10 +3,10 @@ $(function () {
         url: '/admin/categories/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'categoryId', index: 'categoryId', width: 50, key: true, hidden: true},
-            {label: '分类名称', name: 'categoryName', index: 'categoryName', width: 240},
-            {label: '分类图标', name: 'categoryIcon', index: 'categoryIcon', width: 120, formatter: imgFormatter},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 120}
+            {label: 'id', name: 'blogCategoryID', index: 'blogCategoryID', width: 50, key: true, hidden: true},
+            {label: '分类名称', name: 'blogCategoryName', index: 'blogCategoryName', width: 240},
+            {label: '分类图标', name: 'blogCategoryIcon', index: 'blogCategoryIcon', width: 120, formatter: imgFormatter},
+            {label: '添加时间', name: 'blogCategoryCreateTime', index: 'blogCategoryCreateTime', width: 120}
         ],
         height: 560,
         rowNum: 10,
@@ -77,7 +77,7 @@ function categoryAdd() {
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    var categoryName = $("#categoryName").val();
+    var categoryName = $("#blogCategoryName").val();
     if (!validCN_ENString2_18(categoryName)) {
         $('#edit-error-msg').css("display", "block");
         $('#edit-error-msg').html("请输入符合规范的分类名称！");
@@ -125,10 +125,10 @@ function categoryEdit() {
     }
     $('.modal-title').html('分类编辑');
     $('#categoryModal').modal('show');
-    $("#categoryId").val(id);
+    $("#blogCategoryID").val(id);
 }
 
-function deleteCagegory() {
+function deleteCategory() {
     var ids = getSelectedRows();
     if (ids == null) {
         return;
@@ -166,6 +166,6 @@ function deleteCagegory() {
 
 
 function reset() {
-    $("#categoryName").val('');
-    $("#categoryIcon option:first").prop("selected", 'selected');
+    $("#blogCategoryName").val('');
+    $("#blogCategoryIcon option:first").prop("selected", 'selected');
 }

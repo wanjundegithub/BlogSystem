@@ -38,7 +38,7 @@ public class BlogCommentDaoTest {
     @Test
     @Rollback(value = false)
     public void testDeleteBlogCommentByBatch(){
-        int[] keys={26,32};
+        Integer[] keys={26,32};
         int result=blogCommentDao.deleteBlogCommentByBatch(keys);
         LoggerUtil.info("删除操作:"+result);
     }
@@ -124,7 +124,7 @@ public class BlogCommentDaoTest {
     @Test
     @Rollback(value = false)
     public void testUpdateBlogCommentCheckStatusByBatch(){
-        int[] ids={22,26,32};
+        Integer[] ids={22,26,32};
         var result=blogCommentDao.updateBlogCommentCheckStatusByBatch(ids);
         LoggerUtil.info("更新操作:"+result);
     }
