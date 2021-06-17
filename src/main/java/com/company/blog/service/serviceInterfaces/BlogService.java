@@ -27,4 +27,12 @@ public interface BlogService {
     List<RoughBlogVo> getSideBarPage(int type);
 
     DetailBlogVo getDetailBlogVoByID(Integer blogID);
+
+    PageResult getBlogListByTag(String tagName,int page);
+
+    PageResult getBlogListByCategory(String categoryName,int page);
+
+    PageResult getBlogListByKeyword(String keyword,int page);
+
+    DetailBlogVo getDetailBlogVoBySubUrl(String subUrl);
 }

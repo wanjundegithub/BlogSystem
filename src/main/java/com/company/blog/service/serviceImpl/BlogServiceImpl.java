@@ -9,18 +9,17 @@ import com.company.blog.model.vo.BlogListVo;
 import com.company.blog.model.vo.DetailBlogVo;
 import com.company.blog.model.vo.RoughBlogVo;
 import com.company.blog.service.serviceInterfaces.BlogService;
+import com.company.blog.util.CommonUtil;
 import com.company.blog.util.PageQueryUtil;
 import com.company.blog.util.PageResult;
+import com.company.blog.util.StringUtil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.CollectionUtils;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -99,10 +98,10 @@ public class BlogServiceImpl implements BlogService {
                 blogTagRelations.add(blogTagRelation);
             }
             if(blogTagRelationDao.insertRelationByBatch(blogTagRelations)>0){
-                return "保存成功";
+                return CommonUtil.SuccessSave;
             }
         }
-        return "保存失败";
+        return CommonUtil.SaveFailure;
     }
 
     @Override
@@ -173,9 +172,9 @@ public class BlogServiceImpl implements BlogService {
         blogTagRelationDao.deleteRelationByBlogID(blog.getBlogID());
         blogTagRelationDao.insertRelationByBatch(blogTagRelations);
         if(blogDao.updateSelectiveBlogWithContent(updateBlog)>0){
-            return "保存成功";
+            return CommonUtil.SuccessModify;
         }
-        return "保存失败";
+        return CommonUtil.FailureModify;
     }
 
     /**
@@ -222,14 +221,128 @@ public class BlogServiceImpl implements BlogService {
         return roughBlogVos;
     }
 
+    /**
+     * 获取详细Blog
+     * @param blogID
+     * @return
+     */
     @Override
     public DetailBlogVo getDetailBlogVoByID(Integer blogID) {
+        Blog blog=blogDao.queryBlogByPrimaryID(blogID);
+        if(blog==null){
+            return null;
+        }
+        DetailBlogVo detailBlogVo=getDetailBlogVoFromBlog(blog);
+        return detailBlogVo;
+    }
 
+    /**
+     * 根据tag获取文章列表
+     * @param tagName
+     * @param page
+     * @return
+     */
+    @Override
+    public PageResult getBlogListByTag(String tagName, int page) {
+        if(!StringUtil.isMatchNumberOrWord(tagName)){
+            return null;
+        }
+        BlogTag blogTag=blogTagDao.findBlogTagByName(tagName);
+        if(blogTag==null||page<=0){
+            return null;
+        }
+        Map<String,Object> params=new HashMap<>();
+        params.put("page",page);
+        params.put("limit",9);
+        params.put("blogTagID",blogTag.getBlogTagID());
+        PageQueryUtil pageQueryUtil=new PageQueryUtil(params);
+        List<Blog> blogs=blogDao.getBlogListByTagID(pageQueryUtil);
+        List<BlogListVo> blogListVos=getFromBlogList(blogs);
+        int total=blogDao.getTotalBlogCountByTagID(pageQueryUtil);
+        PageResult pageResult=new PageResult(blogListVos,total,pageQueryUtil.getLimit(),
+                pageQueryUtil.getCurrentPage());
+        return pageResult;
+    }
+
+    /**
+     * 根据分类获取文章列表
+     * @param categoryName
+     * @param page
+     * @return
+     */
+    @Override
+    public PageResult getBlogListByCategory(String categoryName, int page) {
+        if(!StringUtil.isMatchNumberOrWord(categoryName)){
+            return null;
+        }
+        BlogCategory blogCategory=blogCategoryDao.selectBlogCategoryByName(categoryName);
+        if(blogCategory==null&&StringUtil.isEqual(categoryName,CommonUtil.DefaultClassification)){
+            blogCategory=new BlogCategory();
+            blogCategory.setBlogCategoryID(0);
+            blogCategory.setBlogCategoryName(CommonUtil.DefaultClassification);
+            blogCategory.setBlogCategoryIcon(CommonUtil.DefaultIconPath);
+        }
+        if(blogCategory!=null&&page>0){
+            Map<String,Object> params=new HashMap<>();
+            params.put("page",page);
+            params.put("limit",9);
+            params.put("blogCategoryID",blogCategory.getBlogCategoryID());
+            params.put("blogStatus",1);
+            PageQueryUtil pageQueryUtil=new PageQueryUtil(params);
+            List<Blog> blogs=blogDao.findBlogList(pageQueryUtil);
+            List<BlogListVo> blogListVos=getFromBlogList(blogs);
+            int total=blogDao.getTotalBlogs(pageQueryUtil);
+            return new PageResult(blogListVos,total,pageQueryUtil.getLimit(),
+                    pageQueryUtil.getCurrentPage());
+        }
         return null;
     }
 
     /**
-     * 将icon加入Blog中
+     * 根据关键字获取文章列表
+     * @param keyword
+     * @param page
+     * @return
+     */
+    @Override
+    public PageResult getBlogListByKeyword(String keyword, int page) {
+        if(StringUtil.isMatchNumberOrWord(keyword)||page<=0){
+            return null;
+        }
+        Map<String,Object> params=new HashMap<>();
+        params.put("page",page);
+        params.put("limit",9);
+        params.put("keyword",keyword);
+        params.put("blogStatus",1);
+        PageQueryUtil pageQueryUtil=new PageQueryUtil(params);
+        List<Blog> blogs=blogDao.findBlogList(pageQueryUtil);
+        List<BlogListVo> blogListVos=getFromBlogList(blogs);
+        int total=blogDao.getTotalBlogs(pageQueryUtil);
+        return new PageResult(blogListVos,total,pageQueryUtil.getLimit(),
+                pageQueryUtil.getCurrentPage());
+    }
+
+    /**
+     * 根据自定义路径获取详细blog
+     * @param subUrl
+     * @return
+     */
+    @Override
+    public DetailBlogVo getDetailBlogVoBySubUrl(String subUrl) {
+        if(!StringUtil.isMatchNetAddress(subUrl)){
+            return null;
+        }
+        Blog blog=blogDao.findBlogBySubUrl(subUrl);
+        if(blog==null){
+            return null;
+        }
+        DetailBlogVo detailBlogVo=getDetailBlogVoFromBlog(blog);
+        return detailBlogVo;
+    }
+
+
+    /**
+     * 将icon加入Blog中,将Blog列表转化为BlogListVo列表
      * @param blogs
      * @return
      */
@@ -263,5 +376,42 @@ public class BlogServiceImpl implements BlogService {
             }
         }
         return  blogListVos;
+    }
+
+    /**
+     * 将blog转换为DetailBlogVo
+     * @param blog
+     * @return
+     */
+    private DetailBlogVo getDetailBlogVoFromBlog(Blog blog){
+        if(blog==null||blog.getBlogStatus()==0){
+            return null;
+        }
+        blog.setBlogViews(blog.getBlogViews()+1);
+        //更新浏览量
+        blogDao.updateBlogWithoutContent(blog);
+        DetailBlogVo result=new DetailBlogVo();
+        BeanUtils.copyProperties(blog,result);
+        BlogCategory blogCategory= blogCategoryDao.findBlogCategoryByPrimaryKey(
+                blog.getBlogCategoryID());
+        if(blogCategory==null){
+            blogCategory=new BlogCategory();
+            blogCategory.setBlogCategoryID(0);
+            blogCategory.setBlogCategoryName(CommonUtil.DefaultClassification);
+            blogCategory.setBlogCategoryIcon(CommonUtil.DefaultIconPath);
+        }
+        //设置Icon
+        result.setBlogCategoryIcon(blogCategory.getBlogCategoryIcon());
+        //设置tags
+        if(!StringUtil.isNullOrEmpty(blog.getBlogTags())){
+            var tags= Arrays.asList(blog.getBlogTags().split(","));
+            result.setBlogTags(tags);
+        }
+        //设置评论数
+        Map<String,Object> map=new HashMap<>();
+        map.put("blogID",blog.getBlogID());
+        map.put("commentStatus",1);
+        result.setBlogCommentCount(blogCommentDao.getTotalBlogCommentCount(new PageQueryUtil(map)));
+        return result;
     }
 }
