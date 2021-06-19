@@ -37,7 +37,6 @@ public class BlogLinkController {
         }
         PageQueryUtil pageQueryUtil=new PageQueryUtil(params);
         var result=blogLinkService.getPageResult(pageQueryUtil);
-        LoggerUtil.info("当前页:"+result.getCurrentPage()+"每页行数,"+result.getPageSize());
         return ResultGeneratorUtil.getSuccessResult(blogLinkService.getPageResult(pageQueryUtil));
     }
 
@@ -48,7 +47,7 @@ public class BlogLinkController {
                               @RequestParam("blogLinkUrl") String blogLinkUrl,
                               @RequestParam("blogLinkDescription") String blogLinkDescription,
                               @RequestParam("blogLinkRank") Integer blogLinkRank){
-        LoggerUtil.info(blogLinkType+","+blogLinkName);
+        LoggerUtil.info(blogLinkType+","+blogLinkName,BlogLinkController.class);
         if(null==blogLinkType||StringUtil.isNullOrEmpty(blogLinkName)||StringUtil.isNullOrEmpty(blogLinkUrl)||
         StringUtil.isNullOrEmpty(blogLinkDescription)||null==blogLinkRank){
             return ResultGeneratorUtil.getFailResult("参数异常");

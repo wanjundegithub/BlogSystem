@@ -17,11 +17,9 @@
     <!-- 引入工具栏sidebar-fragment -->
     <div th:replace="admin/sidebar::sidebar-fragment(${path})"></div>
     <div class="content-wrapper">
-        <!--header -->
         <div class="content-header">
             <div class="container-fluid"></div>
         </div>
-        <!--Main content -->
         <div class="content">
             <div class="container-fluid">
                 <div class="card card-primary card-outline">
@@ -49,15 +47,15 @@
                 </div>
             </div>
         </div>
+        <!-- /.content -->
         <div class="content">
-            <!-- 模态框-->
-            <div class="model fade" id="linkModal" tabindex="-1" role="dialog"
-                 aria-labelledby="linkModalLabel">
-                <div class="modal-dialog" role="document">
+            <!-- 模态框（Modal） -->
+            <div class="modal fade" id="linkModal" tabindex="-1" role="dialog" aria-labelledby="linkModalLabel">
+                <div class="modal-dialog " role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <button type="button" class="close"  data-dismiss="modal"
-                            aria-label="Close"><span aria-hidden="true">&times;</span>
+                                    aria-label="Close"><span aria-hidden="true">&times;</span>
                             </button>
                             <h6 class="modal-title" id="linkModalLabel">Modal</h6>
                         </div>
@@ -80,7 +78,7 @@
                                 <div class="form-group">
                                     <label for="blogLinkName" class="control-label">网站名称:</label>
                                     <input type="text" name="blogLinkName" id="blogLinkName" class="form-control"
-                                    placeholder="请输入网站名称" required="true">
+                                           placeholder="请输入网站名称" required="true">
                                 </div>
                                 <div class="form-group">
                                     <label for="blogLinkUrl" class="control-label">网站Url:</label>
@@ -106,7 +104,7 @@
                     </div>
                 </div>
             </div>
-            <!-- end 模态框-->
+            <!-- /.modal -->
         </div>
     </div>
     <div th:replace="admin/footer::footer-fragment"></div>

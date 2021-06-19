@@ -128,10 +128,10 @@ function linkEdit() {
     $.get("/admin/links/info/" + id, function (r) {
         if (r.resultCode == 200 && r.data != null) {
             //填充数据至modal
-            $("#blogLinkName").val(r.data.linkName);
-            $("#blogLinkUrl").val(r.data.linkUrl);
-            $("#blogLinkDescription").val(r.data.linkDescription);
-            $("#blogLinkRank").val(r.data.linkRank);
+            $("#blogLinkName").val(r.data.blogLinkName);
+            $("#blogLinkUrl").val(r.data.blogLinkUrl);
+            $("#blogLinkDescription").val(r.data.blogLinkDescription);
+            $("#blogLinkRank").val(r.data.blogLinkRank);
             //根据原linkType值设置select选择器为选中状态
             if (r.data.blogLinkType == 1) {
                 $("#linkType option:eq(1)").prop("selected", 'selected');
