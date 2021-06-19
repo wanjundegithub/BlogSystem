@@ -75,4 +75,10 @@ public class BlogCategoryServiceImpl implements BlogCategoryService {
     public List<BlogCategory> getAllBlogCategories() {
         return blogCategoryDao.findBlogCategoryList(null);
     }
+
+    @Override
+    public BlogCategory getBlogCategory(Integer blogCategoryID) {
+        var blogCategory=blogCategoryDao.findBlogCategoryByPrimaryKey(blogCategoryID);
+        return blogCategory;
+    }
 }

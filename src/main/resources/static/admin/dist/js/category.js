@@ -126,6 +126,12 @@ function categoryEdit() {
     $('.modal-title').html('分类编辑');
     $('#categoryModal').modal('show');
     $("#blogCategoryID").val(id);
+    $.get("/admin/categories/info/"+id,function (r){
+        if(r.data!=null){
+            //填充数据到modal
+            $("#blogCategoryName").val(r.data.blogCategoryName);
+        }
+    });
 }
 
 function deleteCategory() {

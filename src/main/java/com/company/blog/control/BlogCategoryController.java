@@ -1,10 +1,7 @@
 package com.company.blog.control;
 
 import com.company.blog.service.serviceInterfaces.BlogCategoryService;
-import com.company.blog.util.PageQueryUtil;
-import com.company.blog.util.Result;
-import com.company.blog.util.ResultGeneratorUtil;
-import com.company.blog.util.StringUtil;
+import com.company.blog.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.CollectionUtils;
 import org.springframework.web.bind.annotation.*;
@@ -79,4 +76,15 @@ public class BlogCategoryController {
                 ResultGeneratorUtil.getFailResult(false);
     }
 
+    @GetMapping("/categories/info/{blogCategoryID}")
+    @ResponseBody
+    public Result getCategoryInfo(@PathVariable("blogCategoryID") Integer blogCategoryID){
+        LoggerUtil.info("id"+blogCategoryID);
+        if(null==blogCategoryID){
+            return ResultGeneratorUtil.getFailResult("参数为空");
+        }
+        var blogCategory=blogCategoryService.getBlogCategory(blogCategoryID);
+        LoggerUtil.info("name:"+blogCategory.getBlogCategoryName());
+        return ResultGeneratorUtil.getSuccessResult(blogCategory);
+    }
 }

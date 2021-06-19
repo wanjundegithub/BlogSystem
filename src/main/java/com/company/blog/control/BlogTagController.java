@@ -35,9 +35,9 @@ public class BlogTagController {
         return ResultGeneratorUtil.getSuccessResult(blogTagService.getBlogTagPage(pageQueryUtil));
     }
 
-    @PostMapping("/tags/save/{blogTagName}")
+    @PostMapping("/tags/save")
     @ResponseBody
-    public Result addBlogTag(@PathVariable("blogTagName") String blogTagName){
+    public Result addBlogTag(@RequestParam("blogTagName") String blogTagName){
         LoggerUtil.info("name:"+blogTagName);
         if(StringUtil.isNullOrEmpty(blogTagName)){
             return ResultGeneratorUtil.getFailResult("参数为空");
