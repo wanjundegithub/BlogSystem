@@ -153,22 +153,22 @@ function reply() {
         });
         return;
     }
-    $("#replyBody").val('');
+    $("#commentReplyContent").val('');
     $('#replyModal').modal('show');
 }
 
 //绑定modal上的保存按钮
 $('#saveButton').click(function () {
-    var replyBody = $("#replyBody").val();
-    if (!validCN_ENString2_100(replyBody)) {
+    var commentReplyContent = $("#commentReplyContent").val();
+    if (!validCN_ENString2_100(commentReplyContent)) {
         swal("请输入符合规范的回复信息!", {
             icon: "warning",
         });
         return;
     } else {
         var url = '/admin/comments/reply';
-        var id = getSelectedRow();
-        var params = {"blogCommentID": id, "replyBody": replyBody}
+        var blogCommentID = getSelectedRow();
+        var params = {"blogCommentID": blogCommentID, "commentReplyContent": commentReplyContent}
         $.ajax({
             type: 'POST',//方法类型
             url: url,

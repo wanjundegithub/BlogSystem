@@ -202,7 +202,7 @@
                 commentReplyContent=#{commentReplyContent,jdbcType=VARCHAR},
             </if>
             <if test="commentReplyTime!=null">
-                commentReplyContent=#{commentReplyTime,jdbcType=TIMESTAMP},
+                commentReplyTime=#{commentReplyTime,jdbcType=TIMESTAMP},
             </if>
             <if test="commentStatus!=null">
                 commentStatus=#{commentStatus,jdbcType=TINYINT},

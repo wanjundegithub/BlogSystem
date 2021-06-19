@@ -3,6 +3,7 @@ package com.company.blog.service.serviceImpl;
 import com.company.blog.dao.BlogCommentDao;
 import com.company.blog.model.BlogComment;
 import com.company.blog.service.serviceInterfaces.BlogCommentService;
+import com.company.blog.util.LoggerUtil;
 import com.company.blog.util.PageQueryUtil;
 import com.company.blog.util.PageResult;
 import org.springframework.stereotype.Service;
@@ -57,7 +58,9 @@ public class BlogCommentServiceServiceImpl implements BlogCommentService {
         //已审核状态为1
         if(blogComment!=null&&blogComment.getCommentStatus().intValue()==1){
             blogComment.setCommentReplyContent(replyContent);
+            var date=new Date();
             blogComment.setCommentReplyTime(new Date());
+            LoggerUtil.info(replyContent+","+date.toString());
             return blogCommentDao.updateSelectiveBlogComment(blogComment)>0;
         }
         return false;

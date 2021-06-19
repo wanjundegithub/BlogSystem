@@ -79,12 +79,10 @@ public class BlogCategoryController {
     @GetMapping("/categories/info/{blogCategoryID}")
     @ResponseBody
     public Result getCategoryInfo(@PathVariable("blogCategoryID") Integer blogCategoryID){
-        LoggerUtil.info("id"+blogCategoryID);
         if(null==blogCategoryID){
             return ResultGeneratorUtil.getFailResult("参数为空");
         }
         var blogCategory=blogCategoryService.getBlogCategory(blogCategoryID);
-        LoggerUtil.info("name:"+blogCategory.getBlogCategoryName());
         return ResultGeneratorUtil.getSuccessResult(blogCategory);
     }
 }

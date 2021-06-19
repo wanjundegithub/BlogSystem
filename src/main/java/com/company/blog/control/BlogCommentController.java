@@ -65,11 +65,13 @@ public class BlogCommentController {
     @PostMapping("/comments/reply")
     @ResponseBody
     public Result replyBlogComment(@RequestParam("blogCommentID") Integer blogCommentID,
-                                   @RequestParam("replyBody") String replyBody){
-        if(blogCommentID==null||replyBody==null){
+                                   @RequestParam("commentReplyContent") String commentReplyContent){
+        LoggerUtil.info("回复内容:"+ commentReplyContent);
+        if(blogCommentID==null|| commentReplyContent ==null){
             return ResultGeneratorUtil.getFailResult("参数为空");
         }
-        var result=blogCommentService.replyBlogComment(blogCommentID,replyBody);
+        var result=blogCommentService.replyBlogComment(blogCommentID, commentReplyContent);
+        LoggerUtil.info("id"+blogCommentID+",replyBody："+ commentReplyContent +",result:"+result);
         return result?ResultGeneratorUtil.getSuccessResult(true):
                 ResultGeneratorUtil.getFailResult(false);
     }
