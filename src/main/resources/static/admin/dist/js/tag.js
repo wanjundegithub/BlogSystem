@@ -56,7 +56,7 @@ function tagAdd() {
         });
     } else {
         //var url = '/admin/tags/save?blogTagName=' + blogTagName;
-        var url='/admin/tags/save';
+        var url='/admin/tags/save/'+blogTagName;
         $.ajax({
             type: 'POST',//方法类型
             url: url,
