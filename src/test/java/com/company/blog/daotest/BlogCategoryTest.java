@@ -12,10 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @SpringBootTest
 @RunWith(SpringRunner.class)
@@ -88,7 +85,7 @@ public class BlogCategoryTest {
 
     @Test
     public void testSelectBlogCategoryByIDs(){
-        Integer[] ids={20,22,24};
+        List<Integer> ids= Arrays.asList(20,22,24);
         var results=blogCategoryDao.selectBlogCategoryByIDs(ids);
         results.forEach(result->{
             LoggerUtil.info("BlogCategoryName:"+result.getBlogCategoryName()+",BlogCategoryIcon:"+result.getBlogCategoryIcon());

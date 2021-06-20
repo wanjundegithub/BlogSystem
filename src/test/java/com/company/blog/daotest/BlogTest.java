@@ -111,9 +111,9 @@ public class BlogTest {
     @Test
     public void testFindBlogList(){
         Map<String,Object> maps=new HashMap<>();
-        maps.put("start",1);
         maps.put("page",1);
-        maps.put("limit",2);
+        maps.put("limit",8);
+        maps.put("blogStatus",1);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var blogs=blogDao.findBlogList(pageQueryUtil);
         if(blogs!=null&&blogs.size()!=0){

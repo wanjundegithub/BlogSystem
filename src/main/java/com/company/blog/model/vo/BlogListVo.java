@@ -7,7 +7,7 @@ import java.util.Date;
 
 public class BlogListVo implements Serializable {
 
-    private  int blogID;
+    private Integer blogID;
 
     private String blogTitle;
 
@@ -15,7 +15,7 @@ public class BlogListVo implements Serializable {
 
     private String blogCoverImagePath;
 
-    private  int blogCategoryID;
+    private  Integer blogCategoryID;
 
     private String blogCategoryIcon;
 
@@ -24,9 +24,9 @@ public class BlogListVo implements Serializable {
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date blogCreateTime;
 
-    public BlogListVo(int blogID, String blogTitle, String blogSubUrl, String blogCoverImagePath,
-                      int blogCategoryID, String blogCategoryIcon, String blogCategoryName,
-                      Date blogCreateTime) {
+    public BlogListVo(Integer blogID, String blogTitle, String blogSubUrl,
+                      String blogCoverImagePath, Integer blogCategoryID, String blogCategoryIcon,
+                      String blogCategoryName, Date blogCreateTime) {
         this.blogID = blogID;
         this.blogTitle = blogTitle;
         this.blogSubUrl = blogSubUrl;
@@ -40,11 +40,11 @@ public class BlogListVo implements Serializable {
     public BlogListVo() {
     }
 
-    public int getBlogID() {
+    public Integer getBlogID() {
         return blogID;
     }
 
-    public void setBlogID(int blogID) {
+    public void setBlogID(Integer blogID) {
         this.blogID = blogID;
     }
 
@@ -72,11 +72,11 @@ public class BlogListVo implements Serializable {
         this.blogCoverImagePath = blogCoverImagePath;
     }
 
-    public int getBlogCategoryID() {
+    public Integer getBlogCategoryID() {
         return blogCategoryID;
     }
 
-    public void setBlogCategoryID(int blogCategoryID) {
+    public void setBlogCategoryID(Integer blogCategoryID) {
         this.blogCategoryID = blogCategoryID;
     }
 

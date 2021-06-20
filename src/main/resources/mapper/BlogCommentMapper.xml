@@ -139,14 +139,12 @@
         select
         <include refid="commonField"/>
         from blogComment where commentIsDeleted=0
-        <trim prefixOverrides="and">
-            <if test="blogID!=null">
-                and blogID=#{blogID,jdbcType=INTEGER}
-            </if>
-            <if test="commentStatus!=null">
-                and commentStatus=#{commentStatus,jdbcType=TINYINT}
-            </if>
-        </trim>
+        <if test="blogID!=null">
+            and blogID=#{blogID,jdbcType=INTEGER}
+        </if>
+        <if test="commentStatus!=null">
+            and commentStatus=#{commentStatus,jdbcType=TINYINT}
+        </if>
         order by blogCommentID desc
         <if test="start!=null and limit!=null">
             limit #{start},#{limit}
@@ -155,14 +153,12 @@
 
     <select id="getTotalBlogCommentCount" parameterType="java.util.Map" resultType="java.lang.Integer">
         select count(1) from blogComment where commentIsDeleted=0
-        <trim prefixOverrides="and">
-            <if test="blogID!=null">
-                and blogID=#{blogID,jdbcType=INTEGER}
-            </if>
-            <if test="commentStatus!=null">
-                and commentStatus=#{commentStatus,jdbcType=TINYINT}
-            </if>
-        </trim>
+        <if test="blogID!=null">
+            and blogID=#{blogID,jdbcType=INTEGER}
+        </if>
+        <if test="commentStatus!=null">
+            and commentStatus=#{commentStatus,jdbcType=TINYINT}
+        </if>
     </select>
 
     <update id="updateBlogComment" parameterType="com.company.blog.model.BlogComment" >

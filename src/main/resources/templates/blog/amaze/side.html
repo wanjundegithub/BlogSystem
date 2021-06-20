@@ -24,10 +24,11 @@
                 </span>
             </div>
             <div class="tags ">
+<!--                Integer blogTagID, String blogTagName, Integer blogTagCount-->
                 <th:block th:if="${null != hotTags}">
                     <th:block th:each="hotTag : ${hotTags}">
-                        <a rel="tag" th:href="@{'/tag/' + ${hotTag.tagName}}">
-                            <th:block th:text="${hotTag.tagName}+'('+${hotTag.tagCount}+')'"></th:block>
+                        <a rel="tag" th:href="@{'/tag/' + ${hotTag.blogTagName}}">
+                            <th:block th:text="${hotTag.blogTagName}+'('+${hotTag.blogTagCount}+')'"></th:block>
                         </a>
                     </th:block>
                 </th:block>
@@ -43,7 +44,7 @@
                 <ul class="sidebar-list-body sidebar-list-items">
                     <th:block th:if="${null != newBlogs}">
                         <th:block th:each="newBlog : ${newBlogs}">
-                            <li class="sidebar-list-item"><a th:href="@{'/blog/' + ${newBlog.blogId}}"
+                            <li class="sidebar-list-item"><a th:href="@{'/blog/' + ${newBlog.blogID}}"
                                                              class="tag tooltipped tooltipped-n">
                                 <th:block th:text="${newBlog.blogTitle}"></th:block>
                             </a></li>
@@ -63,7 +64,7 @@
                     <th:block th:if="${null != hotBlogs}">
                         <th:block th:each="hotBlog : ${hotBlogs}">
                             <li class="sidebar-list-item"><a class="tag tooltipped tooltipped-n"
-                                                             th:href="@{'/blog/' + ${hotBlog.blogId}}">
+                                                             th:href="@{'/blog/' + ${hotBlog.blogID}}">
                                 <th:block th:text="${hotBlog.blogTitle}"></th:block>
                             </a></li>
                         </th:block>

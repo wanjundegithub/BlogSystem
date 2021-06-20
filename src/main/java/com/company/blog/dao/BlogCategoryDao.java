@@ -24,7 +24,7 @@ public interface BlogCategoryDao {
 
     List<BlogCategory> findBlogCategoryList(PageQueryUtil pageQueryUtil);
 
-    List<BlogCategory> selectBlogCategoryByIDs(@Param("blogCategoryIDs") Integer[] blogCategoryIDs);
+    List<BlogCategory> selectBlogCategoryByIDs(@Param("blogCategoryIDs") List<Integer> blogCategoryIDs);
 
     Integer getTotalBlogCategoryCount(PageQueryUtil pageQueryUtil);
 

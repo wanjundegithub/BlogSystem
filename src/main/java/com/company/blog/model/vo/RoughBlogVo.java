@@ -4,11 +4,11 @@ import java.io.Serializable;
 
 public class RoughBlogVo implements Serializable {
 
-    private  int blogID;
+    private Integer blogID;
 
     private String blogTitle;
 
-    public RoughBlogVo(int blogID, String blogTitle) {
+    public RoughBlogVo(Integer blogID, String blogTitle) {
         this.blogID = blogID;
         this.blogTitle = blogTitle;
     }
@@ -16,11 +16,11 @@ public class RoughBlogVo implements Serializable {
     public RoughBlogVo() {
     }
 
-    public int getBlogID() {
+    public Integer getBlogID() {
         return blogID;
     }
 
-    public void setBlogID(int blogID) {
+    public void setBlogID(Integer blogID) {
         this.blogID = blogID;
     }
 

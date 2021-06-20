@@ -243,18 +243,16 @@
         select
         <include refid="baseField"/>
         from blog where blogIsDeleted=0
-        <trim prefixOverrides="and">
-            <if test="keyword!=null">
-                and (blogTitle like  CONCAT('%', #{keyword}, '%') or
-                     blogCategoryName like CONCAT('%', #{keyword}, '%'))
-            </if>
-            <if test="blogStatus!=null">
-                and blogStatus=#{blogStatus,jdbcType=TINYINT}
-            </if>
-            <if test="blogCategoryID!=null">
-                and blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
-            </if>
-        </trim>
+        <if test="keyword!=null">
+            and (blogTitle like  CONCAT('%', #{keyword}, '%') or
+                 blogCategoryName like CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="blogStatus!=null">
+            and blogStatus=#{blogStatus,jdbcType=TINYINT}
+        </if>
+        <if test="blogCategoryID!=null">
+            and blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
+        </if>
         order by blogID desc
         <if test="start!=null and limit!=null">
             limit #{start},#{limit}
@@ -276,18 +274,16 @@
 
     <select id="getTotalBlogs" parameterType="Map" resultType="java.lang.Integer">
         select count(1) from blog  where blogIsDeleted=0
-        <trim prefixOverrides="and">
-            <if test="keyword!=null">
-                and (blogTitle like  CONCAT('%', #{keyword}, '%') or
-                blogCategoryName like CONCAT('%', #{keyword}, '%'))
-            </if>
-            <if test="blogStatus!=null">
-                and blogStatus=#{blogStatus,jdbcType=TINYINT}
-            </if>
-            <if test="blogCategoryID!=null">
-                and blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
-            </if>
-        </trim>
+        <if test="keyword!=null">
+            and (blogTitle like  CONCAT('%', #{keyword}, '%') or
+            blogCategoryName like CONCAT('%', #{keyword}, '%'))
+        </if>
+        <if test="blogStatus!=null">
+            and blogStatus=#{blogStatus,jdbcType=TINYINT}
+        </if>
+        <if test="blogCategoryID!=null">
+            and blogCategoryID=#{blogCategoryID,jdbcType=INTEGER}
+        </if>
     </select>
 
     <select id="findBlogBySubUrl" parameterType="java.lang.String" resultMap="blogModelWithContent">

@@ -4,10 +4,7 @@ import com.company.blog.model.BlogComment;
 import com.company.blog.model.BlogLink;
 import com.company.blog.model.vo.DetailBlogVo;
 import com.company.blog.service.serviceInterfaces.*;
-import com.company.blog.util.PageResult;
-import com.company.blog.util.Result;
-import com.company.blog.util.ResultGeneratorUtil;
-import com.company.blog.util.StringUtil;
+import com.company.blog.util.*;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +37,16 @@ public class MyBlogController {
     private BlogTagService blogTagService;
 
     /**
+     * 首页
+     * @param httpServletRequest
+     * @return
+     */
+    @GetMapping({"/","/index","index.html"})
+    public String index(HttpServletRequest httpServletRequest){
+        return this.getPage(httpServletRequest,1);
+    }
+
+    /**
      * 首页 分页数据
      * @param httpServletRequest
      * @param pageNum
@@ -48,10 +55,13 @@ public class MyBlogController {
     @GetMapping("/page/{pageNum}")
     public String getPage(HttpServletRequest httpServletRequest,
                           @PathVariable("pageNum") Integer pageNum){
+        LoggerUtil.info("这个pageNum:"+pageNum);
         PageResult pageResult=blogService.getBlogHomePage(pageNum);
         if(pageResult==null){
+            LoggerUtil.info("page is null");
             return "error/error_404";
         }
+        LoggerUtil.info(""+pageResult.getCurrentPage()+","+pageResult.getTotalPage());
         httpServletRequest.setAttribute("pageResult",pageResult);
         httpServletRequest.setAttribute("newBlogs",blogService.getSideBarPage(1));
         httpServletRequest.setAttribute("hotBlogs",blogService.getSideBarPage(0));
@@ -59,16 +69,6 @@ public class MyBlogController {
         httpServletRequest.setAttribute("pageName","首页");
         httpServletRequest.setAttribute("configurations",blogConfigService.getAllConfigs());
         return "blog/amaze/index";
-    }
-
-    /**
-     * 首页
-     * @param httpServletRequest
-     * @return
-     */
-    @GetMapping({"/","/index","index.html"})
-    public String index(HttpServletRequest httpServletRequest){
-        return this.getPage(httpServletRequest,1);
     }
 
     /**

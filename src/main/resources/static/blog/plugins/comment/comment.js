@@ -1,23 +1,23 @@
 $('#commentSubmit').click(function () {
-    var blogId = $('#blogId').val();
+    var blogID = $('#blogID').val();
     var verifyCode = $('#verifyCode').val();
-    var commentator = $('#commentator').val();
-    var email = $('#email').val();
-    var websiteUrl = $('#websiteUrl').val();
-    var commentBody = $('#commentBody').val();
-    if (isNull(blogId)) {
+    var blogCommentatorName = $('#blogCommentatorName').val();
+    var blogCommentatorEmail = $('#blogCommentatorEmail').val();
+    var blogWebsiteUrl = $('#blogWebsiteUrl').val();
+    var blogCommentContent = $('#blogCommentContent').val();
+    if (isNull(blogID)) {
         swal("参数异常", {
             icon: "warning",
         });
         return;
     }
-    if (isNull(commentator)) {
+    if (isNull(blogCommentatorName)) {
         swal("请输入你的称呼", {
             icon: "warning",
         });
         return;
     }
-    if (isNull(email)) {
+    if (isNull(blogCommentatorEmail)) {
         swal("请输入你的邮箱", {
             icon: "warning",
         });
@@ -29,21 +29,22 @@ $('#commentSubmit').click(function () {
         });
         return;
     }
-    if (!validCN_ENString2_100(commentator)) {
+    if (!validCN_ENString2_100(blogCommentatorName)) {
         swal("请输入符合规范的名称(不要输入特殊字符)", {
             icon: "warning",
         });
         return;
     }
-    if (!validCN_ENString2_100(commentBody)) {
+    if (!validCN_ENString2_100(blogCommentContent)) {
         swal("请输入符合规范的评论内容(不要输入特殊字符)", {
             icon: "warning",
         });
         return;
     }
     var data = {
-        "blogId": blogId, "verifyCode": verifyCode, "commentator": commentator,
-        "email": email, "websiteUrl": websiteUrl, "commentBody": commentBody
+        "blogID": blogID, "verifyCode": verifyCode, "blogCommentatorName": blogCommentatorName,
+        "blogCommentatorEmail": blogCommentatorEmail, "blogWebsiteUrl": blogWebsiteUrl,
+        "blogCommentContent": blogCommentContent
     };
     console.log(data);
     $.ajax({
@@ -55,7 +56,7 @@ $('#commentSubmit').click(function () {
                 swal("评论提交成功请等待博主审核", {
                     icon: "success",
                 });
-                $('#commentBody').val('');
+                $('#blogCommentContent').val('');
                 $('#verifyCode').val('');
             }
             else {

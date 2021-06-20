@@ -8,11 +8,11 @@ import java.util.List;
 
 public class DetailBlogVo implements Serializable {
 
-    private  int blogID;
+    private  Integer blogID;
 
     private String blogTitle;
 
-    private  int blogCategoryID;
+    private  Integer blogCategoryID;
 
     private Integer blogCommentCount;
 
@@ -28,17 +28,16 @@ public class DetailBlogVo implements Serializable {
 
     private String blogContent;
 
-    private byte blogStatus;
+    private Byte blogStatus;
 
-    private byte blogEnableComment;
+    private Byte blogEnableComment;
 
     private Date blogCreateTime;
 
-    public DetailBlogVo(int blogID, String blogTitle, int blogCategoryID,
-                        Integer blogCommentCount, String blogCategoryIcon,
-                        String blogCategoryName, String blogCoverImagePath,
-                        Integer blogViews, List<String> blogTags, String blogContent,
-                        byte blogStatus, byte blogEnableComment, Date blogCreateTime) {
+    public DetailBlogVo(Integer blogID, String blogTitle, Integer blogCategoryID,
+                        Integer blogCommentCount, String blogCategoryIcon, String blogCategoryName,
+                        String blogCoverImagePath, Integer blogViews, List<String> blogTags,
+                        String blogContent, Byte blogStatus, Byte blogEnableComment, Date blogCreateTime) {
         this.blogID = blogID;
         this.blogTitle = blogTitle;
         this.blogCategoryID = blogCategoryID;
@@ -57,11 +56,11 @@ public class DetailBlogVo implements Serializable {
     public DetailBlogVo() {
     }
 
-    public int getBlogID() {
+    public Integer getBlogID() {
         return blogID;
     }
 
-    public void setBlogID(int blogID) {
+    public void setBlogID(Integer blogID) {
         this.blogID = blogID;
     }
 
@@ -73,11 +72,11 @@ public class DetailBlogVo implements Serializable {
         this.blogTitle = blogTitle;
     }
 
-    public int getBlogCategoryID() {
+    public Integer getBlogCategoryID() {
         return blogCategoryID;
     }
 
-    public void setBlogCategoryID(int blogCategoryID) {
+    public void setBlogCategoryID(Integer blogCategoryID) {
         this.blogCategoryID = blogCategoryID;
     }
 
@@ -137,19 +136,19 @@ public class DetailBlogVo implements Serializable {
         this.blogContent = blogContent;
     }
 
-    public byte getBlogStatus() {
+    public Byte getBlogStatus() {
         return blogStatus;
     }
 
-    public void setBlogStatus(byte blogStatus) {
+    public void setBlogStatus(Byte blogStatus) {
         this.blogStatus = blogStatus;
     }
 
-    public byte getBlogEnableComment() {
+    public Byte getBlogEnableComment() {
         return blogEnableComment;
     }
 
-    public void setBlogEnableComment(byte blogEnableComment) {
+    public void setBlogEnableComment(Byte blogEnableComment) {
         this.blogEnableComment = blogEnableComment;
     }
 

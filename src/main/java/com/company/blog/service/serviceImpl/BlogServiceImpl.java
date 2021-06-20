@@ -158,11 +158,14 @@ public class BlogServiceImpl implements BlogService {
                 blogTag.setBlogTagName(name);
                 newAddBlogTags.add(blogTag);
             }
-            allBlogTags.add(blogTag);
+            else {
+                allBlogTags.add(blogTag);
+            }
         }
         if(!CollectionUtils.isEmpty(newAddBlogTags)){
             blogTagDao.insertBlogTagByBatch(newAddBlogTags);
         }
+        allBlogTags.addAll(newAddBlogTags);
         //更新tag-blog关系
         List<BlogTagRelation> blogTagRelations=new ArrayList<>();
         for(var tag:allBlogTags){
@@ -194,14 +197,11 @@ public class BlogServiceImpl implements BlogService {
         maps.put("blogStatus",1);
         PageQueryUtil pageQueryUtil=new PageQueryUtil(maps);
         var blogs=blogDao.findBlogList(pageQueryUtil);
-        if(CollectionUtils.isEmpty(blogs)){
-            return  null;
-        }
         var blogVos=getFromBlogList(blogs);
         int count=blogDao.getTotalBlogs(pageQueryUtil);
         PageResult pageResult=new PageResult(blogVos,count,pageQueryUtil.getLimit(),
                 pageQueryUtil.getCurrentPage());
-        return null;
+        return pageResult;
     }
 
     /**
@@ -213,12 +213,15 @@ public class BlogServiceImpl implements BlogService {
      */
     @Override
     public List<RoughBlogVo> getSideBarPage(int type) {
+        LoggerUtil.info("type:"+type);
         List<RoughBlogVo> roughBlogVos=new ArrayList<>();
         var blogs=blogDao.findBlogListByCondition(type,9);
         if(!CollectionUtils.isEmpty(blogs)){
             for(var item:blogs){
                 var tempRoughBlogVo=new RoughBlogVo();
                 BeanUtils.copyProperties(item,tempRoughBlogVo);
+                LoggerUtil.info("blogID:"+tempRoughBlogVo.getBlogID()+
+                        ",blogTitle:"+tempRoughBlogVo.getBlogTitle());
                 roughBlogVos.add(tempRoughBlogVo);
             }
         }
@@ -352,13 +355,13 @@ public class BlogServiceImpl implements BlogService {
      */
     private List<BlogListVo> getFromBlogList(List<Blog> blogs){
         List<BlogListVo> blogListVos=new ArrayList<>();
-        if(!CollectionUtils.isEmpty(blogs)){
+        if((blogs.size()>0)){
             List<Integer> blogCategoryIds=blogs.stream().map(Blog::getBlogCategoryID).
                     collect(Collectors.toList());
+
             Map<Integer,String> blogCategoryPairs=new HashMap<>();
             if(!CollectionUtils.isEmpty(blogCategoryIds)){
-                List<BlogCategory>  blogCategories=blogCategoryDao.selectBlogCategoryByIDs(
-                        (Integer[]) blogCategoryIds.toArray());
+                List<BlogCategory>  blogCategories=blogCategoryDao.selectBlogCategoryByIDs(blogCategoryIds);
                 if(!CollectionUtils.isEmpty(blogCategories)){
                     blogCategoryPairs= blogCategories.stream().collect(Collectors.toMap(
                             BlogCategory::getBlogCategoryID,

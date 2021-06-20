@@ -7,6 +7,8 @@
 <div class="am-g am-g-fixed blog-fixed">
     <div class="am-u-lg-8 am-u-sm-12">
         <main class="links-list">
+<!--            `blogLinkID`,`blogLinkType`,`blogLinkName`,`blogLinkUrl`,`blogLinkDescription`,-->
+<!--            `blogLinkRank`,`blogLinkIsDeleted`,`blogLinkCreateTime`-->
             <th:block th:unless="${#lists.isEmpty(favoriteLinks)}">
                 <div class="title">
                     <h3>友链</h3>
@@ -14,10 +16,10 @@
                 <div class="list">
                     <ul>
                         <th:block th:each="favoriteLink : ${favoriteLinks}">
-                            <li><a th:href="@{${favoriteLink.linkUrl}}"
-                                   th:text="${favoriteLink.linkName}">友链</a>
+                            <li><a th:href="@{${favoriteLink.blogblogLinkUrl}}"
+                                   th:text="${favoriteLink.blogLinkName}">友链</a>
                                 -
-                                <th:block th:text="${favoriteLink.linkDescription}"></th:block>
+                                <th:block th:text="${favoriteLink.blogLinkDescription}"></th:block>
                             </li>
                         </th:block>
                     </ul>
@@ -30,9 +32,9 @@
                 <div class="list">
                     <ul>
                         <th:block th:each="recommendLink : ${recommendLinks}">
-                            <li><a th:href="@{${recommendLink.linkUrl}}" th:text="${recommendLink.linkName}">推荐网站</a>
+                            <li><a th:href="@{${recommendLink.blogLinkUrl}}" th:text="${recommendLink.blogLinkName}">推荐网站</a>
                                 -
-                                <th:block th:text="${recommendLink.linkDescription}"></th:block>
+                                <th:block th:text="${recommendLink.blogLinkDescription}"></th:block>
                             </li>
                         </th:block>
                     </ul>
@@ -45,10 +47,10 @@
                 <div class="list">
                     <ul>
                         <th:block th:each="personalLink : ${personalLinks}">
-                            <li><a th:href="@{${personalLink.linkUrl}}"
-                                   th:text="${personalLink.linkName}">个人链接</a>
+                            <li><a th:href="@{${personalLink.blogLinkUrl}}"
+                                   th:text="${personalLink.blogLinkName}">个人链接</a>
                                 -
-                                <th:block th:text="${personalLink.linkDescription}"></th:block>
+                                <th:block th:text="${personalLink.blogLinkDescription}"></th:block>
                             </li>
                         </th:block>
                     </ul>
