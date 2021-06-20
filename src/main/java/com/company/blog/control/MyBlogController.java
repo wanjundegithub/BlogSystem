@@ -55,13 +55,10 @@ public class MyBlogController {
     @GetMapping("/page/{pageNum}")
     public String getPage(HttpServletRequest httpServletRequest,
                           @PathVariable("pageNum") Integer pageNum){
-        LoggerUtil.info("这个pageNum:"+pageNum);
         PageResult pageResult=blogService.getBlogHomePage(pageNum);
         if(pageResult==null){
-            LoggerUtil.info("page is null");
             return "error/error_404";
         }
-        LoggerUtil.info(""+pageResult.getCurrentPage()+","+pageResult.getTotalPage());
         httpServletRequest.setAttribute("pageResult",pageResult);
         httpServletRequest.setAttribute("newBlogs",blogService.getSideBarPage(1));
         httpServletRequest.setAttribute("hotBlogs",blogService.getSideBarPage(0));
@@ -114,9 +111,8 @@ public class MyBlogController {
                          @PathVariable("tagName") String tagName,
                          @PathVariable("page") Integer page){
         PageResult pageResult=blogService.getBlogListByTag(tagName,page);
-        httpServletRequest.setAttribute("pageResult",pageResult);
+        httpServletRequest.setAttribute("blogPageResult",pageResult);
         httpServletRequest.setAttribute("pageName","标签列表");
-        httpServletRequest.setAttribute("tagName",tagName);
         httpServletRequest.setAttribute("pageUrl","tag");
         httpServletRequest.setAttribute("newBlogs",blogService.getSideBarPage(1));
         httpServletRequest.setAttribute("hotBlogs",blogService.getSideBarPage(0));

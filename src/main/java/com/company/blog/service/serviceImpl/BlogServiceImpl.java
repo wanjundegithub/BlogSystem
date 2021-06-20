@@ -220,8 +220,6 @@ public class BlogServiceImpl implements BlogService {
             for(var item:blogs){
                 var tempRoughBlogVo=new RoughBlogVo();
                 BeanUtils.copyProperties(item,tempRoughBlogVo);
-                LoggerUtil.info("blogID:"+tempRoughBlogVo.getBlogID()+
-                        ",blogTitle:"+tempRoughBlogVo.getBlogTitle());
                 roughBlogVos.add(tempRoughBlogVo);
             }
         }
