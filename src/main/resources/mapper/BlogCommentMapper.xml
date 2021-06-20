@@ -47,7 +47,8 @@
         #{commentReplyTime,jdbcType=TIMESTAMP},#{commentStatus,jdbcType=TINYINT},#{commentIsDeleted,jdbcType=TINYINT})
     </insert>
 
-    <insert id="insertSelectiveBlogComment" parameterType="com.company.blog.model.BlogComment">
+    <insert id="insertSelectiveBlogComment" parameterType="com.company.blog.model.BlogComment"
+    keyProperty="blogCommentID" keyColumn="blogCommentID" useGeneratedKeys="true">
         insert into blogComment
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="blogCommentID!=null">

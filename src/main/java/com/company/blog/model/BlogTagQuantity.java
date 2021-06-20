@@ -2,13 +2,13 @@ package com.company.blog.model;
 
 public class BlogTagQuantity {
 
-    private int blogTagID;
+    private Integer blogTagID;
 
     private String blogTagName;
 
-    private int blogTagCount;
+    private Integer blogTagCount;
 
-    public BlogTagQuantity(int blogTagID, String blogTagName, int blogTagCount) {
+    public BlogTagQuantity(Integer blogTagID, String blogTagName, Integer blogTagCount) {
         this.blogTagID = blogTagID;
         this.blogTagName = blogTagName;
         this.blogTagCount = blogTagCount;
@@ -17,11 +17,11 @@ public class BlogTagQuantity {
     public BlogTagQuantity() {
     }
 
-    public int getBlogTagID() {
+    public Integer getBlogTagID() {
         return blogTagID;
     }
 
-    public void setBlogTagID(int blogTagID) {
+    public void setBlogTagID(Integer blogTagID) {
         this.blogTagID = blogTagID;
     }
 
@@ -33,11 +33,11 @@ public class BlogTagQuantity {
         this.blogTagName = blogTagName;
     }
 
-    public int getBlogTagCount() {
+    public Integer getBlogTagCount() {
         return blogTagCount;
     }
 
-    public void setBlogTagCount(int blogTagCount) {
+    public void setBlogTagCount(Integer blogTagCount) {
         this.blogTagCount = blogTagCount;
     }
 }

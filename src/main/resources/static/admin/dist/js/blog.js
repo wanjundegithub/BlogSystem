@@ -3,13 +3,13 @@ $(function () {
         url: '/admin/blogs/list',
         datatype: "json",
         colModel: [
-            {label: 'id', name: 'blogId', index: 'blogId', width: 50, key: true, hidden: true},
+            {label: 'id', name: 'blogID', index: 'blogID', width: 50, key: true, hidden: true},
             {label: '标题', name: 'blogTitle', index: 'blogTitle', width: 140},
-            {label: '预览图', name: 'blogCoverImage', index: 'blogCoverImage', width: 120, formatter: coverImageFormatter},
+            {label: '预览图', name: 'blogCoverImagePath', index: 'blogCoverImagePath', width: 120, formatter: coverImageFormatter},
             {label: '浏览量', name: 'blogViews', index: 'blogViews', width: 60},
             {label: '状态', name: 'blogStatus', index: 'blogStatus', width: 60, formatter: statusFormatter},
             {label: '博客分类', name: 'blogCategoryName', index: 'blogCategoryName', width: 60},
-            {label: '添加时间', name: 'createTime', index: 'createTime', width: 90}
+            {label: '添加时间', name: 'blogCreateTime', index: 'blogCreateTime', width: 90}
         ],
         height: 700,
         rowNum: 10,
@@ -94,11 +94,11 @@ function addBlog() {
 }
 
 function editBlog() {
-    var id = getSelectedRow();
-    if (id == null) {
+    var blogID = getSelectedRow();
+    if (blogID == null) {
         return;
     }
-    window.location.href = "/admin/blogs/edit/" + id;
+    window.location.href = "/admin/blogs/edit/" + blogID;
 }
 
 function deleteBlog() {

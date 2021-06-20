@@ -10,35 +10,35 @@ import java.util.List;
 @Repository
 public interface BlogDao {
 
-    int deleteBlogByPrimaryKey(Integer blogID);
+    Integer deleteBlogByPrimaryKey(Integer blogID);
 
-    int deleteBlogByBatch(@Param("blogIDS") Integer[] blogIDS);
+    Integer deleteBlogByBatch(@Param("blogIDS") Integer[] blogIDS);
 
-    int insertBlog(Blog blog);
+    Integer insertBlog(Blog blog);
 
-    int insertSelectiveBlog(Blog blog);
+    Integer insertSelectiveBlog(Blog blog);
 
     Blog queryBlogByPrimaryID(Integer blogID);
 
-    int updateBlogWithContent(Blog blog);
+    Integer updateBlogWithContent(Blog blog);
 
-    int updateBlogWithoutContent(Blog blog);
+    Integer updateBlogWithoutContent(Blog blog);
 
-    int updateSelectiveBlogWithContent(Blog blog);
+    Integer updateSelectiveBlogWithContent(Blog blog);
 
     List<Blog> findBlogList(PageQueryUtil pageQueryUtil);
 
     List<Blog> findBlogListByCondition(@Param("condition") int condition,@Param("limit") int limit);
 
-    int getTotalBlogs(PageQueryUtil pageQueryUtil);
+    Integer getTotalBlogs(PageQueryUtil pageQueryUtil);
 
     Blog findBlogBySubUrl(String blogSubUrl);
 
     List<Blog> getBlogListByTagID(PageQueryUtil pageQueryUtil);
 
-    int getTotalBlogCountByTagID(PageQueryUtil pageQueryUtil);
+    Integer getTotalBlogCountByTagID(PageQueryUtil pageQueryUtil);
 
-    int  updateCategoryByBatch(@Param("blogCategoryID") Integer blogCategoryID,
+    Integer  updateCategoryByBatch(@Param("blogCategoryID") Integer blogCategoryID,
                                @Param("blogCategoryName") String blogCategoryName,
                                @Param("blogCategoryIDs") Integer[] blogCategoryIDs);
 }

@@ -6,7 +6,7 @@ import java.util.Date;
 
 public class Blog {
 
-    private  int blogID;
+    private  Integer blogID;
 
     private String blogTitle;
 
@@ -14,19 +14,19 @@ public class Blog {
 
     private String blogCoverImagePath;
 
-    private  int blogCategoryID;
+    private  Integer blogCategoryID;
 
     private String blogCategoryName;
 
     private String blogTags;
 
-    private byte blogStatus;
+    private Byte blogStatus;
 
-    private int blogViews;
+    private Integer blogViews;
 
-    private byte blogEnableComment;
+    private Byte blogEnableComment;
 
-    private byte blogIsDeleted;
+    private Byte blogIsDeleted;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date blogCreateTime;
@@ -37,30 +37,8 @@ public class Blog {
     private String blogContent;
 
     public Blog(Integer blogID, String blogTitle, String blogSubUrl, String blogCoverImagePath,
-                int blogCategoryID, String blogCategoryName, String blogTags, byte blogStatus,
-                int blogViews, byte blogEnableComment, byte blogIsDeleted, Date blogCreateTime,
-                Date blogUpdateTime) {
-        this.blogID = blogID;
-        this.blogTitle = blogTitle;
-        this.blogSubUrl = blogSubUrl;
-        this.blogCoverImagePath = blogCoverImagePath;
-        this.blogCategoryID = blogCategoryID;
-        this.blogCategoryName = blogCategoryName;
-        this.blogTags = blogTags;
-        this.blogStatus = blogStatus;
-        this.blogViews = blogViews;
-        this.blogEnableComment = blogEnableComment;
-        this.blogIsDeleted = blogIsDeleted;
-        this.blogCreateTime = blogCreateTime;
-        this.blogUpdateTime = blogUpdateTime;
-    }
-
-    public Blog() {
-    }
-
-    public Blog(int blogID, String blogTitle, String blogSubUrl, String blogCoverImagePath,
-                int blogCategoryID, String blogCategoryName, String blogTags, byte blogStatus,
-                int blogViews, byte blogEnableComment, byte blogIsDeleted, Date blogCreateTime,
+                Integer blogCategoryID, String blogCategoryName, String blogTags, Byte blogStatus,
+                Integer blogViews, Byte blogEnableComment, Byte blogIsDeleted, Date blogCreateTime,
                 Date blogUpdateTime, String blogContent) {
         this.blogID = blogID;
         this.blogTitle = blogTitle;
@@ -78,11 +56,14 @@ public class Blog {
         this.blogContent = blogContent;
     }
 
-    public int getBlogID() {
+    public Blog() {
+    }
+
+    public Integer getBlogID() {
         return blogID;
     }
 
-    public void setBlogID(int blogID) {
+    public void setBlogID(Integer blogID) {
         this.blogID = blogID;
     }
 
@@ -110,19 +91,11 @@ public class Blog {
         this.blogCoverImagePath = blogCoverImagePath;
     }
 
-    public String getBlogContent() {
-        return blogContent;
-    }
-
-    public void setBlogContent(String blogContent) {
-        this.blogContent = blogContent;
-    }
-
-    public int getBlogCategoryID() {
+    public Integer getBlogCategoryID() {
         return blogCategoryID;
     }
 
-    public void setBlogCategoryID(int blogCategoryID) {
+    public void setBlogCategoryID(Integer blogCategoryID) {
         this.blogCategoryID = blogCategoryID;
     }
 
@@ -142,35 +115,35 @@ public class Blog {
         this.blogTags = blogTags;
     }
 
-    public byte getBlogStatus() {
+    public Byte getBlogStatus() {
         return blogStatus;
     }
 
-    public void setBlogStatus(byte blogStatus) {
+    public void setBlogStatus(Byte blogStatus) {
         this.blogStatus = blogStatus;
     }
 
-    public int getBlogViews() {
+    public Integer getBlogViews() {
         return blogViews;
     }
 
-    public void setBlogViews(int blogViews) {
+    public void setBlogViews(Integer blogViews) {
         this.blogViews = blogViews;
     }
 
-    public byte getBlogEnableComment() {
+    public Byte getBlogEnableComment() {
         return blogEnableComment;
     }
 
-    public void setBlogEnableComment(byte blogEnableComment) {
+    public void setBlogEnableComment(Byte blogEnableComment) {
         this.blogEnableComment = blogEnableComment;
     }
 
-    public byte getBlogIsDeleted() {
+    public Byte getBlogIsDeleted() {
         return blogIsDeleted;
     }
 
-    public void setBlogIsDeleted(byte blogIsDeleted) {
+    public void setBlogIsDeleted(Byte blogIsDeleted) {
         this.blogIsDeleted = blogIsDeleted;
     }
 
@@ -188,6 +161,14 @@ public class Blog {
 
     public void setBlogUpdateTime(Date blogUpdateTime) {
         this.blogUpdateTime = blogUpdateTime;
+    }
+
+    public String getBlogContent() {
+        return blogContent;
+    }
+
+    public void setBlogContent(String blogContent) {
+        this.blogContent = blogContent;
     }
 
     public void copyFrom(Blog fromBlog){

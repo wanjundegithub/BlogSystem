@@ -43,7 +43,7 @@
         </foreach>
     </update>
     
-    <insert id="insertBlog" parameterType="com.company.blog.model.Blog">
+    <insert id="insertBlog" parameterType="com.company.blog.model.Blog" >
         insert into blog (blogID,blogTitle,blogSubUrl,blogCoverImagePath,
         blogCategoryID,blogCategoryName,blogTags,blogStatus,blogViews,
         blogEnableComment,blogIsDeleted,blogCreateTime,blogUpdateTime,blogContent)
@@ -57,7 +57,8 @@
         #{blogContent,jdbcType=LONGVARCHAR})
     </insert>
 
-    <insert id="insertSelectiveBlog" parameterType="com.company.blog.model.Blog">
+    <insert id="insertSelectiveBlog" parameterType="com.company.blog.model.Blog"
+            keyProperty="blogID" keyColumn="blogID" useGeneratedKeys="true">
         insert into blog
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="blogID!=null">

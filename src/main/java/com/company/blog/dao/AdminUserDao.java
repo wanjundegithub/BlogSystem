@@ -7,15 +7,15 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AdminUserDao {
 
-    int insertAdminUser(AdminUser adminUser);
+    Integer insertAdminUser(AdminUser adminUser);
 
-    int insertSelectiveAdminUser(AdminUser adminUser);
+    Integer insertSelectiveAdminUser(AdminUser adminUser);
 
     AdminUser login(@Param("account") String account, @Param("password") String password);
 
-    AdminUser queryAdminUserByID(int adminID);
+    AdminUser queryAdminUserByID(Integer adminID);
 
-    int updateAdminUser(AdminUser adminUser);
+    Integer updateAdminUser(AdminUser adminUser);
 
-    int updateSelectiveAdminUser(AdminUser adminUser);
+    Integer updateSelectiveAdminUser(AdminUser adminUser);
 }

@@ -24,4 +24,6 @@ public class CommonUtil {
     public static final String SuccessModify="修改成功";
 
     public static final String FailureModify="修改失败";
+
+    public final static String FILE_UPLOAD_DIC = "/opt/deploy/upload/";
 }

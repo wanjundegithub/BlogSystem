@@ -10,15 +10,15 @@ import java.util.List;
 @Repository
 public interface BlogTagRelationDao {
 
-    int deleteRelationByPrimaryKey(Integer relationID);
+    Integer deleteRelationByPrimaryKey(Integer relationID);
 
-    int deleteRelationByBlogID(Integer blogID);
+    Integer deleteRelationByBlogID(Integer blogID);
 
-    int insertRelation(BlogTagRelation blogTagRelation);
+    Integer insertRelation(BlogTagRelation blogTagRelation);
 
-    int insertSelectiveRelation(BlogTagRelation blogTagRelation);
+    Integer insertSelectiveRelation(BlogTagRelation blogTagRelation);
 
-    int insertRelationByBatch(@Param("blogTagRelations") List<BlogTagRelation> blogTagRelations);
+    Integer insertRelationByBatch(@Param("blogTagRelations") List<BlogTagRelation> blogTagRelations);
 
     BlogTagRelation findBlogTagRelationByPrimaryKey(Integer relationID);
 
@@ -26,7 +26,7 @@ public interface BlogTagRelationDao {
 
     List<Integer> findDistinctTagIDs(@Param("tagIDs") Integer[] tagIDs);
 
-    int updateBlogTagRelation(BlogTagRelation blogTagRelation);
+    Integer updateBlogTagRelation(BlogTagRelation blogTagRelation);
 
-    int updateSelectiveBlogTagRelation(BlogTagRelation blogTagRelation);
+    Integer updateSelectiveBlogTagRelation(BlogTagRelation blogTagRelation);
 }

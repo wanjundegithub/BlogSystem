@@ -10,13 +10,13 @@ import java.util.List;
 @Repository
 public interface BlogCategoryDao {
 
-    int deleteBlogCategoryByPrimaryKey(Integer blogCategoryID);
+    Integer deleteBlogCategoryByPrimaryKey(Integer blogCategoryID);
 
-    int deleteBlogCategoryBatch(@Param("blogCategoryIDs") Integer[] blogCategoryIDs);
+    Integer deleteBlogCategoryBatch(@Param("blogCategoryIDs") Integer[] blogCategoryIDs);
 
-    int insertBlogCategory(BlogCategory blogCategory);
+    Integer insertBlogCategory(BlogCategory blogCategory);
 
-    int insertSelectiveBlogCategory(BlogCategory blogCategory);
+    Integer insertSelectiveBlogCategory(BlogCategory blogCategory);
 
     BlogCategory findBlogCategoryByPrimaryKey(Integer blogCategoryID);
 
@@ -26,9 +26,9 @@ public interface BlogCategoryDao {
 
     List<BlogCategory> selectBlogCategoryByIDs(@Param("blogCategoryIDs") Integer[] blogCategoryIDs);
 
-    int getTotalBlogCategoryCount(PageQueryUtil pageQueryUtil);
+    Integer getTotalBlogCategoryCount(PageQueryUtil pageQueryUtil);
 
-    int updateBlogCategory(BlogCategory blogCategory);
+    Integer updateBlogCategory(BlogCategory blogCategory);
 
-    int updateSelectiveBlogCategory(BlogCategory blogCategory);
+    Integer updateSelectiveBlogCategory(BlogCategory blogCategory);
 }

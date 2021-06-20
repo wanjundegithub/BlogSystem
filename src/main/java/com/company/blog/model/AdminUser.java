@@ -5,7 +5,7 @@ package com.company.blog.model;
  */
 public class AdminUser {
 
-    private int adminID;
+    private Integer adminID;
 
     private String adminAccount;
 
@@ -13,9 +13,10 @@ public class AdminUser {
 
     private String adminNickname;
 
-    private byte locked;
+    private Byte locked;
 
-    public AdminUser(int adminID, String adminAccount, String adminPassword, String adminNickname, byte locked) {
+    public AdminUser(Integer adminID, String adminAccount, String adminPassword,
+                     String adminNickname, Byte locked) {
         this.adminID = adminID;
         this.adminAccount = adminAccount;
         this.adminPassword = adminPassword;
@@ -26,11 +27,11 @@ public class AdminUser {
     public AdminUser() {
     }
 
-    public int getAdminID() {
+    public Integer getAdminID() {
         return adminID;
     }
 
-    public void setAdminID(int adminID) {
+    public void setAdminID(Integer adminID) {
         this.adminID = adminID;
     }
 
@@ -58,11 +59,11 @@ public class AdminUser {
         this.adminNickname = adminNickname;
     }
 
-    public byte getLocked() {
+    public Byte getLocked() {
         return locked;
     }
 
-    public void setLocked(byte locked) {
+    public void setLocked(Byte locked) {
         this.locked = locked;
     }
 

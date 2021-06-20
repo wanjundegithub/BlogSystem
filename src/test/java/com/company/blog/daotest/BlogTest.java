@@ -53,14 +53,15 @@ public class BlogTest {
     }
 
     @Test
-    @Rollback(value = false)
+    @Rollback(value = true)
     public void testInsertSelectiveBlog(){
         Date date = new Date(System.currentTimeMillis());
-        Blog blog=new Blog(5,"岳飞传","岳飞事迹",
+        Blog blog=new Blog(null,"傻逼传","岳飞事迹",
                 "/a/b/c",3,"人物传","英雄",
                 (byte)1,1000,(byte)1,(byte)0, null,null,
                 "岳飞是一个伟大的民族英雄，他的事迹鼓舞着后来的人们...");
         int result=blogDao.insertSelectiveBlog(blog);
+        LoggerUtil.info("id:"+blog.getBlogID());
         LoggerUtil.info("增加可空参数操作:"+result);
     }
 

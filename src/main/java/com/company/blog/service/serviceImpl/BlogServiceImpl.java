@@ -9,10 +9,7 @@ import com.company.blog.model.vo.BlogListVo;
 import com.company.blog.model.vo.DetailBlogVo;
 import com.company.blog.model.vo.RoughBlogVo;
 import com.company.blog.service.serviceInterfaces.BlogService;
-import com.company.blog.util.CommonUtil;
-import com.company.blog.util.PageQueryUtil;
-import com.company.blog.util.PageResult;
-import com.company.blog.util.StringUtil;
+import com.company.blog.util.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -68,6 +65,7 @@ public class BlogServiceImpl implements BlogService {
             blogCategory.setBlogCategoryRank(blogCategory.getBlogCategoryRank()+1);
         }
         if(blogDao.insertSelectiveBlog(blog)>0){
+            LoggerUtil.info("blogID:"+blog.getBlogID());
             //更新分类
             blogCategoryDao.updateSelectiveBlogCategory(blogCategory);
             //更新标签(单个blog可拥有多个标签)
@@ -75,6 +73,7 @@ public class BlogServiceImpl implements BlogService {
             if(blogTagNames.length>6){
                 return "单个blog最多拥有6个标签";
             }
+            LoggerUtil.info("blogTag:"+blog.getBlogTags());
             List<BlogTag> newAddBlogTags=new ArrayList<>();
             List<BlogTag> allBlogTags=new ArrayList<>();
             for(var name:blogTagNames){
@@ -84,12 +83,22 @@ public class BlogServiceImpl implements BlogService {
                     blogTag.setBlogTagName(name);
                     newAddBlogTags.add(blogTag);
                 }
-                allBlogTags.add(blogTag);
+                else {
+                    allBlogTags.add(blogTag);
+                }
             }
-            if(!CollectionUtils.isEmpty(newAddBlogTags)){
+            if(newAddBlogTags.size()>0){
+                //插入时blogTagID主键自增并会自动赋值给blogTagID
                 blogTagDao.insertBlogTagByBatch(newAddBlogTags);
             }
-            //更新tag-blog关系
+            LoggerUtil.info("after insert blogTags");
+            for(int i=0;i<newAddBlogTags.size();i++){
+                LoggerUtil.info("blogTagID:"+newAddBlogTags.get(i).getBlogTagID()+
+                        ",blogTagName:"+newAddBlogTags.get(i).getBlogTagName());
+            }
+            //将新增的tag赋给allBlogTags
+            allBlogTags.addAll(newAddBlogTags);
+            //新增tag-blog关系
             List<BlogTagRelation> blogTagRelations=new ArrayList<>();
             for(var tag:allBlogTags){
                 BlogTagRelation blogTagRelation=new BlogTagRelation();
@@ -120,14 +129,9 @@ public class BlogServiceImpl implements BlogService {
     }
 
     @Override
-    public String updateBlog(Blog blog) {
-        Blog updateBlog =blogDao.queryBlogByPrimaryID(blog.getBlogID());
-        if(updateBlog ==null){
-            return "数据不存在";
-        }
-        updateBlog.copyFrom(blog);
+    public String updateBlog(Blog updateBlog) {
         BlogCategory category =blogCategoryDao.findBlogCategoryByPrimaryKey(
-                blog.getBlogCategoryID());
+                updateBlog.getBlogCategoryID());
         if(category ==null){
             updateBlog.setBlogCategoryName("默认分类");
             updateBlog.setBlogCategoryID(0);
@@ -140,8 +144,8 @@ public class BlogServiceImpl implements BlogService {
             category.setBlogCategoryRank(category.getBlogCategoryRank()+1);
         }
         //更新标签(单个blog可拥有多个标签)
-        String[] blogTagNames=blog.getBlogTags().split(",");
-        updateBlog.setBlogTags(blog.getBlogTags());
+        String[] blogTagNames=updateBlog.getBlogTags().split(",");
+        updateBlog.setBlogTags(updateBlog.getBlogTags());
         if(blogTagNames.length>6){
             return "单个blog最多拥有6个标签";
         }
@@ -163,13 +167,13 @@ public class BlogServiceImpl implements BlogService {
         List<BlogTagRelation> blogTagRelations=new ArrayList<>();
         for(var tag:allBlogTags){
             BlogTagRelation blogTagRelation=new BlogTagRelation();
-            blogTagRelation.setBlogID(blog.getBlogID());
+            blogTagRelation.setBlogID(updateBlog.getBlogID());
             blogTagRelation.setBlogTagID(tag.getBlogTagID());
             blogTagRelations.add(blogTagRelation);
         }
         //修改blog信息->修改分类排序值->删除原关系数据->保存新的关系数据
         blogCategoryDao.updateSelectiveBlogCategory(category);
-        blogTagRelationDao.deleteRelationByBlogID(blog.getBlogID());
+        blogTagRelationDao.deleteRelationByBlogID(updateBlog.getBlogID());
         blogTagRelationDao.insertRelationByBatch(blogTagRelations);
         if(blogDao.updateSelectiveBlogWithContent(updateBlog)>0){
             return CommonUtil.SuccessModify;

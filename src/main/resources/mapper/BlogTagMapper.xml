@@ -40,7 +40,8 @@
          #{blogTagIsDeleted,jdbcType=TINYINT},#{blogTagCreateTime,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelectiveBlogTag" parameterType="com.company.blog.model.BlogTag">
+    <insert id="insertSelectiveBlogTag" parameterType="com.company.blog.model.BlogTag"
+    keyProperty="blogTagID" keyColumn="blogTagID" useGeneratedKeys="true">
         insert into blogTag
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="blogTagID!=null">
@@ -73,9 +74,10 @@
         </trim>
     </insert>
 
-    <insert id="insertBlogTagByBatch" parameterType="java.util.List" useGeneratedKeys="true">
+    <insert id="insertBlogTagByBatch" parameterType="java.util.List"
+            useGeneratedKeys="true" keyProperty="blogTagID">
         insert into blogTag (blogTagName) values
-        <foreach collection="blogTags" item="blogTag" separator=",">
+        <foreach collection="list" item="blogTag" separator=",">
             (#{blogTag.blogTagName,jdbcType=VARCHAR})
         </foreach>
     </insert>

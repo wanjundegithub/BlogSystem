@@ -10,23 +10,23 @@ import java.util.List;
 @Repository
 public interface BlogCommentDao {
 
-    int deleteBlogCommentByPrimaryKey(int blogCommentID);
+    Integer deleteBlogCommentByPrimaryKey(Integer blogCommentID);
 
-    int deleteBlogCommentByBatch(@Param("blogCommentIDs") Integer[] blogCommentIDs);
+    Integer deleteBlogCommentByBatch(@Param("blogCommentIDs") Integer[] blogCommentIDs);
 
-    int insertBlogComment(BlogComment blogComment);
+    Integer insertBlogComment(BlogComment blogComment);
 
-    int insertSelectiveBlogComment(BlogComment blogComment);
+    Integer insertSelectiveBlogComment(BlogComment blogComment);
 
     BlogComment findBlogCommentByPrimaryKey(Integer blogCommentID);
 
     List<BlogComment> findBlogCommentList(PageQueryUtil pageQueryUtil);
 
-    int getTotalBlogCommentCount(PageQueryUtil pageQueryUtil);
+    Integer getTotalBlogCommentCount(PageQueryUtil pageQueryUtil);
 
-    int updateBlogComment(BlogComment blogComment);
+    Integer updateBlogComment(BlogComment blogComment);
 
-    int updateSelectiveBlogComment(BlogComment blogComment);
+    Integer updateSelectiveBlogComment(BlogComment blogComment);
 
-    int updateBlogCommentCheckStatusByBatch(@Param("blogCommentIDs") Integer[] blogCommentIDs);
+    Integer updateBlogCommentCheckStatusByBatch(@Param("blogCommentIDs") Integer[] blogCommentIDs);
 }

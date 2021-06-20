@@ -71,8 +71,8 @@ $(function () {
         },
         onComplete: function (file, r) {
             if (r != null && r.resultCode == 200) {
-                $("#blogCoverImage").attr("src", r.data);
-                $("#blogCoverImage").attr("style", "width: 128px;height: 128px;display:block;");
+                $("#blogCoverImagePath").attr("src", r.data);
+                $("#blogCoverImagePath").attr("style", "width: 128px;height: 128px;display:block;");
                 return false;
             } else {
                 alert("error");
@@ -82,9 +82,9 @@ $(function () {
 });
 
 $('#confirmButton').click(function () {
-    var blogTitle = $('#blogName').val();
+    var blogTitle = $('#blogTitle').val();
     var blogSubUrl = $('#blogSubUrl').val();
-    var blogCategoryId = $('#blogCategoryId').val();
+    var blogCategoryID = $('#blogCategoryID').val();
     var blogTags = $('#blogTags').val();
     var blogContent = blogEditor.getMarkdown();
     if (isNull(blogTitle)) {
@@ -105,7 +105,7 @@ $('#confirmButton').click(function () {
         });
         return;
     }
-    if (isNull(blogCategoryId)) {
+    if (isNull(blogCategoryID)) {
         swal("请选择文章分类", {
             icon: "error",
         });
@@ -139,16 +139,16 @@ $('#confirmButton').click(function () {
 });
 
 $('#saveButton').click(function () {
-    var blogId = $('#blogId').val();
-    var blogTitle = $('#blogName').val();
+    var blogID = $('#blogID').val();
+    var blogTitle = $('#blogTitle').val();
     var blogSubUrl = $('#blogSubUrl').val();
-    var blogCategoryId = $('#blogCategoryId').val();
+    var blogCategoryID = $('#blogCategoryID').val();
     var blogTags = $('#blogTags').val();
     var blogContent = blogEditor.getMarkdown();
-    var blogCoverImage = $('#blogCoverImage')[0].src;
+    var blogCoverImagePath = $('#blogCoverImagePath')[0].src;
     var blogStatus = $("input[name='blogStatus']:checked").val();
-    var enableComment = $("input[name='enableComment']:checked").val();
-    if (isNull(blogCoverImage) || blogCoverImage.indexOf('img-upload') != -1) {
+    var blogEnableComment = $("input[name='blogEnableComment']:checked").val();
+    if (isNull(blogCoverImagePath) || blogCoverImagePath.indexOf('img-upload') != -1) {
         swal("封面图片不能为空", {
             icon: "error",
         });
@@ -157,23 +157,23 @@ $('#saveButton').click(function () {
     var url = '/admin/blogs/save';
     var swlMessage = '保存成功';
     var data = {
-        "blogTitle": blogTitle, "blogSubUrl": blogSubUrl, "blogCategoryId": blogCategoryId,
-        "blogTags": blogTags, "blogContent": blogContent, "blogCoverImage": blogCoverImage, "blogStatus": blogStatus,
-        "enableComment": enableComment
+        "blogTitle": blogTitle, "blogSubUrl": blogSubUrl, "blogCategoryID": blogCategoryID,
+        "blogTags": blogTags, "blogContent": blogContent, "blogCoverImagePath": blogCoverImagePath, "blogStatus": blogStatus,
+        "blogEnableComment": blogEnableComment
     };
-    if (blogId > 0) {
+    if (blogID > 0) {
         url = '/admin/blogs/update';
         swlMessage = '修改成功';
         data = {
-            "blogId": blogId,
+            "blogID": blogID,
             "blogTitle": blogTitle,
             "blogSubUrl": blogSubUrl,
-            "blogCategoryId": blogCategoryId,
+            "blogCategoryID": blogCategoryID,
             "blogTags": blogTags,
             "blogContent": blogContent,
-            "blogCoverImage": blogCoverImage,
+            "blogCoverImagePath": blogCoverImagePath,
             "blogStatus": blogStatus,
-            "enableComment": enableComment
+            "blogEnableComment": blogEnableComment
         };
     }
     console.log(data);
@@ -221,6 +221,6 @@ $('#cancelButton').click(function () {
  */
 $('#randomCoverImage').click(function () {
     var rand = parseInt(Math.random() * 40 + 1);
-    $("#blogCoverImage").attr("src", '/admin/dist/img/rand/' + rand + ".jpg");
-    $("#blogCoverImage").attr("style", "width:160px ;height: 120px;display:block;");
+    $("#blogCoverImagePath").attr("src", '/admin/dist/img/rand/' + rand + ".jpg");
+    $("#blogCoverImagePath").attr("style", "width:160px ;height: 120px;display:block;");
 });

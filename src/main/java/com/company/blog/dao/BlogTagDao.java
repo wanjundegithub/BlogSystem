@@ -19,7 +19,7 @@ public interface BlogTagDao {
 
     int insertSelectiveBlogTag(BlogTag blogTag);
 
-    int insertBlogTagByBatch(@Param("blogTags") List<BlogTag> blogTags);
+    int insertBlogTagByBatch(List<BlogTag> blogTags);
 
     BlogTag findBlogTagByPrimaryKey(Integer blogTagID);
 

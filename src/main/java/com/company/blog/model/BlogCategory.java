@@ -6,21 +6,21 @@ import java.util.Date;
 
 public class BlogCategory {
 
-    private int blogCategoryID;
+    private Integer blogCategoryID;
 
     private String blogCategoryName;
 
     private String blogCategoryIcon;
 
-    private int blogCategoryRank;
+    private Integer blogCategoryRank;
 
-    private byte blogCategoryIsDeleted;
+    private Byte blogCategoryIsDeleted;
 
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", timezone = "GMT+8")
     private Date blogCategoryCreateTime;
 
-    public BlogCategory(int blogCategoryID, String blogCategoryName, String blogCategoryIcon, int blogCategoryRank,
-                        byte blogCategoryIsDeleted, Date blogCategoryCreateTime) {
+    public BlogCategory(Integer blogCategoryID, String blogCategoryName, String blogCategoryIcon,
+                        Integer blogCategoryRank, Byte blogCategoryIsDeleted, Date blogCategoryCreateTime) {
         this.blogCategoryID = blogCategoryID;
         this.blogCategoryName = blogCategoryName;
         this.blogCategoryIcon = blogCategoryIcon;
@@ -32,11 +32,11 @@ public class BlogCategory {
     public BlogCategory() {
     }
 
-    public int getBlogCategoryID() {
+    public Integer getBlogCategoryID() {
         return blogCategoryID;
     }
 
-    public void setBlogCategoryID(int blogCategoryID) {
+    public void setBlogCategoryID(Integer blogCategoryID) {
         this.blogCategoryID = blogCategoryID;
     }
 
@@ -56,19 +56,19 @@ public class BlogCategory {
         this.blogCategoryIcon = blogCategoryIcon;
     }
 
-    public int getBlogCategoryRank() {
+    public Integer getBlogCategoryRank() {
         return blogCategoryRank;
     }
 
-    public void setBlogCategoryRank(int blogCategoryRank) {
+    public void setBlogCategoryRank(Integer blogCategoryRank) {
         this.blogCategoryRank = blogCategoryRank;
     }
 
-    public byte getBlogCategoryIsDeleted() {
+    public Byte getBlogCategoryIsDeleted() {
         return blogCategoryIsDeleted;
     }
 
-    public void setBlogCategoryIsDeleted(byte blogCategoryIsDeleted) {
+    public void setBlogCategoryIsDeleted(Byte blogCategoryIsDeleted) {
         this.blogCategoryIsDeleted = blogCategoryIsDeleted;
     }
 

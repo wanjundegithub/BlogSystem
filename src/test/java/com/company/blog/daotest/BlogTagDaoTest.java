@@ -63,9 +63,11 @@ public class BlogTagDaoTest {
     public void testInsertBlogTagByBatch(){
         List<BlogTag> blogTags=new ArrayList<BlogTag>(Arrays.asList(
                 new BlogTag("标签1"),
-                new BlogTag("标签2"),
-                new BlogTag("标签3")));
+                new BlogTag("标签2")));
         int result=blogTagDao.insertBlogTagByBatch(blogTags);
+        for(var tag:blogTags){
+            LoggerUtil.info(tag.getBlogTagID()+","+tag.getBlogTagName());
+        }
         LoggerUtil.info("批量插入结果:"+result);
     }
 

@@ -34,7 +34,8 @@
         #{blogCategoryRank,jdbcType=INTEGER},#{blogCategoryIsDeleted,jdbcType=TINYINT},#{blogCategoryCreateTime,jdbcType=TIMESTAMP})
     </insert>
 
-    <insert id="insertSelectiveBlogCategory" parameterType="com.company.blog.model.BlogCategory">
+    <insert id="insertSelectiveBlogCategory" parameterType="com.company.blog.model.BlogCategory"
+    keyColumn="blogCategoryID" keyProperty="blogCategoryID" useGeneratedKeys="true">
         insert into blogCategory
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="blogCategoryID!=null">

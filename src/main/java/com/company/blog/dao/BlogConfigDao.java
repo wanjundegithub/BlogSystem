@@ -12,5 +12,5 @@ public interface BlogConfigDao {
 
     BlogConfig getConfigByPrimaryKey(String blogConfigName);
 
-    int updateSelectiveBlogConfig(BlogConfig blogConfig);
+    Integer updateSelectiveBlogConfig(BlogConfig blogConfig);
 }

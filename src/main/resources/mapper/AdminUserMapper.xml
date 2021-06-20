@@ -21,7 +21,8 @@
                 #{adminNickname,jdbcType=VARCHAR},#{locked,jdbcType=TINYINT})
     </insert>
 
-    <insert id="insertSelectiveAdminUser" parameterType="com.company.blog.model.AdminUser">
+    <insert id="insertSelectiveAdminUser" parameterType="com.company.blog.model.AdminUser"
+     keyProperty="adminID" keyColumn="adminID" useGeneratedKeys="true">
         insert into admin
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="adminID!=null">

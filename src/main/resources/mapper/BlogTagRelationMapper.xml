@@ -35,7 +35,8 @@
         </trim>
     </insert>
 
-    <insert id="insertSelectiveRelation" parameterType="com.company.blog.model.BlogTagRelation">
+    <insert id="insertSelectiveRelation" parameterType="com.company.blog.model.BlogTagRelation"
+    keyProperty="relationID" keyColumn="relationID" useGeneratedKeys="true">
         insert into blog_tag_relation
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="relationID!=null">

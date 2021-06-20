@@ -45,7 +45,8 @@
         </trim>
     </insert>
 
-    <insert id="insertSelectiveBlogLink" parameterType="com.company.blog.model.BlogLink">
+    <insert id="insertSelectiveBlogLink" parameterType="com.company.blog.model.BlogLink"
+    keyProperty="blogLinkID" keyColumn="blogLinkID" useGeneratedKeys="true">
         insert into blogLink
         <trim prefix="(" suffix=")" suffixOverrides=",">
             <if test="blogLinkType!=null">
