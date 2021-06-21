@@ -92,9 +92,7 @@ public class MyBlogController {
                              @PathVariable("blogID") Integer blogID,
                              @RequestParam(value = "commentPage", required = false, defaultValue = "1")
                                          Integer commentPage){
-        LoggerUtil.info("开始查询详情页");
         DetailBlogVo detailBlogVo=blogService.getDetailBlogVoByID(blogID);
-        LoggerUtil.info("detail是否为空:"+(detailBlogVo!=null));
         if(detailBlogVo!=null){
             httpServletRequest.setAttribute("blogDetailVO",detailBlogVo);
             httpServletRequest.setAttribute("commentPageResult",
@@ -201,6 +199,7 @@ public class MyBlogController {
     public String link(HttpServletRequest request) {
         request.setAttribute("pageName", "友情链接");
         Map<Byte, List<BlogLink>> linkMap = blogLinkService.getLinkMaps();
+        var links=linkMap.get((byte)0);
         if (linkMap != null) {
             //判断友链类别并封装数据 0-友链 1-推荐 2-个人网站
             if (linkMap.containsKey((byte) 0)) {
@@ -270,16 +269,18 @@ public class MyBlogController {
     }
 
     /**
-     * 关于页面 以及其他配置了subUrl的文章页
+     * about
      *
      * @return
      */
-    @GetMapping({"/{subUrl}"})
-    public String detail(HttpServletRequest request, @PathVariable("subUrl") String subUrl) {
-        DetailBlogVo blogDetailVO = blogService.getDetailBlogVoBySubUrl(subUrl);
+    @GetMapping({"/{about}"})
+    public String detail(HttpServletRequest request, @PathVariable("about") String about) {
+        LoggerUtil.info("about:"+about);
+        DetailBlogVo blogDetailVO = blogService.getDetailBlogVoBySubUrl(about);
+        LoggerUtil.info("blogDetail is null:"+(blogDetailVO==null));
         if (blogDetailVO != null) {
             request.setAttribute("blogDetailVO", blogDetailVO);
-            request.setAttribute("pageName", subUrl);
+            request.setAttribute("pageName", about);
             request.setAttribute("configurations", blogConfigService.getAllConfigs());
             return "blog/amaze/detail";
         } else {

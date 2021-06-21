@@ -7,8 +7,6 @@
 <div class="am-g am-g-fixed blog-fixed">
     <div class="am-u-lg-8 am-u-sm-12">
         <main class="links-list">
-<!--            `blogLinkID`,`blogLinkType`,`blogLinkName`,`blogLinkUrl`,`blogLinkDescription`,-->
-<!--            `blogLinkRank`,`blogLinkIsDeleted`,`blogLinkCreateTime`-->
             <th:block th:unless="${#lists.isEmpty(favoriteLinks)}">
                 <div class="title">
                     <h3>友链</h3>
@@ -16,7 +14,7 @@
                 <div class="list">
                     <ul>
                         <th:block th:each="favoriteLink : ${favoriteLinks}">
-                            <li><a th:href="@{${favoriteLink.blogblogLinkUrl}}"
+                            <li><a th:href="@{${favoriteLink.blogLinkUrl}}"
                                    th:text="${favoriteLink.blogLinkName}">友链</a>
                                 -
                                 <th:block th:text="${favoriteLink.blogLinkDescription}"></th:block>
@@ -32,7 +30,8 @@
                 <div class="list">
                     <ul>
                         <th:block th:each="recommendLink : ${recommendLinks}">
-                            <li><a th:href="@{${recommendLink.blogLinkUrl}}" th:text="${recommendLink.blogLinkName}">推荐网站</a>
+                            <li><a th:href="@{${recommendLink.blogLinkUrl}}"
+                                   th:text="${recommendLink.blogLinkName}">推荐网站</a>
                                 -
                                 <th:block th:text="${recommendLink.blogLinkDescription}"></th:block>
                             </li>
@@ -63,9 +62,9 @@
                 , 格式要求如下:
             </p>
             <ul>
-                <li>网站名称：13blog</li>
-                <li>网站链接：http://13blog.site</li>
-                <li>网站描述：十三的个人博客</li>
+                <li>网站名称：blog</li>
+                <li>网站链接：http://blog.site</li>
+                <li>网站描述：帝皇的个人博客</li>
             </ul>
 
             <p>请保证自己的链接长期有效,不然可能会被清理.</p>

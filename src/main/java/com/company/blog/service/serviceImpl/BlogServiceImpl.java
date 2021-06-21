@@ -334,9 +334,6 @@ public class BlogServiceImpl implements BlogService {
      */
     @Override
     public DetailBlogVo getDetailBlogVoBySubUrl(String subUrl) {
-        if(!StringUtil.isMatchNetAddress(subUrl)){
-            return null;
-        }
         Blog blog=blogDao.findBlogBySubUrl(subUrl);
         if(blog==null){
             return null;
