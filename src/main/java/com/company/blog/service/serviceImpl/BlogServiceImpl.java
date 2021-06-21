@@ -416,7 +416,7 @@ public class BlogServiceImpl implements BlogService {
         Map<String,Object> map=new HashMap<>();
         map.put("blogID",blog.getBlogID());
         map.put("commentStatus",1);
-        result.setBlogCommentCount(blogCommentDao.getTotalBlogCommentCount(new PageQueryUtil(map)));
+        result.setBlogCommentCount(blogCommentDao.getTotalBlogCommentCount(map));
         return result;
     }
 }

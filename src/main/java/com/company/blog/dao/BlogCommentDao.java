@@ -6,6 +6,7 @@ import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public interface BlogCommentDao {
@@ -20,9 +21,9 @@ public interface BlogCommentDao {
 
     BlogComment findBlogCommentByPrimaryKey(Integer blogCommentID);
 
-    List<BlogComment> findBlogCommentList(PageQueryUtil pageQueryUtil);
+    List<BlogComment> findBlogCommentList(Map map);
 
-    Integer getTotalBlogCommentCount(PageQueryUtil pageQueryUtil);
+    Integer getTotalBlogCommentCount(Map map);
 
     Integer updateBlogComment(BlogComment blogComment);
 

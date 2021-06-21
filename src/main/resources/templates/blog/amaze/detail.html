@@ -110,7 +110,6 @@
             </th:block>
         </th:block>
         <th:block th:if="${null != commentPageResult}">
-            <!--        List<?> list,int totalCount, int pageSize, int currentPage,totalPage-->
             <ul class="am-pagination">
                 <li th:class="${commentPageResult.currentPage==1}?'disabled' : ''"><a
                         th:href="@{${commentPageResult.currentPage==1}?'##':'/blog/'+${blogDetailVO.blogID}+'?commentPage=' + ${commentPageResult.currentPage-1}+'#comments'}">&laquo;</a>

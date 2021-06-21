@@ -59,7 +59,7 @@ public class MyBlogController {
         if(pageResult==null){
             return "error/error_404";
         }
-        httpServletRequest.setAttribute("pageResult",pageResult);
+        httpServletRequest.setAttribute("blogPageResult",pageResult);
         httpServletRequest.setAttribute("newBlogs",blogService.getSideBarPage(1));
         httpServletRequest.setAttribute("hotBlogs",blogService.getSideBarPage(0));
         httpServletRequest.setAttribute("hotTags",blogTagService.getBlogQuantities());
@@ -87,16 +87,18 @@ public class MyBlogController {
      * @param httpServletRequest
      * @return
      */
-    @GetMapping({"/blog/{blogId}", "/article/{blogId}"})
+    @GetMapping({"/blog/{blogID}", "/article/{blogID}"})
     public String detailBlog(HttpServletRequest httpServletRequest,
-                             @PathVariable("blogId") Integer blogId,
+                             @PathVariable("blogID") Integer blogID,
                              @RequestParam(value = "commentPage", required = false, defaultValue = "1")
                                          Integer commentPage){
-        DetailBlogVo detailBlogVo=blogService.getDetailBlogVoByID(blogId);
+        LoggerUtil.info("开始查询详情页");
+        DetailBlogVo detailBlogVo=blogService.getDetailBlogVoByID(blogID);
+        LoggerUtil.info("detail是否为空:"+(detailBlogVo!=null));
         if(detailBlogVo!=null){
             httpServletRequest.setAttribute("blogDetailVO",detailBlogVo);
             httpServletRequest.setAttribute("commentPageResult",
-                    blogCommentService.getPageResultByIdWithPage(blogId,commentPage));
+                    blogCommentService.getPageResultByIdWithPage(blogID,commentPage));
         }
         httpServletRequest.setAttribute("pageName","详情");
         httpServletRequest.setAttribute("configurations",blogConfigService.getAllConfigs());
@@ -221,7 +223,7 @@ public class MyBlogController {
     @PostMapping(value = "/blog/comment")
     @ResponseBody
     public Result comment(HttpServletRequest request, HttpSession session,
-                          @RequestParam Integer blogId, @RequestParam String verifyCode,
+                          @RequestParam Integer blogID, @RequestParam String verifyCode,
                           @RequestParam String commentator, @RequestParam String email,
                           @RequestParam String websiteUrl, @RequestParam String commentBody) {
         if (StringUtil.isNullOrEmpty(verifyCode)) {
@@ -238,7 +240,7 @@ public class MyBlogController {
         if (StringUtil.isNullOrEmpty(ref)) {
             return ResultGeneratorUtil.getFailResult("非法请求");
         }
-        if (null == blogId || blogId < 0) {
+        if (null == blogID || blogID < 0) {
             return ResultGeneratorUtil.getFailResult("非法请求");
         }
         if (StringUtil.isNullOrEmpty(commentator)) {
@@ -257,7 +259,7 @@ public class MyBlogController {
             return ResultGeneratorUtil.getFailResult("评论内容过长");
         }
         BlogComment comment = new BlogComment();
-        comment.setBlogID(blogId);
+        comment.setBlogID(blogID);
         comment.setBlogCommentatorName(commentator);
         comment.setBlogCommentatorEmail(email);
         if (StringUtil.isMatchNetAddress(websiteUrl)) {
