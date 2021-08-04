@@ -66,7 +66,7 @@ public class AdminUserController {
         session.setAttribute("loginUserName",user.getAdminNickname());
         session.setAttribute("loginUserID",user.getAdminID());
         //这里应该到主页index
-        return "redirect:/admin/profile";
+        return "redirect:/admin/index";
     }
 
     @GetMapping("/profile")
